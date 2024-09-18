@@ -1,5 +1,5 @@
-import React from 'react';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import { GuiaEstilos } from './pages/GuiaEstilos';
 
 
 const Login = () => {
@@ -14,12 +14,16 @@ const App = () => {
   const router = createBrowserRouter([
     {
       path: '',
-      element: <Login/>
+      element: <Login />
     },
     {
       path: '/register',
-      element:<Register/>
-      
+      element: <Register />
+
+    },
+    {
+      path: '/style-guide',
+      element: <GuiaEstilos />
     }
   ])
   return (

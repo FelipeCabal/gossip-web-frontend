@@ -1,5 +1,3 @@
-import './GuiaEstilos.css'
-
 export function GuiaEstilos() {
     return (
         <div>
