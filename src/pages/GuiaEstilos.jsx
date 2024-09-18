@@ -25,12 +25,12 @@ export function GuiaEstilos() {
                     <ul>
                         <li className='bg-[#306bac]'>Principal: #306bac</li>
                         <li className='bg-[#918ef4]'>Secundario: #918ef4</li>
-                        <li className='pricipaltres'>Terceario: #6f9ceb</li>
+                        <li className='bg-[#6f9ceb]'>Terceario: #6f9ceb</li>
                     </ul>
                     <li>Colores Secundarios:</li>
                     <ul>
-                        <li>Principal: #141b41</li>
-                        <li>Secundario: #98b9f2</li>
+                        <li className='bg-[#141b41]'>Principal: #141b41</li>
+                        <li className='bg-[#98b9f2]'>Secundario: #98b9f2</li>
                     </ul>
                 </ul>
             </section>
