@@ -3,7 +3,7 @@ import axios from "axios";
 
 export const AuthContext = createContext();
 
-export function AuthContextProvider(children) {
+export function AuthContextProvider({ child }) {
     const [token, setToken] = useState(localStorage.getItem("token") || null);
     const [usuario, setUsuario] = useState(null);
     const [isLoading, setIsLoading] = useState(false)
@@ -40,12 +40,15 @@ export function AuthContextProvider(children) {
     }, [token])
 
     const Context = useMemo(() => {
-        isLoading
-        usuario
-        updateToken
-        deleteToken
-    }, [usuario, isLoading])
-    return <AuthContext.Provider value={Context}>{children}</AuthContext.Provider>
+        return {
+            token,
+            isLoading,
+            usuario,
+            updateToken,
+            deleteToken
+        }
+    }, [token,usuario, isLoading])
+    return <AuthContext.Provider value={Context}>{child}</AuthContext.Provider>
 
 }
 
