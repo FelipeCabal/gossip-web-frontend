@@ -24,10 +24,6 @@ const App = () => {
     {
       path: '/style-guide',
       element: <GuiaEstilos />
-    },
-    {
-      path: '/navbar',
-      element: <navbar />
     }
   ])
   return (

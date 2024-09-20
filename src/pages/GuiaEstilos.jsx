@@ -1,6 +1,11 @@
+import Navbar from "../partials/navbar";
+
+
 export function GuiaEstilos() {
     return (
+
         <div>
+            <Navbar />
             <section className='introduccion'>
                 <h1 className="text-[25px]">Guía de estilos</h1>
                 <h2>Introduccion</h2>
