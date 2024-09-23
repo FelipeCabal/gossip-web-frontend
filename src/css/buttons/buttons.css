@@ -3,14 +3,14 @@
     align-items: center;
     justify-content: center;
     text-decoration: none;
-    font-size: 0.875rem; 
-    padding: 10px 18px; 
+    font-size: 1rem;
+    padding: 10px 18px;
     border: 0;
     outline: 0;
-    color: #ffffff; 
+    color: #ffffff;
     line-height: 1;
     cursor: pointer;
-    border-radius: 5px; 
+    border-radius: 5px;
     transition: transform 0.3s ease;
     margin: center;
     font-weight: bold;
@@ -58,7 +58,7 @@
     background: #728dbd;
 }
 
-.btn-3{
+.btn-3 {
     background: #034c9b;
 }
 
@@ -81,4 +81,3 @@
 .btn-link::before {
     background: #a6a6a6;
 }
-
