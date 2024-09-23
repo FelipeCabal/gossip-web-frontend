@@ -1,7 +1,7 @@
-import { useEffect, useMemo, useState, createContext } from "react";
+import { useEffect, useMemo, useState, createContext, useContext } from "react";
 import axios from "axios";
 
-export const AuthContext = createContext();
+const AuthContext = createContext();
 
 export function AuthContextProvider({ child }) {
     const [token, setToken] = useState(localStorage.getItem("token") || null);
@@ -17,14 +17,14 @@ export function AuthContextProvider({ child }) {
     }
 
     const getUsuario = () => {
-        axios.get(process.env.REACT_APP_API + "/auth/profile")
+       /* axios.get(process.env.REACT_APP_API + "/auth/profile")
             .then((respuesta) => {
                 setUsuario(respuesta.data);
                 setIsLoading(false);
             })
             .catch(function (error) {
                 setIsLoading(false);
-            })
+            })*/
     }
 
     useEffect(() => {
@@ -52,6 +52,6 @@ export function AuthContextProvider({ child }) {
 
 }
 
-
-
-
+export const useAuth = () => {
+    return useContext(AuthContext);
+}
