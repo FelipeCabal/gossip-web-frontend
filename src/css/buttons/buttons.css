@@ -58,19 +58,19 @@
 }
 
 .btn-success {
-    background: #306bac;
+    background: #034c9b;
 }
 
 .btn-success::before {
-    background: #0d4a8c;
+    background: #0362c7;
 }
 
 .btn-danger {
-    background: #c42700;
+    background: #c32700;
 }
 
 .btn-danger::before {
-    background: #911e01;
+    background: #9f2000;
 }
 
 .btn-link {
