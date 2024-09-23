@@ -36,10 +36,10 @@ export function GuiaEstilos() {
                 <br />
                 <br />
                 <div className="flex justify-evenly">
-                    <a href="homepage" target="_blank" className="btn btn-primary">Descarga</a>
-                    <a href="homepage" target="_blank" className="btn btn-secondary">Aceptar</a>
-                    <a href="homepage" target="_blank" className="btn btn-danger">Rechazar</a>
-                    <a href="homepage" target="_blank" className="btn btn-success">Enviar</a>
+                    <a href="homepage" target="_blank" className="btn btn-1">Descarga</a>
+                    <a href="homepage" target="_blank" className="btn btn-2">Aceptar</a>
+                    <a href="homepage" target="_blank" className="btn btn-4">Rechazar</a>
+                    <a href="homepage" target="_blank" className="btn btn-3">Enviar</a>
                 </div>
 
                 <br /><br />
