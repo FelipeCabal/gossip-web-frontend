@@ -1,0 +1,29 @@
+.containerHome {
+    display: grid;
+    grid-template-columns: 30% 70%;
+    gap: 20px; 
+}
+
+.contentlayout {
+    padding: 20px; 
+}
+
+.left-column {
+    background-color: #f0f0f0; 
+}
+
+.right-column {
+    background-color: #ffffff; 
+}
+
+
+@media (max-width: 450px) {
+    .containerHome {
+        grid-template-columns: 1fr; 
+        gap: 10px; 
+    }
+
+    .contentlayout {
+        padding: 10px; 
+    }
+}

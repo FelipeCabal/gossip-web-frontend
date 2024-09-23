@@ -6,6 +6,8 @@
 
 @import './typography/typography.css';
 
+@import './layouts/containerHome.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
