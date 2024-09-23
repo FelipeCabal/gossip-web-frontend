@@ -9,7 +9,7 @@ import { useAuth } from '../../providers/AuthProvider';
 
 
 export function Register() {
-    const ENDPOINT = 'https://gossip-web-back-production.up.railway.app/api/auth/register'
+    const ENDPOINT = process.env.REACT_APP_API +'auth/register'
     const showErrorInformacion= () => toast.info("Campos sin informacion")
     const showSucess = () => toast.success("Registrado Exitosamente")
     const showErrorPeticion = () => toast.error("Usuario ya existe")

@@ -8,8 +8,8 @@ import { toast, ToastContainer } from 'react-toastify';
 import { useAuth } from '../../providers/AuthProvider';
 
 export function Login() {
-    const ENDPOINT = 'https://gossip-web-back-production.up.railway.app/api/auth/login'
-    const showSucess = () => toast.sucess("Logueado Correctamente", {
+    const ENDPOINT = process.env.REACT_APP_API +'auth/login'
+    const showSucess = () => toast.success("Logueado Correctamente", {
         onClose: () => {
             navigate('/');
         },
