@@ -1,4 +1,5 @@
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import { GuiaEstilos } from './pages/GuiaEstilos';
 
 //providers
 import { AuthContextProvider } from './providers/AuthProvider';
@@ -14,18 +15,18 @@ const App = () => {
     {
       path: '',
       element: <Fondo />,
-      children: [
-
-        {
-          path: '',
-          element: <Login />
-        },
-        {
-          path: 'register',
-          element: <Register />
-
-        }
-      ]
+      children: [{
+        path: '',
+        element: <Login />
+      },
+      {
+        path: 'register',
+        element: <Register />
+      }]
+    },
+    {
+      path: '/style-guide',
+      element: <GuiaEstilos />
     }
   ])
   return (
