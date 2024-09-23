@@ -1,4 +1,4 @@
-import { Link } from "react-scroll"
+import { Link } from "react-router-dom"
 import img from "../assets/avatares/neutro.png"
 import imgHome from "../assets/icons/HOMEPAGE.png"
 import imgCommunity from "../assets/icons/COMMUNITYS.png"
