@@ -1,3 +1,5 @@
+import "../css/buttons/buttons.css"
+
 export function GuiaEstilos() {
     return (
         <div>
@@ -31,6 +33,16 @@ export function GuiaEstilos() {
                         <li className='bg-[#98b9f2]'>Secundario: #98b9f2</li>
                     </ul>
                 </ul>
+                <br />
+                <br />
+                <div className="flex justify-evenly">
+                    <a href="homepage" target="_blank" className="btn btn-1">Descarga</a>
+                    <a href="homepage" target="_blank" className="btn btn-2">Aceptar</a>
+                    <a href="homepage" target="_blank" className="btn btn-4">Rechazar</a>
+                    <a href="homepage" target="_blank" className="btn btn-3">Enviar</a>
+                </div>
+
+                <br /><br />
             </section>
         </div>
     )
