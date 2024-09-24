@@ -6,7 +6,11 @@
 
 @import './typography/typography.css';
 
+
+@import './layouts/containerHome.css';
+
 @import 'react-toastify/dist/ReactToastify.css';
+
 
 @tailwind base;
 @tailwind components;
