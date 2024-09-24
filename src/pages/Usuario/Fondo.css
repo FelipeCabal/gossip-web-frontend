@@ -8,7 +8,7 @@
 }
 
 .logotipo {
-    background-image: url('../../assets/image.png');
+    background-image: url('../../assets/avatares/Logotipo.png');
     height: 500px;
     width: 600px;
     background-size: cover;
@@ -20,9 +20,8 @@
     display: flex;
     width: 100%;
     height: 100%;
-    background: linear-gradient(to bottom, #918EF4, #918EF4, #54538E);
+    background: linear-gradient(to bottom, #9f9cff, #7f7dce, #24243d);
     align-items: center;
-    overflow-y:scroll ;
 }
 
 .fondo_formulario {
@@ -36,6 +35,7 @@
     border-radius: 10px;
     padding: 10px;
     box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.4);
+    overflow-y: scroll;
 }
 
 .formulario {
@@ -62,8 +62,10 @@
         height: max-content;
         margin: 20px;
         padding: 20px 30px;
+        overflow-y: hidden;
     }
-    .logotipo-formulario{
+
+    .logotipo-formulario {
         display: none;
     }
 }

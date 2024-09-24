@@ -5,10 +5,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Nerko+One&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap');
 
 @import './typography/typography.css';
-
-
 @import './layouts/containerHome.css';
-
 @import 'react-toastify/dist/ReactToastify.css';
 
 
@@ -16,12 +13,11 @@
 @tailwind components;
 @tailwind utilities;
 
-
-
 body {
     width: 100%;
     height: 100%;
     margin: 0;
+    overflow-x: hidden;
 }
 
 html,
