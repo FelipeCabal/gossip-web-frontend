@@ -15,7 +15,7 @@ export function Login() {
         },
         autoClose: 2000,
     });
-    const showErrorContraseña = () => toast.error("Constraseña o correo incorrecto")
+    const showErrorContraseña = () => toast.error("Constraseña incorrecta")
     const showErrorCorreo = () => toast.error("Usuario no encontrado")
     const { updateToken } = useAuth()
     const [datos, setDatos] = useState({
@@ -131,13 +131,13 @@ export function Login() {
         <Link to={'/Register/'} style={{ fontSize: '15px', textDecoration: 'underline', color: '#306BAC' }}>Registrate</Link>
         <ToastContainer
             position="bottom-left"
-            autoClose={2500}
-            hideProgressBar={false}
+            autoClose={5000}
+            hideProgressBar={true}
             newestOnTop={false}
             rtl={false}
             pauseOnFocusLoss
             pauseOnHover
-            theme="light"
+            theme="dark"
         />
     </>)
 }
