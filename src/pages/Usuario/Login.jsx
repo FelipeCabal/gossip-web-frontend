@@ -8,7 +8,7 @@ import { toast, ToastContainer } from 'react-toastify';
 import { useAuth } from '../../providers/AuthProvider';
 
 export function Login() {
-    const ENDPOINT = process.env.REACT_APP_API +'auth/login'
+    const ENDPOINT = process.env.REACT_APP_API + 'auth/login'
     const showSucess = () => toast.success("Logueado Correctamente", {
         onClose: () => {
             navigate('/');
@@ -123,7 +123,7 @@ export function Login() {
                 />
             </ThemeProvider>
         </form>
-        <button style={{ marginBottom: '10px' }}
+        <button className='btn btn-3' style={{ marginBottom: '10px' }}
             onClick={handleIngresar}
         >
             Ingresar

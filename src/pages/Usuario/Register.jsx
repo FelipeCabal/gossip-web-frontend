@@ -9,8 +9,8 @@ import { useAuth } from '../../providers/AuthProvider';
 
 
 export function Register() {
-    const ENDPOINT = process.env.REACT_APP_API +'auth/register'
-    const showErrorInformacion= () => toast.info("Campos sin informacion")
+    const ENDPOINT = process.env.REACT_APP_API + 'auth/register'
+    const showErrorInformacion = () => toast.info("Campos sin informacion")
     const showSucess = () => toast.success("Registrado Exitosamente")
     const showErrorPeticion = () => toast.error("Usuario ya existe")
 
@@ -166,7 +166,7 @@ export function Register() {
             </ThemeProvider>
 
         </form>
-        <button style={{ marginBottom: '10px' }}
+        <button className='btn btn-3' style={{ marginBottom: '10px' }}
             onClick={handleIngresar}>
             Registrarse
         </button>
