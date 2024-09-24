@@ -10,17 +10,17 @@ import imgBuho from "../assets/icons/buho.png"
 const Navbar = () => {
     return (
         <header>
-            <nav className="w-full h-17 flex justify-center items-center flex-col sm:flex-row">
-                <div className="w-full h-20 text-slate-950 flex items-center justify-center sm:justify-start">
+            <nav className="w-full h-17 flex justify-between items-center ">
+                <div className=" h-20 text-slate-950 flex items-center justify-center ">
                     <div className="flex flex-col items-center justify-center p-2">
                         <img src={img} alt="Gossip-web" className="max-w-full w-24 -mb-2" />
                         <h1 className="-m-1 -mt-3.5 px-5">Username</h1>
                     </div>
                 </div>
-                <div className="w-full h-20 text-slate-950 flex items-center justify-center">
-                    <h1 className="text-3xl font-bold">Gossip-Web</h1>
+                <div className=" h-20 text-slate-950 flex items-center justify-center ">
+                    <h1 className="text-3xl font-bold ">Gossip-Web</h1>
                 </div>
-                <div className="w-full h-20 text-slate-950 flex items-center justify-center sm:justify-end">
+                <div className=" h-20 text-slate-950 flex items-center justify-center ">
                     <img src={imgBuho} alt="Gossip-web" className="max-w-full w-24 mb-1" />
                 </div>
             </nav>
