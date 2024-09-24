@@ -1,3 +1,5 @@
+import "../css/buttons/buttons.css"
+
 export function GuiaEstilos() {
     return (
         <div className="containerHome">
@@ -17,6 +19,7 @@ export function GuiaEstilos() {
                         <li className='bg-[#98b9f2]'>Secundario: #98b9f2</li>
                     </ul>
                 </ul>
+
             </div>
             <div className="right-column">
                 <h1 className="text-[25px]">Guía de estilos</h1>
@@ -31,7 +34,16 @@ export function GuiaEstilos() {
                     <li>Inter:  Es una fuente de código abierto diseñada principalmente para pantallas y lectura en interfaces digitales y va a ser usada para textos generales con tipografia base de 16 px. </li>
                 </ul>
             </div>
+                <br />
+                <br />
+                <div className="flex justify-evenly">
+                    <a href="homepage" target="_blank" className="btn btn-1">Descarga</a>
+                    <a href="homepage" target="_blank" className="btn btn-2">Aceptar</a>
+                    <a href="homepage" target="_blank" className="btn btn-4">Rechazar</a>
+                    <a href="homepage" target="_blank" className="btn btn-3">Enviar</a>
+                </div>
 
+                <br /><br />
         </div>
     )
 }
