@@ -1,7 +1,7 @@
 export function GuiaEstilos() {
     return (
         <div className="containerHome">
-            <div >
+            <div className="left-column">
                 <h2>Colores</h2>
                 <p>La elección de una paleta de colores adecuada es fundamental para el diseño de interfaces. Los colores pueden transmitir emociones y crear una atmósfera única en la aplicación. A continuación se presentan los colores recomendados para su uso en la aplicación:</p>
                 <ul>
@@ -18,7 +18,7 @@ export function GuiaEstilos() {
                     </ul>
                 </ul>
             </div>
-            <div>
+            <div className="right-column">
                 <h1 className="text-[25px]">Guía de estilos</h1>
                 <h2>Introduccion</h2>
                 <p>La Guía de Estilos tiene como objetivo proporcionar un conjunto de reglas y componentes predefinidos que permiten mantener la consistencia visual y de comportamiento a lo largo de toda la aplicación. Al utilizar esta guía, los desarrolladores y diseñadores pueden asegurarse de que la interfaz de usuario sea coherente, accesible y fácil de mantener, independientemente de la escala o el tamaño del proyecto.</p>
