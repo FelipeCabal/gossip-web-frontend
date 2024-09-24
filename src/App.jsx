@@ -1,25 +1,28 @@
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import { GuiaEstilos } from './pages/GuiaEstilos';
 
+//providers
+import { AuthContextProvider } from './providers/AuthProvider';
 
-const Login = () => {
-  return <h1>Holaaaa</h1>
-}
-const Register = () => {
-  return <h2>Registro</h2>
-}
+//usuario
+import { Fondo } from './pages/Usuario/Fondo';
+import { Login } from './pages/Usuario/Login';
+import { Register } from './pages/Usuario/Register';
 
 const App = () => {
 
   const router = createBrowserRouter([
     {
       path: '',
-      element: <Login />
-    },
-    {
-      path: '/register',
-      element: <Register />
-
+      element: <Fondo />,
+      children: [{
+        path: '',
+        element: <Login />
+      },
+      {
+        path: 'register',
+        element: <Register />
+      }]
     },
     {
       path: '/style-guide',
@@ -27,7 +30,7 @@ const App = () => {
     }
   ])
   return (
-    <RouterProvider router={router} />
+    <AuthContextProvider child={<RouterProvider router={router} />} />
   )
 }
 
