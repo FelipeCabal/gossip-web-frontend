@@ -1,7 +1,10 @@
+import Navbar from "../partials/navbar";
 import "../css/buttons/buttons.css"
 
 export function GuiaEstilos() {
     return (
+      <>
+        <Navbar />
         <div className="containerHome">
             <div className="left-column">
                 <h2>Colores</h2>
@@ -45,5 +48,6 @@ export function GuiaEstilos() {
 
                 <br /><br />
         </div>
+      </>
     )
 }
