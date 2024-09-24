@@ -84,9 +84,9 @@ export function Login() {
     });
     return (<>
         <div className='logotipo-formulario'></div>
-        <h1 style={{ fontSize: '22px', fontWeight: 'normal', marginTop: '-5px', marginBottom: '35px' }}>GOSSIP-WEB</h1>
+        <h1 style={{ fontSize: '25px', fontWeight: 'normal', marginTop: '-5px', marginBottom: '35px' }}>GOSSIP-WEB</h1>
         <form action="" className='formulario'>
-            <h2>Login</h2>
+            <h2 style={{ fontWeight: 'bold', fontSize: '20px' }}>Login</h2>
             <ThemeProvider theme={theme}>
                 <TextField
                     type='email'
