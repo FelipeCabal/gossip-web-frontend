@@ -12,7 +12,6 @@ import { Register } from './pages/Usuario/Register';
 //Paginas
 import { HomePage } from './pages/HomePage/HomePage';
 import { LayoutComponent } from './pages/LayoutComponent';
-import { VistaComunidades } from './pages/Comunidades/VistaComunidades';
 
 const App = () => {
 
