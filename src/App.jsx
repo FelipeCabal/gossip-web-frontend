@@ -8,6 +8,7 @@ import { AuthContextProvider } from './providers/AuthProvider';
 import { Fondo } from './pages/Usuario/Fondo';
 import { Login } from './pages/Usuario/Login';
 import { Register } from './pages/Usuario/Register';
+import { ListaPublicaciones } from './components/PublicacionesHome/ListaPublicaciones';
 
 const App = () => {
 
@@ -27,6 +28,10 @@ const App = () => {
     {
       path: '/style-guide',
       element: <GuiaEstilos />
+    },
+    {
+      path: '/post',
+      element: <ListaPublicaciones/>
     }
   ])
   return (
