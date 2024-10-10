@@ -8,12 +8,20 @@ export function PublicacionHome({userName,img,texto,perfil, esAnonimo}) {
   const heartFill = likeIt ? '#99b4ff':'none'
   const fotoPerfil = esAnonimo ? anonimo : perfil;
   const nombre = esAnonimo ? 'anonimo' : userName;
-
+  
 
   const handleClick = () => {
     setLikeIt(!likeIt)
   }
 
+  const maxWords = img? '100':'300';
+  const wordsArray = texto.split(' ');
+  const truncatedText = wordsArray.length > maxWords
+    ? wordsArray.slice(0, maxWords).join(' ') + '...'
+    : texto;
+  
+
+  console.log(PublicacionHome, img)
   return (
     <>
       <div className="containerHome">
@@ -30,7 +38,7 @@ export function PublicacionHome({userName,img,texto,perfil, esAnonimo}) {
                 </div>
 
                 <div className="w-full p-6 ">
-                  <span className="text-xl font-roboto">{texto }</span>
+                  <span className="text-xl font-roboto">{truncatedText}</span>
                 </div>
 
                 <section className=" bottom-0 right-0 flex space-x-3 p-4 w-full">
@@ -40,14 +48,14 @@ export function PublicacionHome({userName,img,texto,perfil, esAnonimo}) {
                         data-slot="icon"
                         fill={heartFill}
                         height="27"
-                        stroke-width="2"
+                        strokeWidth="2"
                         stroke={heartStroke}
                         viewBox="0 0 24 24"
                         xmlns="http://www.w3.org/2000/svg"
                         aria-hidden="true">
                         <path
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
                           d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z">   
                           </path>
                       </svg>
@@ -63,8 +71,8 @@ export function PublicacionHome({userName,img,texto,perfil, esAnonimo}) {
                         <path
                           d="M20.656 17.008a9.993 9.993 0 1 0-3.59 3.615L22 22Z"
                           fill="none" stroke="currentColor"
-                          stroke-linejoin="round"
-                          stroke-width="2"></path>
+                          strokeLinejoin="round"
+                          strokeWidth="2"></path>
                       </svg>
                     </button>
                   </div>

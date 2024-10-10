@@ -10,14 +10,14 @@ const publicaciones = [
         img: 'https://i.pinimg.com/enabled_hi/564x/2c/6b/29/2c6b29c44f3d419764ba812183808322.jpg',
         texto: 'Bonito Paisaje',
         esAnonimo: false,
-        perfil: mujer 
+        perfil: mujer
     },
     {
         userName: 'Rulo Ronaldo',
         img: 'https://i.pinimg.com/enabled_hi/564x/b4/59/3a/b4593a1cadeb6d97fe68b4efef3173c1.jpg',
         texto: 'Patas',
         esAnonimo: false,
-        perfil: hombre 
+        perfil: hombre
     },
     {
         userName: 'Carlos',
@@ -42,7 +42,7 @@ const publicaciones = [
     {
         userName: 'lucy',
         img: 'https://i.pinimg.com/enabled_hi/564x/96/0a/b5/960ab5c0ae223f8f3646622be2e90749.jpg',
-        texto: 'acabo con la progrmacion o la programacion acaba conmigo',
+        texto: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum finibus malesuada ipsum, eu mattis magna pharetra vel. Praesent non egestas felis, sed dictum ipsum. Fusce scelerisque et ante quis rutrum. Integer sollicitudin ante vel nunc ornare viverra. Vestibulum eu pharetra turpis. Pellentesque rutrum blandit metus. Aenean pulvinar nisi at ligula sollicitudin, ac dapibus nulla blandit. Morbi ut erat sem. Morbi blandit lacinia diam luctus faucibus.Donec odio massa, dignissim a rhoncus sit amet, efficitur eu eros.Donec euismod sagittis sem, id consectetur sem ornare quis.Phasellus malesuada ante sagittis eleifend dictum.Donec metus magna, dictum sit amet convallis vel, feugiat vel felis.Nunc id finibus est.Suspendisse facilisis elementum neque sit amet blandit.Donec vestibulum justo nec feugiat congue.Morbi id ultricies libero.Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.Nulla ligula tortor, ultrices in tortor eu, blandit rutrum arcu.Suspendisse malesuada sit amet augue dignissim dictum.Nulla et elit nunc.Praesent eleifend, erat non vulputate ullamcorper, est elit bibendum urna, ac tristique metus ante et justo.Pellentesque maximus sit amet lectus et viverra.Nullam eget malesuada est.Duis rutrum turpis eu consectetur rutrum.Nulla porttitor, sem sed cursus commodo, diam nulla ultrices velit.',
         esAnonimo: true,
         perfil: hombre
     }
@@ -52,14 +52,14 @@ export const ListaPublicaciones = () => {
     return (
         <section className="ListaPublicaciones">
             {
-                publicaciones.map(({ userName, img, texto,esAnonimo, perfil }) => (
+                publicaciones.map(({ userName, img, texto, esAnonimo, perfil }) => (
                     <PublicacionHome
                         key={userName}
                         userName={userName}
                         img={img}
                         texto={texto}
-                        esAnonimo = {esAnonimo}
-                        perfil = {perfil}
+                        esAnonimo={esAnonimo}
+                        perfil={perfil}
                     >
                     </PublicacionHome>
                 ))
