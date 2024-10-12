@@ -1,5 +1,6 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
+import { getStorage, ref, uploadBytesResumable, getDownloadURL, deleteObject } from "firebase/storage";
 import { getAnalytics } from "firebase/analytics";
 import axios from "axios";
 // TODO: Add SDKs for Firebase products that you want to use
@@ -19,9 +20,10 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
+const storage = getStorage(app);
 const analytics = getAnalytics(app);
 
-const uploadFile = async (asset, onProgress, idOwner) => {
+const uploadFile = async (asset, onProgress) => {
     return new Promise((resolve, reject) => {
         const storageRef = ref(storage, `uploads/${asset.type}/${asset.name}`);
         const uploadTask = uploadBytesResumable(storageRef, asset.file);
@@ -36,11 +38,10 @@ const uploadFile = async (asset, onProgress, idOwner) => {
                 reject(error);
             },
             () => {
-                getDownloadURL(storageRef).then(async (url) => {
-                    return await axios.patch(`${process.env.REACT_APP_API, asset.type}/${idOwner}`, { imagen: url }).then(() => {
-                        resolve();
-                    });
-
+                getDownloadURL(uploadTask.snapshot.ref).then((url) => {
+                    resolve(url);
+                }).catch((error) => {
+                    reject(error);
                 });
             }
         );
