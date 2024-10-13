@@ -106,7 +106,10 @@ export function PostHomeForm() {
                     onChange={handleChangeDescription}
                     onInput={autoResize}
                 />
-                {(!isUploading && asset) ? <ImagenPreview file={asset} /> : asset && <h2>Loading</h2>}
+                {(!isUploading && asset) ? <div className=" w-full flex justify-center items-center mt-2"> <ImagenPreview file={asset} /> </div> :
+                    asset && <div className="w-full flex items-center justify-center">
+                        <img className="w-24 h-24" src="https://upload.wikimedia.org/wikipedia/commons/c/c7/Loading_2.gif?20170503175831" alt="loading..." />
+                    </div>}
                 <div className="flex justify-end items-center mt-4">
                     <input
                         type="file"
