@@ -1,14 +1,9 @@
 import { useState } from "react";
 import { ImagenPreview } from "../../partials/ImagenPreview/imagenPreview";
-import { uploadFile } from "../../services/firebase-services";
+import { deleteFile, uploadFile } from "../../services/firebase-services";
+import axios from "axios";
 
 export function PostHomeForm() {
-    const autoResize = (e) => {
-        const textarea = e.target;
-        textarea.style.height = 'auto';
-        textarea.style.height = `${textarea.scrollHeight}px`;
-    };
-
     const [isToggled, setIsToggled] = useState(false);
     const [postContent, setPostContent] = useState({
         description: '',
@@ -17,21 +12,27 @@ export function PostHomeForm() {
     });
     const [asset, setAsset] = useState(null);
     const [isUploading, setIsUploading] = useState(false);
+    const [fileExist, setFileExist] = useState(false)
 
+    const autoResize = (e) => {
+        const textarea = e.target;
+        textarea.style.height = 'auto';
+        textarea.style.height = `${textarea.scrollHeight}px`;
+    };
     const handleChangeDescription = (e) => {
         setPostContent(prevContent => ({ ...prevContent, description: e.target.value }));
     };
-
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (!postContent.description) return;
+        if (!postContent.description && !asset) return;
 
-        console.log('Post submitted:', postContent);
-        setIsToggled(false);
-        setPostContent({ description: '', imagen: '', esAnonimo: false });
-        setAsset(null);
+        axios.post(`${process.env.REACT_APP_API}publicaciones`, postContent).then(() => {
+            console.log('Post submitted:', postContent);
+            setIsToggled(false);
+            setPostContent({ description: '', imagen: '', esAnonimo: false });
+            setAsset(null);
+        }).catch(e => console.log(e))
     };
-
     const handleFileChange = async (e) => {
         const file = e.target.files[0];
         if (!file) return;
@@ -66,13 +67,24 @@ export function PostHomeForm() {
             console.error("Upload error:", error);
         } finally {
             setIsUploading(false);
+            setFileExist(true)
         }
     };
-
     const handleToggle = () => {
         setIsToggled(!isToggled);
         setPostContent(prevContent => ({ ...prevContent, esAnonimo: !isToggled }));
     };
+    const handleDelete = () => {
+        try {
+            deleteFile(asset)
+        } catch {
+            console.log("El archivo no pudo ser eliminado")
+        }
+        finally {
+            setAsset(null)
+            setFileExist(false)
+        }
+    }
 
     return (
         <div className="bg-white rounded-lg shadow-md p-4 mb-4 w-full max-w-2xl mx-auto">
@@ -106,7 +118,7 @@ export function PostHomeForm() {
                     onChange={handleChangeDescription}
                     onInput={autoResize}
                 />
-                {(!isUploading && asset) ? <div className=" w-full flex justify-center items-center mt-2"> <ImagenPreview file={asset} /> </div> :
+                {(!isUploading && asset) ? <ImagenPreview file={asset} handleDelete={handleDelete} /> :
                     asset && <div className="w-full flex items-center justify-center">
                         <img className="w-24 h-24" src="https://upload.wikimedia.org/wikipedia/commons/c/c7/Loading_2.gif?20170503175831" alt="loading..." />
                     </div>}
@@ -119,14 +131,18 @@ export function PostHomeForm() {
                         accept="image/*,video/*"
                         multiple={false}
                     />
-                    <label
-                        htmlFor="file-upload"
-                        className="flex items-center py-2 px-4 rounded-lg cursor-pointer focus:outline-none hover:bg-slate-400"
-                    >
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-10">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Zm10.5-11.25h.008v.008h-.008V8.25Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
-                        </svg>
-                    </label>
+                    {fileExist ? <></> : <>
+                        <label
+                            htmlFor="file-upload"
+                            className='flex items-center py-2 px-4 rounded-lg cursor-pointer focus:outline-none hover:bg-slate-400'
+
+                        >
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-10">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Zm10.5-11.25h.008v.008h-.008V8.25Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
+                            </svg>
+                        </label>
+                    </>
+                    }
                     <button
                         type="submit"
                         className="flex items-center py-2 px-4 rounded-lg hover:bg-blue-400 focus:outline-none"
