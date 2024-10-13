@@ -14,14 +14,6 @@ export function PostHomeForm() {
     const [isUploading, setIsUploading] = useState(false);
     const [fileExist, setFileExist] = useState(false)
 
-    const autoResize = (e) => {
-        const textarea = e.target;
-        textarea.style.height = 'auto';
-        textarea.style.height = `${textarea.scrollHeight}px`;
-    };
-    const handleChangeDescription = (e) => {
-        setPostContent(prevContent => ({ ...prevContent, description: e.target.value }));
-    };
     const handleSubmit = (e) => {
         e.preventDefault();
         if (!postContent.description && !asset) return;
@@ -32,6 +24,20 @@ export function PostHomeForm() {
             setPostContent({ description: '', imagen: '', esAnonimo: false });
             setAsset(null);
         }).catch(e => console.log(e))
+    };
+    const handleDelete = () => {
+        try {
+            deleteFile(asset)
+        } catch {
+            console.log("El archivo no pudo ser eliminado")
+        }
+        finally {
+            setAsset(null)
+            setFileExist(false)
+        }
+    }
+    const handleChangeDescription = (e) => {
+        setPostContent(prevContent => ({ ...prevContent, description: e.target.value }));
     };
     const handleFileChange = async (e) => {
         const file = e.target.files[0];
@@ -74,17 +80,11 @@ export function PostHomeForm() {
         setIsToggled(!isToggled);
         setPostContent(prevContent => ({ ...prevContent, esAnonimo: !isToggled }));
     };
-    const handleDelete = () => {
-        try {
-            deleteFile(asset)
-        } catch {
-            console.log("El archivo no pudo ser eliminado")
-        }
-        finally {
-            setAsset(null)
-            setFileExist(false)
-        }
-    }
+    const autoResize = (e) => {
+        const textarea = e.target;
+        textarea.style.height = 'auto';
+        textarea.style.height = `${textarea.scrollHeight}px`;
+    };
 
     return (
         <div className="bg-white rounded-lg shadow-md p-4 mb-4 w-full max-w-2xl mx-auto">
