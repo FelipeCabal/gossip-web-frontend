@@ -1,6 +1,7 @@
 import Navbar from "../partials/navbar";
 import "../css/buttons/buttons.css"
 import { PostHomeForm } from "../components/postsHomeForm/postHomeForm";
+import { Outlet } from "react-router-dom";
 
 export function GuiaEstilos() {
     return (
@@ -50,6 +51,7 @@ export function GuiaEstilos() {
 
                 <br /><br />
             </div>
+            <Outlet />
         </>
     )
 }

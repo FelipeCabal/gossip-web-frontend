@@ -3,7 +3,7 @@ import { ImagenPreview } from "../../partials/ImagenPreview/imagenPreview";
 import { deleteFile, uploadFile } from "../../services/firebase-services";
 import axios from "axios";
 
-export function PostHomeForm() {
+export function PostHomeForm({ context }) {
     const [isToggled, setIsToggled] = useState(false);
     const [postContent, setPostContent] = useState({
         description: '',
@@ -12,7 +12,7 @@ export function PostHomeForm() {
     });
     const [asset, setAsset] = useState(null);
     const [isUploading, setIsUploading] = useState(false);
-    const [fileExist, setFileExist] = useState(false)
+    const [fileExist, setFileExist] = useState(false);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -23,22 +23,24 @@ export function PostHomeForm() {
             setIsToggled(false);
             setPostContent({ description: '', imagen: '', esAnonimo: false });
             setAsset(null);
-        }).catch(e => console.log(e))
+        }).catch(e => console.log(e));
     };
+
     const handleDelete = () => {
         try {
-            deleteFile(asset)
+            deleteFile(asset);
         } catch {
-            console.log("El archivo no pudo ser eliminado")
+            console.log("El archivo no pudo ser eliminado");
+        } finally {
+            setAsset(null);
+            setFileExist(false);
         }
-        finally {
-            setAsset(null)
-            setFileExist(false)
-        }
-    }
+    };
+
     const handleChangeDescription = (e) => {
         setPostContent(prevContent => ({ ...prevContent, description: e.target.value }));
     };
+
     const handleFileChange = async (e) => {
         const file = e.target.files[0];
         if (!file) return;
@@ -73,13 +75,15 @@ export function PostHomeForm() {
             console.error("Upload error:", error);
         } finally {
             setIsUploading(false);
-            setFileExist(true)
+            setFileExist(true);
         }
     };
+
     const handleToggle = () => {
         setIsToggled(!isToggled);
         setPostContent(prevContent => ({ ...prevContent, esAnonimo: !isToggled }));
     };
+
     const autoResize = (e) => {
         const textarea = e.target;
         textarea.style.height = 'auto';
@@ -87,7 +91,7 @@ export function PostHomeForm() {
     };
 
     return (
-        <div className="bg-white rounded-lg shadow-md p-4 mb-4 w-full max-w-2xl mx-auto">
+        <div style={{ width: '500px' }} className="bg-white rounded-lg shadow-md p-4 mb-4 max-w-2xl mx-auto">
             <div className="flex justify-between items-center space-x-4 mb-4">
                 <div className="flex items-center space-x-4 mb-4">
                     <img
@@ -125,24 +129,24 @@ export function PostHomeForm() {
                 <div className="flex justify-end items-center mt-4">
                     <input
                         type="file"
-                        id="file-upload"
+                        id={`file-upload-${context}`}
                         className="hidden"
                         onChange={handleFileChange}
                         accept="image/*,video/*"
                         multiple={false}
                     />
-                    {fileExist ? <></> : <>
-                        <label
-                            htmlFor="file-upload"
-                            className='flex items-center py-2 px-4 rounded-lg cursor-pointer focus:outline-none hover:bg-slate-400'
-
-                        >
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-10">
-                                <path strokeLinecap="round" strokeLinejoin="round" d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Zm10.5-11.25h.008v.008h-.008V8.25Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
-                            </svg>
-                        </label>
-                    </>
-                    }
+                    {fileExist ? null : (
+                        <>
+                            <label
+                                htmlFor={`file-upload-${context}`}
+                                className='flex items-center py-2 px-4 rounded-lg cursor-pointer focus:outline-none hover:bg-slate-400'
+                            >
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-10">
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Zm10.5-11.25h.008v.008h-.008V8.25Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
+                                </svg>
+                            </label>
+                        </>
+                    )}
                     <button
                         type="submit"
                         className="flex items-center py-2 px-4 rounded-lg hover:bg-blue-400 focus:outline-none"
