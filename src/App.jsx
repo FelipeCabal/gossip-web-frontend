@@ -38,10 +38,10 @@ const App = () => {
       },
       {
         path: 'Homepage',
-        element: <HomePage />
+        element: <HomePage />,
         children: [
           {
-            path: '/post',
+            path: 'post',
             element: <ListaPublicaciones/>
           }
         ]

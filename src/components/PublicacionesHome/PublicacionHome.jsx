@@ -14,14 +14,12 @@ export function PublicacionHome({userName,img,texto,perfil, esAnonimo}) {
     setLikeIt(!likeIt)
   }
 
-  const maxWords = img? '100':'300';
+  const maxWords = img? '70':'300';
   const wordsArray = texto.split(' ');
   const truncatedText = wordsArray.length > maxWords
     ? wordsArray.slice(0, maxWords).join(' ') + '...'
     : texto;
   
-
-  console.log(PublicacionHome, img)
   return (
     <>
       <div className="containerHome">
