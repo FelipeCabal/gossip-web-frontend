@@ -34,7 +34,7 @@ const Navbar = () => {
                         <Link to="/search" className="flex-1 flex items-center justify-center hover:text-gray-300">
                             <img src={imgBuscar} alt="Buscar" className="max-w-full w-8 sm:w-12" />
                         </Link>
-                        <Link to="/communities" className="flex-1 flex items-center justify-center hover:text-gray-300">
+                        <Link to="/style-guide/post" className="flex-1 flex items-center justify-center hover:text-gray-300">
                             <img src={imgCommunity} alt="Comunidades" className="max-w-full w-8 sm:w-12" />
                         </Link>
                         <Link to="/messaging" className="flex-1 flex items-center justify-center hover:text-gray-300">
