@@ -1,18 +1,16 @@
-import Navbar from "../partials/navbar";
 import "../css/buttons/buttons.css"
 import { PostHomeForm } from "../components/postsHomeForm/postHomeForm";
 import { Outlet } from "react-router-dom";
 
 export function GuiaEstilos() {
     return (
-        <>
-            <Navbar />
-            <div className="containerHome">
-                <div className="left-column">
-                    <h2>Colores</h2>
-                    <p>La elección de una paleta de colores adecuada es fundamental para el diseño de interfaces. Los colores pueden transmitir emociones y crear una atmósfera única en la aplicación. A continuación se presentan los colores recomendados para su uso en la aplicación:</p>
-                    <ul>
-                        <li>Colores Principales::</li>
+      <>
+        <div className="containerHome">
+            <div className="left-column">
+                <h2>Colores</h2>
+                <p>La elección de una paleta de colores adecuada es fundamental para el diseño de interfaces. Los colores pueden transmitir emociones y crear una atmósfera única en la aplicación. A continuación se presentan los colores recomendados para su uso en la aplicación:</p>
+                <ul>
+                    <li>Colores Principales::</li>
                         <ul>
                             <li className='bg-[#306bac] w-[20%]'>Principal: #306bac</li>
                             <li className='bg-[#918ef4]'>Secundario: #918ef4</li>

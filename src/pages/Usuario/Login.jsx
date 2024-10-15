@@ -1,7 +1,7 @@
 import { IconButton, InputAdornment, TextField } from '@mui/material'
 import { Link, useNavigate } from 'react-router-dom'
 import { createTheme, ThemeProvider } from '@mui/material';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Password, Visibility, VisibilityOff } from '@mui/icons-material';
 import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
@@ -11,11 +11,11 @@ export function Login() {
     const ENDPOINT = process.env.REACT_APP_API + 'auth/login'
     const showSucess = () => toast.success("Logueado Correctamente", {
         onClose: () => {
-            navigate('/');
+            navigate('/Homepage');
         },
         autoClose: 2000,
     });
-    const showErrorContraseña = () => toast.error("Constraseña o correo incorrecto")
+    const showErrorContraseña = () => toast.error("Constraseña incorrecta")
     const showErrorCorreo = () => toast.error("Usuario no encontrado")
     const { updateToken } = useAuth()
     const [datos, setDatos] = useState({
@@ -55,6 +55,7 @@ export function Login() {
     const handleMouseUpPassword = (event) => {
         event.preventDefault();
     };
+
 
     const theme = createTheme({
         components: {
@@ -125,19 +126,19 @@ export function Login() {
         </form>
         <button className='btn btn-3' style={{ marginBottom: '10px' }}
             onClick={handleIngresar}
-        >
-            Ingresar
+        >    
+                Ingresar      
         </button>
         <Link to={'/Register/'} style={{ fontSize: '15px', textDecoration: 'underline', color: '#306BAC' }}>Registrate</Link>
         <ToastContainer
             position="bottom-left"
-            autoClose={2500}
-            hideProgressBar={false}
+            autoClose={5000}
+            hideProgressBar={true}
             newestOnTop={false}
             rtl={false}
             pauseOnFocusLoss
             pauseOnHover
-            theme="light"
+            theme="dark"
         />
     </>)
 }
