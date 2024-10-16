@@ -24,8 +24,8 @@ export function PublicacionHome({userName,img,texto,perfil, esAnonimo}) {
   console.log(PublicacionHome, img)
   return (
     <>
-      <div className="containerHome">
-        <div className="right-column place-items-center">
+      
+        <div className=" place-items-center">
           <div className="max-w-[630px] max-h-[900px] bg-gray-50 place-items-center">
             <article className="flex-col border-b border-gray-400 mb-4">
               <div className="w-full flex pt-2">
@@ -81,7 +81,7 @@ export function PublicacionHome({userName,img,texto,perfil, esAnonimo}) {
             </article>
           </div>
         </div>
-      </div>
+  
     </>
   )
 }

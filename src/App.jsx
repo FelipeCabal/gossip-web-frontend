@@ -13,6 +13,7 @@ import { ListaPublicaciones } from './components/PublicacionesHome/ListaPublicac
 //Paginas
 import { HomePage } from './pages/HomePage/HomePage';
 import { LayoutComponent } from './pages/LayoutComponent';
+import { PerfilUsuario } from './pages/Perfil/PerfilUsuario';
 
 const App = () => {
 
@@ -38,13 +39,17 @@ const App = () => {
       },
       {
         path: 'Homepage',
-        element: <HomePage />
+        element: <HomePage />,
         children: [
           {
-            path: '/post',
-            element: <ListaPublicaciones/>
+            path: 'post',
+            element: <ListaPublicaciones />
           }
         ]
+      },
+      {
+        path: 'perfil',
+        element: <PerfilUsuario/>
       }
       ]
     }
