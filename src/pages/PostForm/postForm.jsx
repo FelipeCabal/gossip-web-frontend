@@ -13,7 +13,7 @@ export function PostForm() {
     return (
         <>
             <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-30 flex items-center justify-center">
-                <div className="bg-white w-2/3 h-4/5 flex flex-col overflow-y-scroll">
+                <div className="bg-white w-100 h-4/5 flex flex-col overflow-y-scroll lg:w-[42%] md:w-[60%] sm:w-[75%]" >
                     <div className="flex justify-end p-2">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
