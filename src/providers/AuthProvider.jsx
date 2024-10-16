@@ -17,14 +17,14 @@ export function AuthContextProvider({ child }) {
     }
 
     const getUsuario = () => {
-       /* axios.get(process.env.REACT_APP_API + "/auth/profile")
+        axios.get(process.env.REACT_APP_API + "/auth/profile")
             .then((respuesta) => {
                 setUsuario(respuesta.data);
                 setIsLoading(false);
             })
             .catch(function (error) {
                 setIsLoading(false);
-            })*/
+            })
     }
 
     useEffect(() => {
@@ -47,7 +47,7 @@ export function AuthContextProvider({ child }) {
             updateToken,
             deleteToken
         }
-    }, [token,usuario, isLoading])
+    }, [token, usuario, isLoading])
     return <AuthContext.Provider value={Context}>{child}</AuthContext.Provider>
 
 }
