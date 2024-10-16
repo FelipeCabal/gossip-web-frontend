@@ -8,6 +8,11 @@ import { AuthContextProvider } from './providers/AuthProvider';
 import { Fondo } from './pages/Usuario/Fondo';
 import { Login } from './pages/Usuario/Login';
 import { Register } from './pages/Usuario/Register';
+import { ListaPublicaciones } from './components/PublicacionesHome/ListaPublicaciones';
+
+//Paginas
+import { HomePage } from './pages/HomePage/HomePage';
+import { LayoutComponent } from './pages/LayoutComponent';
 
 const App = () => {
 
@@ -25,8 +30,23 @@ const App = () => {
       }]
     },
     {
-      path: '/style-guide',
-      element: <GuiaEstilos />
+      path: '',
+      element: <LayoutComponent />,
+      children: [{
+        path: '/style-guide',
+        element: <GuiaEstilos />
+      },
+      {
+        path: 'Homepage',
+        element: <HomePage />
+        children: [
+          {
+            path: '/post',
+            element: <ListaPublicaciones/>
+          }
+        ]
+      }
+      ]
     }
   ])
   return (
