@@ -1,27 +1,27 @@
 import mujer from '../../assets/avatares/mujer.png'
 
 export function CardComentario({ userName, texto, perfil }) {
-  const maxWords = '70'
+  const maxWords = 70; // Define el límite máximo de palabras
   const wordsArray = texto.split(' ');
   const truncatedText = wordsArray.length > maxWords
     ? wordsArray.slice(0, maxWords).join(' ') + '...'
     : texto;
 
   return (
-    <div>
-      <div className="max-w-[630] place-items-center"></div>
-      <section>
-        <div className='flex'>
-          <img src={perfil} alt="no" className="w-14   rounded-full mr-1" />
-          <div className='flex max-w-[630px] items-center justify-start'>
-            <span className="items-center justify-between text-xl font-bold pr-2">@{userName} </span>
-            <div className=" text-xl ">
-              {truncatedText}
-            </div>
-          </div>
+    <div className="max-w-[630px] border-l-[1px] border-l-gray-400 mb-4">
+      <section className="flex items-start gap-2 ml-2">
+        <div className="flex-shrink-0">
+          <img src={perfil} alt="no" className="w-14 rounded-full" />
+        </div>
+        <div className="text-xl">
+          <span className="font-bold pr-2">@{userName}</span>
+          <p>
+            {truncatedText}
+          </p>
         </div>
       </section>
-    </div >
+    </div>
   )
 }
+
 

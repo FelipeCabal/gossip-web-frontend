@@ -7,7 +7,7 @@ import neutro from '../../assets/avatares/neutro.png'
 const lista = [
     {
         userName: 'Rulo Ricardo',
-        texto: 'pero mas bonito estas tu',
+        texto: 'pero mas bonito estas tu pero mas bonito estas tu pero mas bonito estas tu pero mas bonito estas tu pero mas bonito estas tu pero mas bonito estas tu pero mas bonito estas tu pero mas bonito estas tu pero mas bonito estas tu pero mas bonito estas tu pero mas bonito estas tu pero mas bonito estas tu pero mas bonito estas tu pero mas bonito estas tu pero mas bonito estas tu pero mas bonito estas tu pero mas bonito estas tu pero mas bonito estas tu pero mas bonito estas tu pero mas bonito estas tu pero mas bonito estas tu pero mas bonito estas tu pero mas bonito estas tu pero mas bonito estas tu pero mas bonito estas tu pero mas bonito estas tu pero mas bonito estas tu pero mas bonito estas tu pero mas bonito estas tu pero mas bonito estas tu pero mas bonito estas tu ',
         esAnonimo: false,
         perfil: mujer
     },
@@ -44,20 +44,20 @@ const lista = [
 ]
 
 export const Comentarios = () => {
-  return (
-      <div className='flex flex-col gap-y-2'>
-          {
-              lista.map(({ userName, texto, perfil }) => (
-                  <CardComentario
-                      key={userName}
-                      userName={userName}
-                      texto={texto}
-                      perfil={perfil}
-                  >
-                      
-                  </CardComentario>
-              ))
-          }
-      </div>
-  )
+    return (
+        <div className='flex flex-col gap-y-2'>
+            {
+                lista.map(({ userName, texto, perfil }) => (
+                    <CardComentario
+                        key={userName}
+                        userName={userName}
+                        texto={texto}
+                        perfil={perfil}
+                    >
+
+                    </CardComentario>
+                ))
+            }
+        </div>
+    )
 }
