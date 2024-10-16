@@ -33,25 +33,27 @@ const App = () => {
     {
       path: '',
       element: <LayoutComponent />,
-      children: [{
-        path: '/style-guide',
-        element: <GuiaEstilos />,
-        children: [
-          {
-            path: 'post',
-            element: <PostForm />
-          }
-      },
-      {
-        path: 'Homepage',
-        element: <HomePage />
-        children: [
-          {
-            path: '/post',
-            element: <ListaPublicaciones/>
-          }
-        ]
-      }
+      children: [
+        {
+          path: 'style-guide',
+          element: <GuiaEstilos />,
+          children: [
+            {
+              path: 'postForm',
+              element: <PostForm />
+            }
+          ]
+        },
+        {
+          path: 'homepage',
+          element: <HomePage />,
+          children: [
+            {
+              path: 'post',
+              element: <ListaPublicaciones />
+            }
+          ]
+        }
       ]
     }
   ])
