@@ -1,3 +1,4 @@
+import { Comentarios } from "../components/Comentarios/Comentarios"
 import "../css/buttons/buttons.css"
 import { PostHomeForm } from "../components/postsHomeForm/postHomeForm";
 import { Outlet } from "react-router-dom";
@@ -26,10 +27,10 @@ export function GuiaEstilos() {
                 </div>
                 <div className="right-column">
                     <PostHomeForm />
+                    <Comentarios></Comentarios>
                     <h1 className="text-[25px]">Guía de estilos</h1>
                     <h2>Introduccion</h2>
                     <p>La Guía de Estilos tiene como objetivo proporcionar un conjunto de reglas y componentes predefinidos que permiten mantener la consistencia visual y de comportamiento a lo largo de toda la aplicación. Al utilizar esta guía, los desarrolladores y diseñadores pueden asegurarse de que la interfaz de usuario sea coherente, accesible y fácil de mantener, independientemente de la escala o el tamaño del proyecto.</p>
-
                     <h2>Tipografía</h2>
                     <p>La tipografía es un elemento clave en el diseño de interfaces. La elección de una fuente adecuada puede mejorar la legibilidad y la accesibilidad de la aplicación. A continuación se presentan las fuentes recomendadas para su uso en la aplicación:</p>
                     <ul>

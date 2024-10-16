@@ -50,7 +50,7 @@ const publicaciones = [
 
 export const ListaPublicaciones = () => {
     return (
-        <section className="ListaPublicaciones">
+        <section>
             {
                 publicaciones.map(({ userName, img, texto, esAnonimo, perfil }) => (
                     <PublicacionHome
