@@ -39,13 +39,8 @@ const App = () => {
       {
         path: 'Homepage',
         element: <HomePage />,
-        children: [
-          {
-            path: 'post',
-            element: <ListaPublicaciones/>
-          }
-        ]
-      }
+        }
+      
       ]
     }
   ])

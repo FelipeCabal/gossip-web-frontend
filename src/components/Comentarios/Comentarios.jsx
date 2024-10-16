@@ -45,7 +45,7 @@ const lista = [
 
 export const Comentarios = () => {
   return (
-      <div>
+      <div className='flex flex-col gap-y-2'>
           {
               lista.map(({ userName, texto, perfil }) => (
                   <CardComentario

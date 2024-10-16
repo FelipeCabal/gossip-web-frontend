@@ -1,3 +1,4 @@
+import { Comentarios } from "../components/Comentarios/Comentarios"
 import "../css/buttons/buttons.css"
 
 export function GuiaEstilos() {
@@ -22,7 +23,9 @@ export function GuiaEstilos() {
                 </ul>
 
             </div>
-            <div className="right-column">
+                <div className="right-column">
+                 <Comentarios></Comentarios>   
+                
                 <h1 className="text-[25px]">Guía de estilos</h1>
                 <h2>Introduccion</h2>
                 <p>La Guía de Estilos tiene como objetivo proporcionar un conjunto de reglas y componentes predefinidos que permiten mantener la consistencia visual y de comportamiento a lo largo de toda la aplicación. Al utilizar esta guía, los desarrolladores y diseñadores pueden asegurarse de que la interfaz de usuario sea coherente, accesible y fácil de mantener, independientemente de la escala o el tamaño del proyecto.</p>
