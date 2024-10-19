@@ -18,7 +18,7 @@ const Comunidades = () => {
                 {comunidades.map((comunidad) => (
                     <div
                         key={comunidad.id}
-                        className="flex items-center border-b-2 justify-around border-b-[#918ef4] pb-1 w-full"
+                        className="flex items-center border-b-2 justify-between border-b-[#918ef4] pb-1 w-full"
                     >
                         <img src={icono} alt="Icono de búho" className="w-12 " />
                         <Link className="ml-4 text-lg text-center text-[#306bac] font-bold flex-1">{comunidad.nombre}</Link>
