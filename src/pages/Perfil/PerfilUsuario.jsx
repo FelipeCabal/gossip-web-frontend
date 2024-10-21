@@ -1,7 +1,13 @@
+import { useParams } from 'react-router-dom'
 import neutro from '../../assets/avatares/neutro.png'
 import { ListaPublicaciones } from '../../components/PublicacionesHome/ListaPublicaciones'
+import { useAuth } from '../../providers/AuthProvider'
 
 export function PerfilUsuario() {
+    const { usuario } = useAuth()
+    /*const { idUsuario } = usuario.id
+    const { id } = useParams()*/
+
     return (
         <div className="flex flex-col items-center ">
             <section className='flex justify-between w-3/5 border-b-2 border-gray-300'>
@@ -10,11 +16,13 @@ export function PerfilUsuario() {
                 </div>
                 <div>
                     <h2 className='font-semibold h-fit pt-10 '>
-                        buhitoChismoso
+                        {/*usuario.nombre*/}
+                        BuhitoChismoso
                     </h2>
                     <div className='grid'>
                         <span className='text-xl font-bold'>5 Publicaciones</span>
                         <span className='text-xl'>
+                            {/*usuario.descripcion*/}
                             mi novia mi religión <br />
                             #teamMinovia <br />
                             solo gente fiel
@@ -24,6 +32,20 @@ export function PerfilUsuario() {
 
                 <div className='flex  h-fit pt-10'>
                     <div>
+                        {/*idUsuario == id ? (<div>
+                            <button className='btn  border border-blue-500  text-black mr-4'>
+                                Editar perfil
+                            </button>
+                            <button className='btn  border border-blue-500 text-black '>
+                                Solicitudes
+                            </button>
+                        </div>) : (<div>
+                            <button className='btn  border border-blue-500  text-black mr-4'>
+                                Añadir
+                            </button>
+                            <button className='btn  border border-blue-500 text-black '>
+                                Enviar solicitud
+                            </button> </div>)*/}
                         <button className='btn  border border-blue-500  text-black mr-4'>
                             Editar perfil
                         </button>

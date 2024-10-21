@@ -6,6 +6,9 @@ export default {
     extend: {
       fontFamily: {
         roboto: ['Roboto', 'sans-serif'], // Añadir la fuente Roboto
+        screens: {
+          'xs': '450px', 
+        }
       },
     },
   },
