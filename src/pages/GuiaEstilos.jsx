@@ -1,9 +1,10 @@
 import Navbar from "../partials/navbar";
 import "../css/buttons/buttons.css"
+import { Outlet } from "react-router-dom";
 
 export function GuiaEstilos() {
     return (
-      <>
+    <>
         <Navbar />
         <div className="containerHome">
             <div className="left-column">
@@ -47,7 +48,8 @@ export function GuiaEstilos() {
                 </div>
 
                 <br /><br />
+                <Outlet/>
         </div>
-      </>
+    </>
     )
 }
