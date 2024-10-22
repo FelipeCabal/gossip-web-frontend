@@ -12,11 +12,11 @@ const Navbar = () => {
         <header>
             <nav className="w-full h-17 flex justify-between items-center ">
                 <div className=" h-20 text-slate-950 flex items-center justify-center ">
-                    <div className="flex flex-col items-center justify-center p-2">
+                    <div className="flex items-center justify-center p-2">
                         <Link to='/perfil'>
-                            <img src={img} alt="Gossip-web" className="max-w-full w-24 -mb-2" />
-                        </Link>                        
-                        <h1 className="-m-1 -mt-3.5 px-5 text-4xl">Username</h1>
+                          <img src={img} alt="Gossip-web" className="max-w-full w-20" />
+                          <h1 className="hidden -m-1 -mt-3.5 px-5 text-3xl sm:block">Username</h1>
+                        </Link>
                     </div>
                 </div>
                 <div className=" h-20 text-slate-950 flex items-center justify-center ">
@@ -36,7 +36,7 @@ const Navbar = () => {
                         <Link to="/search" className="flex-1 flex items-center justify-center hover:text-gray-300">
                             <img src={imgBuscar} alt="Buscar" className="max-w-full w-8 sm:w-12" />
                         </Link>
-                        <Link to="/communities" className="flex-1 flex items-center justify-center hover:text-gray-300">
+                        <Link to="/style-guide/postForm" className="flex-1 flex items-center justify-center hover:text-gray-300">
                             <img src={imgCommunity} alt="Comunidades" className="max-w-full w-8 sm:w-12" />
                         </Link>
                         <Link to="/messaging" className="flex-1 flex items-center justify-center hover:text-gray-300">

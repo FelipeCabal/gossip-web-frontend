@@ -1,8 +1,11 @@
 import { useState } from "react"
 import anonimo from '../../assets/icons/Buho.png'
+import { FormComment } from "../Comentarios/FormComment";
 
 
 export function PublicacionHome({ userName, img, texto, perfil, esAnonimo }) {
+  const [expandir, setExpandir] = useState(false); // Controla si la publicación está extendida
+  const toggleExpandir = () => setExpandir(!expandir); // Alterna el estado
   const [likeIt, setLikeIt] = useState(false)
   const heartStroke = likeIt ? '#99b4ff' : 'currentColor'
   const heartFill = likeIt ? '#99b4ff' : 'none'
@@ -14,14 +17,13 @@ export function PublicacionHome({ userName, img, texto, perfil, esAnonimo }) {
     setLikeIt(!likeIt)
   }
 
+
   const maxWords = img ? '100' : '300';
   const wordsArray = texto.split(' ');
   const truncatedText = wordsArray.length > maxWords
     ? wordsArray.slice(0, maxWords).join(' ') + '...'
     : texto;
 
-
-  console.log(PublicacionHome, img)
   return (
     <>
       <div className=" place-items-center">
@@ -38,7 +40,6 @@ export function PublicacionHome({ userName, img, texto, perfil, esAnonimo }) {
               <div className="w-full p-6 ">
                 <span className="text-xl font-roboto">{truncatedText}</span>
               </div>
-
               <section className=" bottom-0 right-0 flex space-x-3 p-4 w-full">
                 <div className=" absolute bottom-0 right-0 flex justify-end space-x-3 pt-6 pb-4 pr-4 w-full">
                   <button onClick={handleClick}>
@@ -58,7 +59,7 @@ export function PublicacionHome({ userName, img, texto, perfil, esAnonimo }) {
                       </path>
                     </svg>
                   </button>
-                  <button>
+                  <button onClick={toggleExpandir}>
                     <svg
                       fill="currentColor"
                       height="24"
@@ -76,6 +77,7 @@ export function PublicacionHome({ userName, img, texto, perfil, esAnonimo }) {
                 </div>
               </section>
             </aside>
+            {expandir && <FormComment />}
           </article>
         </div>
       </div>

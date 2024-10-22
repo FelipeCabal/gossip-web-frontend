@@ -8,6 +8,7 @@ import { AuthContextProvider } from './providers/AuthProvider';
 import { Fondo } from './pages/Usuario/Fondo';
 import { Login } from './pages/Usuario/Login';
 import { Register } from './pages/Usuario/Register';
+import { PostForm } from './pages/PostForm/postForm';
 import { ListaPublicaciones } from './components/PublicacionesHome/ListaPublicaciones';
 
 //Paginas
@@ -35,17 +36,17 @@ const App = () => {
       element: <LayoutComponent />,
       children: [{
         path: '/style-guide',
-        element: <GuiaEstilos />
+        element: <GuiaEstilos />,
+        children: [
+            {
+              path: 'postForm',
+              element: <PostForm />
+            }
+          ]
       },
       {
-        path: 'Homepage',
-        element: <HomePage />,
-        children: [
-          {
-            path: 'post',
-            element: <ListaPublicaciones />
-          }
-        ]
+        path: 'homepage',
+        element: <HomePage />
       },
       {
         path: 'perfil',
