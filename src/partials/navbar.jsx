@@ -12,12 +12,10 @@ const Navbar = () => {
         <header>
             <nav className="w-full h-17 flex justify-between items-center ">
                 <div className=" h-20 text-slate-950 flex items-center justify-center ">
-                    <div className="flex items-center justify-center p-2">
-                        <Link to='/perfil'>
-                            <img src={img} alt="Gossip-web" className="max-w-full w-20" />
-                            <h1 className="hidden -m-1 -mt-3.5 px-5 text-3xl sm:block">Username</h1>
-                        </Link>
-                    </div>
+                    <Link to='/perfil' className="flex flex-row items-center justify-center p-2">
+                        <img src={img} alt="Gossip-web" className="max-w-full w-20" />
+                        <h1 className="hidden -m-1 -mt-3.5 px-5 text-3xl sm:block">Username</h1>
+                    </Link>
                 </div>
                 <div className=" h-20 text-slate-950 flex items-center justify-center ">
                     <h1 className="text-5xl font-bold ">Gossip-Web</h1>
