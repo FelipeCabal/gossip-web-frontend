@@ -6,7 +6,6 @@ import { FormComment } from "../Comentarios/FormComment";
 export function PublicacionHome({ userName, img, texto, perfil, esAnonimo }) {
   const [expandir, setExpandir] = useState(false); // Controla si la publicación está extendida
   const toggleExpandir = () => setExpandir(!expandir); // Alterna el estado
-
   const [likeIt, setLikeIt] = useState(false)
   const heartStroke = likeIt ? '#99b4ff' : 'currentColor'
   const heartFill = likeIt ? '#99b4ff' : 'none'
@@ -18,7 +17,8 @@ export function PublicacionHome({ userName, img, texto, perfil, esAnonimo }) {
     setLikeIt(!likeIt)
   }
 
-  const maxWords = img ? '70' : '300';
+
+  const maxWords = img ? '100' : '300';
   const wordsArray = texto.split(' ');
   const truncatedText = wordsArray.length > maxWords
     ? wordsArray.slice(0, maxWords).join(' ') + '...'
@@ -26,27 +26,20 @@ export function PublicacionHome({ userName, img, texto, perfil, esAnonimo }) {
 
   return (
     <>
-      <div className="place-items-center">
-        <div className="max-w-[630px] max-h-[1000px] bg-gray-50 place-items-center">
-          <article className="flex-col border-b border-gray-400  mt-4">
+      <div className=" place-items-center">
+        <div className="max-w-[630px] max-h-[900px] bg-gray-50 place-items-center">
+          <article className="flex-col border-b border-gray-400 mb-4">
             <div className="w-full flex pt-2">
               <img src={fotoPerfil} alt="perfil" className="w-20" />
               <span className="flex items-center justify-center text-xl font-bold">@{nombre}</span>
             </div>
-            <aside className=" flex-col justify-center items-center relative">
-
-              <div className="max-w-[630px] overflow-hidden flex justify-center ">
-                <img
-                  className="w-[468px] h-full object-cover flex"
-                  src={img}
-                  alt=""
-                />
-              </div>
-
+            <aside className="flex-col flex justify-center items-center relative">
+              <div className="max-w-[468px] max-h-[468px] overflow-hidden xs:max-w-[428px] xs:max-h-[428px] pr-4 pl-3">
+                  <img className="w-full h-full object-cover" src={img} alt="" />
+                </div>              
               <div className="w-full p-6 ">
                 <span className="text-xl font-roboto">{truncatedText}</span>
               </div>
-
               <section className=" bottom-0 right-0 flex space-x-3 p-4 w-full">
                 <div className=" absolute bottom-0 right-0 flex justify-end space-x-3 pt-6 pb-4 pr-4 w-full">
                   <button onClick={handleClick}>
@@ -88,6 +81,7 @@ export function PublicacionHome({ userName, img, texto, perfil, esAnonimo }) {
           </article>
         </div>
       </div>
+
     </>
   )
 }

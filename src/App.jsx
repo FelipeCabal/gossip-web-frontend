@@ -14,6 +14,7 @@ import { ListaPublicaciones } from './components/PublicacionesHome/ListaPublicac
 //Paginas
 import { HomePage } from './pages/HomePage/HomePage';
 import { LayoutComponent } from './pages/LayoutComponent';
+import { PerfilUsuario } from './pages/Perfil/PerfilUsuario';
 
 const App = () => {
 
@@ -33,21 +34,24 @@ const App = () => {
     {
       path: '',
       element: <LayoutComponent />,
-      children: [
-        {
-          path: 'style-guide',
-          element: <GuiaEstilos />,
-          children: [
+      children: [{
+        path: '/style-guide',
+        element: <GuiaEstilos />,
+        children: [
             {
               path: 'postForm',
               element: <PostForm />
             }
           ]
-        },
-        {
-          path: 'homepage',
-          element: <HomePage />
-        }
+      },
+      {
+        path: 'homepage',
+        element: <HomePage />
+      },
+      {
+        path: 'perfil',
+        element: <PerfilUsuario/>
+      }
       ]
     }
   ])

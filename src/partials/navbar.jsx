@@ -13,8 +13,10 @@ const Navbar = () => {
             <nav className="w-full h-17 flex justify-between items-center ">
                 <div className=" h-20 text-slate-950 flex items-center justify-center ">
                     <div className="flex items-center justify-center p-2">
-                        <img src={img} alt="Gossip-web" className="max-w-full w-20" />
-                        <h1 className="hidden -m-1 -mt-3.5 px-5 text-3xl sm:block">Username</h1>
+                        <Link to='/perfil'>
+                          <img src={img} alt="Gossip-web" className="max-w-full w-20" />
+                          <h1 className="hidden -m-1 -mt-3.5 px-5 text-3xl sm:block">Username</h1>
+                        </Link>
                     </div>
                 </div>
                 <div className=" h-20 text-slate-950 flex items-center justify-center ">
@@ -28,7 +30,7 @@ const Navbar = () => {
             <nav className="w-full h-16 bg-[#6f9ceb] border-[#306bac] border-4">
                 <div className="w-full h-14 flex justify-center items-center text-white px-4 sm:px-20 py-5">
                     <div className="w-full flex items-center justify-between font-normal px-2 sm:px-4 space-x-4">
-                        <Link to="/Homepage" className="flex-1 flex items-center justify-center hover:text-gray-300">
+                        <Link to="/Homepage/post" className="flex-1 flex items-center justify-center hover:text-gray-300">
                             <img src={imgHome} alt="Homepage" className="max-w-full w-8 sm:w-12" />
                         </Link>
                         <Link to="/search" className="flex-1 flex items-center justify-center hover:text-gray-300">
