@@ -49,7 +49,6 @@ const DropdownSolicitudes = () => {
                 </div>
             </div>
 
-            {/* Un solo dropdown para ambas secciones */}
             {visibleSection && (
                 <div className="`absolute right-0 mt-8">
                     <ul className="w-full">
