@@ -68,14 +68,14 @@ export const ListaPublicaciones = () => {
     return (<>
         <section>
             {
-                publicaciones.map(({ img, userName, texto, esAnonimo,perfil  }) => (
+                publicaciones.map(({ publicaciones, index }) => (
                     <PublicacionHome
-                        key={userName}
-                        img={img}
-                        userName={userName}
-                        perfil={perfil}
-                        texto={texto}
-                        esAnonimo={esAnonimo}
+                        key={index}
+                        img={publicaciones.img}
+                        userName={publicaciones.nombre}
+                        perfil={publicaciones.perfil}
+                        texto={publicaciones.texto}
+                        esAnonimo={publicaciones.esAnonimo}
                     >
                     </PublicacionHome>))
             }
