@@ -49,11 +49,11 @@ const Navbar = () => {
                             <img src={imgMensajes} alt="Mensajes" className="max-w-full w-8 sm:w-12" />
                         </Link>
 
-                        <div className="relative">
+                        <div className="relative flex-1 flex">
                             <button onClick={toggleDropdown} className="flex-1 flex items-center justify-center hover:text-gray-300">
                                 <img src={imgNotification} alt="Notificaciones" className="max-w-full w-8 sm:w-12" />
                             </button>
-                            <div className={`absolute right-0 mt-6 ${isDropdownVisible ? 'block' : 'hidden'}`}>
+                            <div className={`absolute right-0 mt-10 ${isDropdownVisible ? 'block' : 'hidden'}`}>
                                 <DropdownSolicitudes />
                             </div>
                         </div>
