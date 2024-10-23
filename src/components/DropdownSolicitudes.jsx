@@ -4,6 +4,7 @@ import sol_amistad from "../assets/icons/sol_amistad.png";
 import sol_comunidad from "../assets/icons/sol_comunidad.png";
 import aceptar from "../assets/icons/aceptar.png";
 import no_aceptar from "../assets/icons/no_aceptar.png";
+import img from "../assets/avatares/neutro.png";
 
 import '../css/DropdownSolicitudes/DropdownSolicitudes.css';
 
@@ -37,13 +38,13 @@ const DropdownSolicitudes = () => {
             <div className="flex justify-around w-full">
                 <div className="dropdown-amistades">
                     <Link to="#" className="flex-1 flex items-center justify-center hover:text-gray-300" onClick={() => toggleDropdown('amistad')}>
-                        <img src={sol_amistad} alt="amistad" className="max-w-full w-8 sm:w-12" />
+                        <img src={sol_amistad} alt="amistad" className="max-w-full w-64 " />
                     </Link>
                 </div>
 
                 <div className="dropdown-comunidades">
                     <Link to="#" className="flex-1 flex items-center justify-center hover:text-gray-300" onClick={() => toggleDropdown('grupo')}>
-                        <img src={sol_comunidad} alt="comunidad" className="max-w-full w-8 sm:w-12" />
+                        <img src={sol_comunidad} alt="comunidad" className="max-w-full w-60 " />
                     </Link>
                 </div>
             </div>
@@ -55,6 +56,7 @@ const DropdownSolicitudes = () => {
                         {visibleSection === 'amistad' && solicitudesAmistad.length > 0 ? (
                             solicitudesAmistad.map((solicitud) => (
                                 <li key={solicitud.id} className="solicitud-item flex justify-between items-center p-2 border-b">
+                                    <img src={img} alt="foto de perfil" className='w-28' />
                                     <span className="text-black">{solicitud.name}</span>
                                     <div className="actions flex space-x-2">
                                         <button onClick={() => handleAction(solicitud.id)}>
@@ -69,6 +71,7 @@ const DropdownSolicitudes = () => {
                         ) : visibleSection === 'grupo' && solicitudesGrupo.length > 0 ? (
                             solicitudesGrupo.map((solicitud) => (
                                 <li key={solicitud.id} className="solicitud-item flex justify-between items-center p-2 border-b">
+                                    <img src={img} alt="foto de perfil" className='w-28' />
                                     <span className="text-black">{solicitud.name}</span>
                                     <div className="actions flex space-x-2">
                                         <button onClick={() => handleAction(solicitud.id)}>
