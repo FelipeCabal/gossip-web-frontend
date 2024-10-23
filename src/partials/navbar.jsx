@@ -53,7 +53,7 @@ const Navbar = () => {
                             <button onClick={toggleDropdown} className="flex-1 flex items-center justify-center hover:text-gray-300">
                                 <img src={imgNotification} alt="Notificaciones" className="max-w-full w-8 sm:w-12" />
                             </button>
-                            <div className={`absolute right-0 mt-2 ${isDropdownVisible ? 'block' : 'hidden'}`}>
+                            <div className={`absolute right-0 mt-6 ${isDropdownVisible ? 'block' : 'hidden'}`}>
                                 <DropdownSolicitudes />
                             </div>
                         </div>
