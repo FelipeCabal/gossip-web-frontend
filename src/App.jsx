@@ -49,7 +49,7 @@ const App = () => {
         element: <HomePage />
       },
       {
-        path: 'perfil',
+        path: 'perfil/:id',
         element: <PerfilUsuario/>
       }
       ]

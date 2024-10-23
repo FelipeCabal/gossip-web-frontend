@@ -3,6 +3,9 @@ import { CardComentario } from './CardComentario'
 import mujer from '../../assets/avatares/mujer.png'
 import hombre from '../../assets/avatares/hombre.png'
 import neutro from '../../assets/avatares/neutro.png'
+import { useEffect, useState } from 'react'
+import axios from 'axios'
+import { useAuth } from '../../providers/AuthProvider'
 
 const lista = [
     {
@@ -44,17 +47,32 @@ const lista = [
 ]
 
 export const Comentarios = () => {
+    ENDPOINT_COMMENTS = process.env.REACT_APP_API + 'comentarios'
+    const {usuario} = useAuth()
+    const [comments, setComments] = useState(null)
+    
+
+    useEffect(() => {
+        axios.get(ENDPOINT_COMMENTS)
+            .then((respuesta) => {
+                setComments(respuesta.data)
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+    })
+
+
     return (
         <div className='flex flex-col gap-y-2'>
             {
-                lista.map(({ userName, texto, perfil }) => (
+                comments.map(({comments, index }) => (
                     <CardComentario
-                        key={userName}
-                        userName={userName}
-                        texto={texto}
-                        perfil={perfil}
+                        key={index}
+                        userName={comments.userName}
+                        texto={comments.texto}
+                        perfil={comments.perfil}
                     >
-
                     </CardComentario>
                 ))
             }

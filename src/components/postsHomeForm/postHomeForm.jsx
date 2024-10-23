@@ -91,9 +91,9 @@ export function PostHomeForm({ context }) {
     };
 
     return (
-        <div style={{ width: '500px' }} className="bg-white rounded-lg shadow-md p-4 mb-4 max-w-2xl mx-auto">
+        <div style={{ width: '630px' }} className=" bg-white rounded-lg shadow-md p-2 mb-3 mx-auto">
             <div className="flex justify-between items-center space-x-4 mb-4">
-                <div className="flex items-center space-x-4 mb-4">
+                <div className="flex items-center space-x-4">
                     <img
                         className="w-12 h-12 rounded-full"
                         src="https://via.placeholder.com/150"
@@ -116,7 +116,7 @@ export function PostHomeForm({ context }) {
 
             <form onSubmit={handleSubmit}>
                 <textarea
-                    className="w-full h-24 p-2 border border-gray-300 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-blue-500 overflow-hidden"
+                    className="w-full h-[50px] p-2 border border-gray-300 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-blue-500 overflow-hidden"
                     placeholder="Escribe algo"
                     value={postContent.description}
                     onChange={handleChangeDescription}
@@ -126,7 +126,7 @@ export function PostHomeForm({ context }) {
                     asset && <div className="w-full flex items-center justify-center">
                         <img className="w-24 h-24" src="https://upload.wikimedia.org/wikipedia/commons/c/c7/Loading_2.gif?20170503175831" alt="loading..." />
                     </div>}
-                <div className="flex justify-end items-center mt-4">
+                <div className="flex justify-end items-center mt-2">
                     <input
                         type="file"
                         id={`file-upload-${context}`}

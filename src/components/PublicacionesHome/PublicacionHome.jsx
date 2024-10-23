@@ -29,7 +29,7 @@ export function PublicacionHome({ userName, img, texto, perfil, esAnonimo }) {
       <div className=" place-items-center">
         <div className="max-w-[630px] max-h-[900px] bg-gray-50 place-items-center">
           <article className="flex-col border-b border-gray-400 mb-4">
-            <div className="w-full flex pt-2">
+            <div className="w-full flex pt-2 pl-1 pb-2 gap-2">
               <img src={fotoPerfil} alt="perfil" className="w-20" />
               <span className="flex items-center justify-center text-xl font-bold">@{nombre}</span>
             </div>

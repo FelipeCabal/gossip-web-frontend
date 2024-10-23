@@ -2,6 +2,9 @@ import { PublicacionHome } from "./PublicacionHome"
 import mujer from '../../assets/avatares/mujer.png'
 import hombre from '../../assets/avatares/hombre.png'
 import neutro from '../../assets/avatares/neutro.png'
+import { useEffect, useState } from "react"
+import { useParams } from "react-router-dom"
+
 
 
 const publicaciones = [
@@ -49,21 +52,34 @@ const publicaciones = [
 ]
 
 export const ListaPublicaciones = () => {
-    return (
+    /*const [posts, setPosts] = useState(null)
+
+    useEffect(() => {
+        axios.get(process.env.REACT_APP_API + 'posts')
+            .then((respuesta) => {
+                setPosts(respuesta.data)
+                console.log(respuesta.data)
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+    }, [])*/
+
+    return (<>
         <section>
             {
-                publicaciones.map(({ userName, img, texto, esAnonimo, perfil }) => (
+                publicaciones.map(({ img, userName, texto, esAnonimo,perfil  }) => (
                     <PublicacionHome
                         key={userName}
-                        userName={userName}
                         img={img}
+                        userName={userName}
+                        perfil={perfil}
                         texto={texto}
                         esAnonimo={esAnonimo}
-                        perfil={perfil}
                     >
-                    </PublicacionHome>
-                ))
+                    </PublicacionHome>))
             }
-        </section>
+        </section >
+    </>
     )
 }

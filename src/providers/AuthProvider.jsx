@@ -20,6 +20,7 @@ export function AuthContextProvider({ child }) {
         axios.get(process.env.REACT_APP_API + "/auth/profile")
             .then((respuesta) => {
                 setUsuario(respuesta.data);
+                console.log(respuesta.data)
                 setIsLoading(false);
             })
             .catch(function (error) {
@@ -31,6 +32,7 @@ export function AuthContextProvider({ child }) {
         if (token) {
             axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
             localStorage.setItem("token", token);
+            console.log(token)
             getUsuario();
         } else {
             delete axios.defaults.headers.common["Authorization"];
