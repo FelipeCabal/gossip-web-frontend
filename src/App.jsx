@@ -1,5 +1,6 @@
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import { GuiaEstilos } from './pages/GuiaEstilos';
+import { VistaPublicacion } from './components/vistaPublicacion/vistaPublicacion.jsx';
 
 //providers
 import { AuthContextProvider } from './providers/AuthProvider';

@@ -1,0 +1,80 @@
+.modal-fade {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, .6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9;
+}
+
+.modal-fade .modal-content {
+    background: #ffffff;
+    padding: 20px;
+    width: 100%;
+    height: 90%;
+    overflow: scroll;
+    max-width: 1200px;
+    border-radius: 10px;
+}
+.modal-fade .modal-content.modal-form {
+    height: auto;
+}
+
+.modal-fade .modal-content-compra {
+    background: #ffffff;
+    padding: 20px;
+    width: 35%;
+    height: 90%;
+    max-width: 1200px;
+    border-radius: 10px;
+    overflow-y: scroll;
+}
+
+.modal-fade .modal-content-admin {
+    background: #ffff;
+    padding: 20px;
+  /*   width: 30%; */
+    height: 90%;
+    overflow-y: scroll;
+    max-width: 1200px;
+    border-radius: 10px;
+}
+
+.modal-fade .modal-form{
+    background: #ffffff;
+    padding: 20px;
+    width: 100%;
+    height: fit-content;
+    max-width: 600px;
+    border-radius: 10px;
+}
+
+.modal-fade .modal-content .container {
+    display: flex;
+    gap: 20px;
+}
+
+.modal-fade .modal-content .container-compra {
+    display: flex;
+    gap: 20px;
+}
+
+.modal-fade .modal-content-compra .modal-header,
+.modal-fade .modal-header
+{
+    display: flex;
+}
+
+.modal-fade .modal-content .modal-header .modal-closer {
+    color: #000000;
+    font-weight: bolder;
+}
+.modal-fade .modal-content-admin .modal-header .modal-closer-admin{
+    color: #000;
+    font-weight: bolder;
+}
+
