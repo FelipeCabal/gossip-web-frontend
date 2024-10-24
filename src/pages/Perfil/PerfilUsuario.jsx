@@ -7,12 +7,12 @@ import { useEffect, useState } from 'react'
 import { WidthFull } from '@mui/icons-material'
 
 export function PerfilUsuario() {
-    /*const { usuario } = useAuth()
+    const { usuario } = useAuth()
     const { id } = useParams()
     const [user, setUser] = useState(null)
 
     useEffect(() => {
-        axios.get(process.env.REACT_APP_API + 'users/' + id)
+        axios.get(process.env.REACT_APP_API + '/users/' + id)
             .then((respuesta) => {
                 setUser(respuesta.data)
                 console.log(respuesta.data)
@@ -20,39 +20,31 @@ export function PerfilUsuario() {
             .catch((error) => {
                 console.log(error)
             })
-    }, [id])*/
+    }, [id])
 
     return (<>
         {
-            user ?
+            user && usuario ?
                 <div className="flex flex-col items-center ">
                     < section className='flex justify-between !xs:w-3/5 border-b-2 border-gray-300' style={{ maxwidth: '100%' }}>
                         <div>
-                            <img src={/*user.imagen ? user.imagen : neutro*/ neutro} alt="perfil" className='w-80 ' />
+                            <img src={user.imagen ? user.imagen : neutro} alt="perfil" className='w-80 ' />
                         </div>
                         <div>
                             <h2 className='font-semibold h-fit pt-10 '>
-                                {/*user.nombre*/}
-                                BuhitoChismoso
+                                {user.nombre}
                             </h2>
                             <div className='grid'>
                                 <span className='text-xl font-bold'>5 Publicaciones</span>
                                 <span className='text-xl'>
-                                    {/*user.pais*/}
-                                    holaa, este es mi perfil
+                                    {user.pais}
                                 </span>
                             </div>
                         </div>
 
                         <div className='flex  h-fit pt-10'>
                             <div >
-                                <button className='btn btn-font-black border border-blue-500 text-black mr-4' >
-                                    Editar perfil
-                                </button>
-                                <button className='btn btn-font-black border border-blue-500 text-black'>
-                                    Solicitudes
-                                </button>
-                                {/*usuario.id == id ? (<div>
+                                {usuario.id == id ? (<div>
                                     <button className='btn btn-font-black border border-blue-500  text-black mr-4'>
                                         Editar perfil
                                     </button>
@@ -65,17 +57,17 @@ export function PerfilUsuario() {
                                     </button>
                                     <button className='btn btn-font-black border border-blue-500 text-black '>
                                         Enviar solicitud
-                                    </button> </div>)*/}
+                                    </button> </div>)}
 
                             </div>
                         </div>
 
                     </section >
-                    <section className='flex justify-center font-medium flex-col '>
+                    <section className='w-full flex font-medium flex-col items-center'>
                         <div className='flex justify-center'>
                             <h3 className='border-t-2 mt-[-2px] border-black w-fit'>Publicaciones</h3>
                         </div>
-                        <div className=''>
+                        <div className='w-full flex flex-col justify-center sm:w-10/12 md:w-3/4'>
                             <ListaPublicaciones></ListaPublicaciones>
                         </div>
                     </section>

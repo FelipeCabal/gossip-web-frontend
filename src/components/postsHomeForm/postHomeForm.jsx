@@ -1,9 +1,13 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { ImagenPreview } from "../../partials/ImagenPreview/imagenPreview";
 import { deleteFile, uploadFile } from "../../services/firebase-services";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { useRefresh } from "../../providers/RefreshProvider";
 
 export function PostHomeForm({ context }) {
+    const { setRefresh } = useRefresh();
+    const navigate = useNavigate();
     const [isToggled, setIsToggled] = useState(false);
     const [postContent, setPostContent] = useState({
         description: '',
@@ -18,11 +22,13 @@ export function PostHomeForm({ context }) {
         e.preventDefault();
         if (!postContent.description && !asset) return;
 
-        axios.post(`${process.env.REACT_APP_API}publicaciones`, postContent).then(() => {
+        axios.post(`${process.env.REACT_APP_API}/posts`, postContent).then(() => {
             console.log('Post submitted:', postContent);
             setIsToggled(false);
             setPostContent({ description: '', imagen: '', esAnonimo: false });
+            setRefresh(true)
             setAsset(null);
+            navigate('/homepage');
         }).catch(e => console.log(e));
     };
 
@@ -89,9 +95,9 @@ export function PostHomeForm({ context }) {
         textarea.style.height = 'auto';
         textarea.style.height = `${textarea.scrollHeight}px`;
     };
-
+    const currentPath = window.location.pathname;
     return (
-        <div style={{ width: '630px' }} className=" bg-white rounded-lg shadow-md p-2 mb-3 mx-auto">
+        <div className={currentPath == '/homepage/postForm' && context == 'modal' ? "w-11/12 bg-white rounded-lg shadow-md p-2 mb-3 mx-auto" : "w-11/12 bg-white rounded-lg shadow-md p-2 mb-3 mx-auto sm:w-2/4"} >
             <div className="flex justify-between items-center space-x-4 mb-4">
                 <div className="flex items-center space-x-4">
                     <img
@@ -150,6 +156,7 @@ export function PostHomeForm({ context }) {
                     <button
                         type="submit"
                         className="flex items-center py-2 px-4 rounded-lg hover:bg-blue-400 focus:outline-none"
+                        onClick={handleSubmit}
                     >
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="black" className="size-9">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5" />

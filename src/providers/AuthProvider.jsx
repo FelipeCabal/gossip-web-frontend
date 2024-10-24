@@ -3,7 +3,7 @@ import axios from "axios";
 
 const AuthContext = createContext();
 
-export function AuthContextProvider({ child }) {
+export function AuthContextProvider({ children }) {
     const [token, setToken] = useState(localStorage.getItem("token") || null);
     const [usuario, setUsuario] = useState(null);
     const [isLoading, setIsLoading] = useState(false)
@@ -20,7 +20,6 @@ export function AuthContextProvider({ child }) {
         axios.get(process.env.REACT_APP_API + "/auth/profile")
             .then((respuesta) => {
                 setUsuario(respuesta.data);
-                console.log(respuesta.data)
                 setIsLoading(false);
             })
             .catch(function (error) {
@@ -32,7 +31,6 @@ export function AuthContextProvider({ child }) {
         if (token) {
             axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
             localStorage.setItem("token", token);
-            console.log(token)
             getUsuario();
         } else {
             delete axios.defaults.headers.common["Authorization"];
@@ -50,7 +48,7 @@ export function AuthContextProvider({ child }) {
             deleteToken
         }
     }, [token, usuario, isLoading])
-    return <AuthContext.Provider value={Context}>{child}</AuthContext.Provider>
+    return <AuthContext.Provider value={Context}>{children}</AuthContext.Provider>
 
 }
 

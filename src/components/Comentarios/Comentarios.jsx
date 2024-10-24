@@ -47,10 +47,10 @@ const lista = [
 ]
 
 export const Comentarios = () => {
-    ENDPOINT_COMMENTS = process.env.REACT_APP_API + 'comentarios'
-    const {usuario} = useAuth()
+    const ENDPOINT_COMMENTS = process.env.REACT_APP_API + '/comentarios'
+    const { usuario } = useAuth()
     const [comments, setComments] = useState(null)
-    
+
 
     useEffect(() => {
         axios.get(ENDPOINT_COMMENTS)
@@ -65,8 +65,8 @@ export const Comentarios = () => {
 
     return (
         <div className='flex flex-col gap-y-2'>
-            {
-                comments.map(({comments, index }) => (
+            {comments ?
+                comments.map(({ comments, index }) => (
                     <CardComentario
                         key={index}
                         userName={comments.userName}
@@ -74,7 +74,7 @@ export const Comentarios = () => {
                         perfil={comments.perfil}
                     >
                     </CardComentario>
-                ))
+                )) : <></>
             }
         </div>
     )

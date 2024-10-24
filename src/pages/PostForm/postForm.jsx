@@ -7,12 +7,12 @@ export function PostForm() {
     const modalRef = useRef(null);
 
     const exit = () => {
-        navigate('/style-guide');
+        navigate('/homepage');
     };
 
     return (
         <>
-            <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-30 flex items-center justify-center">
+            <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-30 flex items-center justify-center z-50">
                 <div className="bg-white w-100 h-4/5 flex flex-col overflow-y-scroll lg:w-[42%] md:w-[60%] sm:w-[75%]" >
                     <div className="flex justify-end p-2">
                         <svg
@@ -27,7 +27,7 @@ export function PostForm() {
                             <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
                         </svg>
                     </div>
-                    <div>
+                    <div className="w-full">
                         <PostHomeForm context="modal" />
                     </div>
                 </div>

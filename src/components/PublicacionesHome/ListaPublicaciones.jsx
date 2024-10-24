@@ -4,6 +4,8 @@ import hombre from '../../assets/avatares/hombre.png'
 import neutro from '../../assets/avatares/neutro.png'
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
+import axios from "axios"
+import { useRefresh } from "../../providers/RefreshProvider"
 
 
 
@@ -52,32 +54,37 @@ const publicaciones = [
 ]
 
 export const ListaPublicaciones = () => {
-    /*const [posts, setPosts] = useState(null)
+    const { refresh, setRefresh } = useRefresh();
+    const [posts, setPosts] = useState(null)
 
     useEffect(() => {
-        axios.get(process.env.REACT_APP_API + 'posts')
+        axios.get(process.env.REACT_APP_API + '/posts')
             .then((respuesta) => {
                 setPosts(respuesta.data)
                 console.log(respuesta.data)
+                setRefresh(false)
             })
             .catch((error) => {
                 console.log(error)
             })
-    }, [])*/
+    }, [refresh, setRefresh])
 
     return (<>
-        <section>
-            {
-                publicaciones.map(({ publicaciones, index }) => (
-                    <PublicacionHome
+        <section className="w-full">
+            {posts ? <>{
+                posts.map((publicaciones, index) => {
+                    console.log(publicaciones.user)
+                    return <PublicacionHome
                         key={index}
-                        img={publicaciones.img}
-                        userName={publicaciones.nombre}
-                        perfil={publicaciones.perfil}
-                        texto={publicaciones.texto}
+                        img={publicaciones.imagen}
+                        userName={publicaciones.user ? publicaciones.user.nombre : null}
+                        perfil={publicaciones.user ? publicaciones.user.imagen_perfil : null}
+                        texto={publicaciones.description}
                         esAnonimo={publicaciones.esAnonimo}
                     >
-                    </PublicacionHome>))
+                    </PublicacionHome>
+                })}
+            </> : <></>
             }
         </section >
     </>

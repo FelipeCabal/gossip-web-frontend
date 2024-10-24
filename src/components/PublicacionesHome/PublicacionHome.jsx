@@ -9,7 +9,7 @@ export function PublicacionHome({ userName, img, texto, perfil, esAnonimo }) {
   const [likeIt, setLikeIt] = useState(false)
   const heartStroke = likeIt ? '#99b4ff' : 'currentColor'
   const heartFill = likeIt ? '#99b4ff' : 'none'
-  const fotoPerfil = esAnonimo ? anonimo : perfil;
+  const fotoPerfil = esAnonimo ? anonimo : perfil ? perfil : anonimo;
   const nombre = esAnonimo ? 'anonimo' : userName;
 
 
@@ -26,8 +26,8 @@ export function PublicacionHome({ userName, img, texto, perfil, esAnonimo }) {
 
   return (
     <>
-      <div className=" place-items-center">
-        <div className="max-w-[630px] max-h-[900px] bg-gray-50 place-items-center">
+      <div className="w-full flex justify-center place-items-center">
+        <div className="w-full max-h-[900px] bg-gray-50 place-items-center sm:w-3/4">
           <article className="flex-col border-b border-gray-400 mb-4">
             <div className="w-full flex pt-2 pl-1 pb-2 gap-2">
               <img src={fotoPerfil} alt="perfil" className="w-20" />
@@ -35,12 +35,12 @@ export function PublicacionHome({ userName, img, texto, perfil, esAnonimo }) {
             </div>
             <aside className="flex-col flex justify-center items-center relative">
               <div className="max-w-[468px] max-h-[468px] overflow-hidden xs:max-w-[428px] xs:max-h-[428px] pr-4 pl-3">
-                  <img className="w-full h-full object-cover" src={img} alt="" />
-                </div>              
+                <img className="w-full h-full object-cover" src={img} alt="" />
+              </div>
               <div className="w-full p-6 ">
                 <span className="text-xl font-roboto">{truncatedText}</span>
               </div>
-              <section className=" bottom-0 right-0 flex space-x-3 p-4 w-full">
+              <section className="bottom-0 right-0 flex space-x-3 p-4 w-full">
                 <div className=" absolute bottom-0 right-0 flex justify-end space-x-3 pt-6 pb-4 pr-4 w-full">
                   <button onClick={handleClick}>
                     <svg

@@ -8,7 +8,7 @@ import { toast, ToastContainer } from 'react-toastify';
 import { useAuth } from '../../providers/AuthProvider';
 
 export function Login() {
-    const ENDPOINT = process.env.REACT_APP_API + 'auth/login'
+    const ENDPOINT = process.env.REACT_APP_API + '/auth/login'
     const showSucess = () => toast.success("Logueado Correctamente", {
         onClose: () => {
             navigate('/Homepage');
@@ -32,7 +32,8 @@ export function Login() {
     const handleIngresar = () => {
         axios.post(ENDPOINT, datos)
             .then((respuesta) => {
-                updateToken(respuesta.data.accesToken)
+                console.log(respuesta.data.access_token)
+                updateToken(respuesta.data.access_token)
                 showSucess()
             })
             .catch((error) => {
@@ -126,8 +127,8 @@ export function Login() {
         </form>
         <button className='btn btn-3' style={{ marginBottom: '10px' }}
             onClick={handleIngresar}
-        >    
-                Ingresar      
+        >
+            Ingresar
         </button>
         <Link to={'/Register/'} style={{ fontSize: '15px', textDecoration: 'underline', color: '#306BAC' }}>Registrate</Link>
         <ToastContainer

@@ -9,7 +9,7 @@ import { useAuth } from '../../providers/AuthProvider';
 
 
 export function Register() {
-    const ENDPOINT = process.env.REACT_APP_API + 'auth/register'
+    const ENDPOINT = process.env.REACT_APP_API + '/auth/register'
     const showErrorInformacion = () => toast.info("Campos sin informacion")
     const showSucess = () => toast.success("Registrado Exitosamente")
     const showErrorPeticion = () => toast.error("Usuario ya existe")
@@ -32,8 +32,8 @@ export function Register() {
         }
         axios.post(ENDPOINT, datos)
             .then((respuesta) => {
-                updateToken(respuesta.data.access_token)
-                showSucess()
+                console.log(respuesta.data.access_token)
+                updateToken(respuesta.data.access_token).then(() => showSucess())
             })
             .catch((error) => {
                 console.log(error)
