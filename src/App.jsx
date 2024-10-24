@@ -27,15 +27,7 @@ const App = () => {
     },
     {
       path: 'style-guide',
-      element: <GuiaEstilos />,
-      children:[{
-        path: 'modal',
-        element: <VistaPublicacion />
-
-      }
-      ]
-      
-
+      element: <GuiaEstilos />
     }
   ])
   return (
