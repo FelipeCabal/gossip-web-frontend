@@ -1,3 +1,5 @@
+import Navbar from "../partials/navbar";
+import ComunidadesDesplegables from "../components/ComunidadesDesplegables";
 import { Comentarios } from "../components/Comentarios/Comentarios"
 import "../css/buttons/buttons.css"
 import { PostHomeForm } from "../components/postsHomeForm/postHomeForm";
@@ -9,7 +11,7 @@ export function GuiaEstilos() {
             <Navbar />
             <div className="containerHome">
                 <div className="left-column">
-
+                    <ComunidadesDesplegables />
                 </div>
                 <div className="right-column">
                     <h1 className="text-[25px]">Guía de estilos</h1>
