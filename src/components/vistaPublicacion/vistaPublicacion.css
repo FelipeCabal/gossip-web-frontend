@@ -67,11 +67,10 @@
 .modal-fade .modal-header
 {
     display: flex;
-    justify-content: end;
 }
 
 .modal-fade .modal-content .modal-header .modal-closer {
-    color: #fff;
+    color: #000000;
     font-weight: bolder;
 }
 .modal-fade .modal-content-admin .modal-header .modal-closer-admin{
