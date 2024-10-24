@@ -13,6 +13,7 @@
 .left-column {
     padding: 20px;
     overflow-x: hidden;
+    display: none;
 }
 
 .right-column {
@@ -25,11 +26,13 @@
         grid-template-columns: 20% 80%;
         gap: 10px;
     }
+
     .left-column {
         grid-column: 1 / 2;
+        display: block;
     }
 
     .right-column {
-        grid-column: 2 / 3;  
+        grid-column: 2 / 3;
     }
 }
