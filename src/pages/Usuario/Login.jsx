@@ -1,17 +1,17 @@
 import { IconButton, InputAdornment, TextField } from '@mui/material'
 import { Link, useNavigate } from 'react-router-dom'
 import { createTheme, ThemeProvider } from '@mui/material';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Password, Visibility, VisibilityOff } from '@mui/icons-material';
 import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
 import { useAuth } from '../../providers/AuthProvider';
 
 export function Login() {
-    const ENDPOINT = process.env.REACT_APP_API + 'auth/login'
+    const ENDPOINT = process.env.REACT_APP_API + '/auth/login'
     const showSucess = () => toast.success("Logueado Correctamente", {
         onClose: () => {
-            navigate('/');
+            navigate('/Homepage');
         },
         autoClose: 2000,
     });
@@ -32,7 +32,8 @@ export function Login() {
     const handleIngresar = () => {
         axios.post(ENDPOINT, datos)
             .then((respuesta) => {
-                updateToken(respuesta.data.accesToken)
+                console.log(respuesta.data.access_token)
+                updateToken(respuesta.data.access_token)
                 showSucess()
             })
             .catch((error) => {
@@ -55,6 +56,7 @@ export function Login() {
     const handleMouseUpPassword = (event) => {
         event.preventDefault();
     };
+
 
     const theme = createTheme({
         components: {

@@ -3,7 +3,7 @@ import axios from "axios";
 
 const AuthContext = createContext();
 
-export function AuthContextProvider({ child }) {
+export function AuthContextProvider({ children }) {
     const [token, setToken] = useState(localStorage.getItem("token") || null);
     const [usuario, setUsuario] = useState(null);
     const [isLoading, setIsLoading] = useState(false)
@@ -17,14 +17,14 @@ export function AuthContextProvider({ child }) {
     }
 
     const getUsuario = () => {
-       /* axios.get(process.env.REACT_APP_API + "/auth/profile")
+        axios.get(process.env.REACT_APP_API + "/auth/profile")
             .then((respuesta) => {
                 setUsuario(respuesta.data);
                 setIsLoading(false);
             })
             .catch(function (error) {
                 setIsLoading(false);
-            })*/
+            })
     }
 
     useEffect(() => {
@@ -47,8 +47,8 @@ export function AuthContextProvider({ child }) {
             updateToken,
             deleteToken
         }
-    }, [token,usuario, isLoading])
-    return <AuthContext.Provider value={Context}>{child}</AuthContext.Provider>
+    }, [token, usuario, isLoading])
+    return <AuthContext.Provider value={Context}>{children}</AuthContext.Provider>
 
 }
 
