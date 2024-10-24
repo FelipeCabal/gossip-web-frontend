@@ -56,14 +56,20 @@ const App = () => {
             element: <PostForm />
           },
           {
-            path: 'post/:id',
+            path: 'post/:post',
             element: <VistaPublicacion />
           }
         ]
       },
       {
         path: 'perfil/:id',
-        element: <PerfilUsuario />
+        element: <PerfilUsuario />,
+        children: [
+          {
+            path: 'post/:post',
+            element: <VistaPublicacion />
+          }
+        ]
       }
       ]
     }

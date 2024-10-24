@@ -14,42 +14,10 @@
 .modal-fade .modal-content {
     background: #ffffff;
     padding: 20px;
-    width: 100%;
-    height: 90%;
-    overflow: scroll;
-    max-width: 1200px;
-    border-radius: 10px;
-}
-.modal-fade .modal-content.modal-form {
-    height: auto;
-}
-
-.modal-fade .modal-content-compra {
-    background: #ffffff;
-    padding: 20px;
-    width: 35%;
-    height: 90%;
-    max-width: 1200px;
-    border-radius: 10px;
-    overflow-y: scroll;
-}
-
-.modal-fade .modal-content-admin {
-    background: #ffff;
-    padding: 20px;
-  /*   width: 30%; */
+    width: 95%;
     height: 90%;
     overflow-y: scroll;
     max-width: 1200px;
-    border-radius: 10px;
-}
-
-.modal-fade .modal-form{
-    background: #ffffff;
-    padding: 20px;
-    width: 100%;
-    height: fit-content;
-    max-width: 600px;
     border-radius: 10px;
 }
 
@@ -63,9 +31,7 @@
     gap: 20px;
 }
 
-.modal-fade .modal-content-compra .modal-header,
-.modal-fade .modal-header
-{
+.modal-fade .modal-header {
     display: flex;
 }
 
@@ -73,8 +39,15 @@
     color: #000000;
     font-weight: bolder;
 }
-.modal-fade .modal-content-admin .modal-header .modal-closer-admin{
-    color: #000;
-    font-weight: bolder;
+
+@media (min-width: 450px) {
+    .modal-fade .modal-content {
+        width: 80%;
+    }
 }
 
+@media (min-width: 600px) {
+    .modal-fade .modal-content {
+        width: 75%;
+    }
+}

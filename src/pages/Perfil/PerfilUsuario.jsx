@@ -1,10 +1,9 @@
-import { useParams } from 'react-router-dom'
+import { Outlet, useParams } from 'react-router-dom'
 import neutro from '../../assets/avatares/neutro.png'
 import { ListaPublicaciones } from '../../components/PublicacionesHome/ListaPublicaciones'
 import { useAuth } from '../../providers/AuthProvider'
 import axios from 'axios'
 import { useEffect, useState } from 'react'
-import { WidthFull } from '@mui/icons-material'
 
 export function PerfilUsuario() {
     const { usuario } = useAuth()
@@ -15,7 +14,6 @@ export function PerfilUsuario() {
         axios.get(process.env.REACT_APP_API + '/users/' + id)
             .then((respuesta) => {
                 setUser(respuesta.data)
-                console.log(respuesta.data)
             })
             .catch((error) => {
                 console.log(error)
@@ -24,13 +22,13 @@ export function PerfilUsuario() {
 
     return (<>
         {
-            user && usuario ?
+            user && usuario ? <>
                 <div className="flex flex-col items-center ">
-                    < section className='flex justify-between !xs:w-3/5 border-b-2 border-gray-300' style={{ maxwidth: '100%' }}>
-                        <div>
+                    < section className='flex justify-between !xs:w-3/5 border-b-2 border-gray-300 pb-10 mt-6' style={{ maxwidth: '100%' }}>
+                        <div className='mr-12 flex items-center'>
                             <img src={user.imagen ? user.imagen : neutro} alt="perfil" className='w-80 ' />
                         </div>
-                        <div>
+                        <div className='mr-12 w-auto'>
                             <h2 className='font-semibold h-fit pt-10 '>
                                 {user.nombre}
                             </h2>
@@ -42,8 +40,8 @@ export function PerfilUsuario() {
                             </div>
                         </div>
 
-                        <div className='flex  h-fit pt-10'>
-                            <div >
+                        <div className='flex h-fit pt-10'>
+                            <div className='flex sm:flex-col'>
                                 {usuario.id == id ? (<div>
                                     <button className='btn btn-font-black border border-blue-500  text-black mr-4'>
                                         Editar perfil
@@ -72,7 +70,9 @@ export function PerfilUsuario() {
                         </div>
                     </section>
 
-                </div> : <></>
+                </div>
+                <Outlet />
+            </> : <></>
         }
     </>
     )
