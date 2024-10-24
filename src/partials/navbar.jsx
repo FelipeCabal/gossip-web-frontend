@@ -1,15 +1,22 @@
-import { Link } from "react-router-dom"
-import img from "../assets/avatares/neutro.png"
-import imgHome from "../assets/icons/HOMEPAGE.png"
-import imgCommunity from "../assets/icons/COMMUNITYS.png"
-import imgBuscar from "../assets/icons/BUSCAR.png"
-import imgMensajes from "../assets/icons/MENSAJES.png"
-import imgNotification from "../assets/icons/NOTIFICATIONS.png"
-import imgBuho from "../assets/icons/buho.png"
+import { useState } from 'react';
+import { Link } from "react-router-dom";
+import img from "../assets/avatares/neutro.png";
+import imgHome from "../assets/icons/HOMEPAGE.png";
+import imgCommunity from "../assets/icons/COMMUNITYS.png";
+import imgBuscar from "../assets/icons/BUSCAR.png";
+import imgMensajes from "../assets/icons/MENSAJES.png";
+import imgNotification from "../assets/icons/NOTIFICATIONS.png";
+import imgBuho from "../assets/icons/buho.png";
 import { useAuth } from "../providers/AuthProvider"
+import DropdownSolicitudes from '../components/DropdownSolicitudes'; // Importa el componente
 
 const Navbar = () => {
     const { usuario } = useAuth()
+    const [isDropdownVisible, setDropdownVisible] = useState(false);
+
+    const toggleDropdown = () => {
+        setDropdownVisible(!isDropdownVisible);
+    };
     return <>
         {usuario ?
             <header>
@@ -43,17 +50,21 @@ const Navbar = () => {
                             <Link to="/messaging" className="flex-1 flex items-center justify-center hover:text-gray-300">
                                 <img src={imgMensajes} alt="Mensajes" className="max-w-full w-8 sm:w-12" />
                             </Link>
-
-                            <Link to="/notifications" className="flex-1 flex items-center justify-center hover:text-gray-300">
+  
+                        <div className="relative flex-1 flex">
+                            <button onClick={toggleDropdown} className="flex-1 flex items-center justify-center hover:text-gray-300">
                                 <img src={imgNotification} alt="Notificaciones" className="max-w-full w-8 sm:w-12" />
-                            </Link>
+                            </button>
+                            <div className={`absolute right-0 mt-10 ${isDropdownVisible ? 'block' : 'hidden'}`}>
+                                <DropdownSolicitudes />
+                            </div>
                         </div>
                     </div>
-                </nav>
-            </header> : <></>
+                </div>
+            </nav>
+        </header>: <></>
         }
     </>
-}
+};
 
-export default Navbar
-
+export default Navbar;
