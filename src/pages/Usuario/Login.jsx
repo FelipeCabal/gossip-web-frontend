@@ -37,7 +37,7 @@ export function Login() {
             })
             .catch((error) => {
                 console.log(error)
-                /*Se debe agregar aqui la validacion  para si el error es por contraseña*/
+                /*Se debe agregar aqui la validacion para si el error es por contraseña*/
                 showErrorContraseña()
                 setDatos({
                     email: datos.email,
