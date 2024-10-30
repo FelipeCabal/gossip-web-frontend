@@ -32,7 +32,6 @@ export function Login() {
     const handleIngresar = () => {
         axios.post(ENDPOINT, datos)
             .then((respuesta) => {
-                console.log(respuesta.data.access_token)
                 updateToken(respuesta.data.access_token)
                 showSucess()
             })

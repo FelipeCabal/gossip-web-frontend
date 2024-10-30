@@ -23,7 +23,6 @@ export function PostHomeForm({ context }) {
         if (!postContent.description && !asset) return;
 
         axios.post(`${process.env.REACT_APP_API}/posts`, postContent).then(() => {
-            console.log('Post submitted:', postContent);
             setIsToggled(false);
             setPostContent({ description: '', imagen: '', esAnonimo: false });
             setRefresh(true)

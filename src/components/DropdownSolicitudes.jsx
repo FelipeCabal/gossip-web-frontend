@@ -30,7 +30,6 @@ const DropdownSolicitudes = () => {
         }
         axios.patch(process.env.REACT_APP_API + `/friend-request/request/${id}/status`, accept)
             .then((r) => {
-                console.log(r.data)
                 setSolicitudesAmistad(solicitudesAmistad.filter(solicitud => solicitud.id !== id));
             })
 
@@ -41,7 +40,6 @@ const DropdownSolicitudes = () => {
         }
         axios.patch(process.env.REACT_APP_API + `/friend-request/request/${id}/status`, deny)
             .then((r) => {
-                console.log(r.data)
                 setSolicitudesAmistad(solicitudesAmistad.filter(solicitud => solicitud.id !== id));
             })
 
