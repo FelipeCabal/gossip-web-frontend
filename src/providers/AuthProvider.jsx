@@ -17,14 +17,12 @@ export function AuthContextProvider({ children }) {
     }
 
     const getUsuario = () => {
-        axios.get(process.env.REACT_APP_API + "/auth/profile")
-            .then((respuesta) => {
-                setUsuario(respuesta.data);
-                setIsLoading(false);
-            })
-            .catch(function (error) {
-                setIsLoading(false);
-            })
+        axios.get(process.env.REACT_APP_API + "/auth/profile").then((respuesta) => {
+            setUsuario(respuesta.data);
+            setIsLoading(false);
+        }).catch(function (error) {
+            setIsLoading(false);
+        })
     }
 
     useEffect(() => {
