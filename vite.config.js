@@ -11,6 +11,9 @@ export default defineConfig((mode) => {
     plugins: [react()],
     css: {
       devSourcemap: true,
+    },
+    build: {
+      outDir: 'dist',
     }
   };
 });
