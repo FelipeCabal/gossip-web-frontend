@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import './ImagenPreview.css'
+import './imagenPreview.css'
 
 export function ImagenPreview({ file, handleDelete }) {
     const { id, url, name } = file;
