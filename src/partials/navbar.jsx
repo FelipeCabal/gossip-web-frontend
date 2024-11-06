@@ -24,7 +24,7 @@ const Navbar = () => {
                     <div className=" h-20 text-slate-950 flex items-center justify-center ">
                         <Link to={'/perfil/' + usuario.id} className="flex flex-row items-center justify-center p-2">
                             <img src={img} alt="Gossip-web" className="max-w-full w-20" />
-                            <h1 className="hidden -m-1 -mt-3.5 px-5 text-3xl sm:block">Username</h1>
+                            <h1 className="hidden -m-1 -mt-3.5 px-5 text-3xl sm:block">{ usuario.nombre }</h1>
                         </Link>
                     </div>
                     <div className=" h-20 text-slate-950 flex items-center justify-center ">
