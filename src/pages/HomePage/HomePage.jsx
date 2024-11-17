@@ -11,7 +11,7 @@ export function HomePage() {
             </div>
             <div className="right-column flex flex-col justify-center xs:pr-2 w-full">
                 <PostHomeForm />
-                <ListaPublicaciones />
+                <ListaPublicaciones ENDPOINT={process.env.REACT_APP_API + '/posts/'} />
             </div>
         </div>
         <Outlet />

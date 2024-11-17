@@ -9,14 +9,16 @@ export function PerfilUsuario() {
     const { usuario } = useAuth()
     const { id } = useParams()
     const [user, setUser] = useState(null)
+    
 
     useEffect(() => {
         axios.get(process.env.REACT_APP_API + '/users/' + id)
             .then((respuesta) => {
                 setUser(respuesta.data)
+                console.log("esta es la respuesta"+respuesta.data)
             })
             .catch((error) => {
-                console.log(error)
+                console.log("este es el error"+error)
             })
     }, [id])
 
@@ -66,7 +68,7 @@ export function PerfilUsuario() {
                             <h3 className='border-t-2 mt-[-2px] border-black w-fit'>Publicaciones</h3>
                         </div>
                         <div className='w-full flex flex-col justify-center sm:w-10/12 md:w-3/4'>
-                            <ListaPublicaciones></ListaPublicaciones>
+                            <ListaPublicaciones ENDPOINT={process.env.REACT_APP_API + '/posts/user/' + id}/>
                         </div>
                     </section>
 

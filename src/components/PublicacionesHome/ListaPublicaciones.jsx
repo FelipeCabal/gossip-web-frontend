@@ -2,21 +2,24 @@ import { PublicacionHome } from "./PublicacionHome"
 import { useEffect, useState } from "react"
 import axios from "axios"
 import { useRefresh } from "../../providers/RefreshProvider"
+import { ConstructionOutlined } from "@mui/icons-material"
 
-export const ListaPublicaciones = () => {
+export const ListaPublicaciones = ({ENDPOINT}) => {
     const { refresh, setRefresh } = useRefresh();
     const [posts, setPosts] = useState(null)
 
     useEffect(() => {
-        axios.get(process.env.REACT_APP_API + '/posts')
+        axios.get(ENDPOINT)
             .then((respuesta) => {
                 setPosts(respuesta.data)
+                console.log(respuesta.data)
                 setRefresh(false)
             })
             .catch((error) => {
                 console.log(error)
             })
     }, [refresh, setRefresh])
+     
 
     return (<>
         <section className="w-full">
