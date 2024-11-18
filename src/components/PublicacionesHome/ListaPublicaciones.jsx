@@ -36,7 +36,7 @@ export const ListaPublicaciones = ({ENDPOINT}) => {
                     >
                     </PublicacionHome>
                 })}
-            </> : <></>
+            </> : <div className = "flex items-center justify-center font-medium text-2xl">No hay publicaciones disponibles</div>
             }
         </section >
     </>
