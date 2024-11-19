@@ -33,7 +33,8 @@ export function Register() {
         axios.post(ENDPOINT, datos)
             .then((respuesta) => {
                 console.log(respuesta.data.access_token)
-                updateToken(respuesta.data.access_token).then(() => showSucess())
+                updateToken(respuesta.data.access_token)
+                showSucess()
             })
             .catch((error) => {
                 console.log(error)
