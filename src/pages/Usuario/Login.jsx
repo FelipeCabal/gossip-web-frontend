@@ -45,17 +45,25 @@ export function Login() {
 
                     if (status === 404 || data.message === "Usuario no encontrado") {
                         showErrorCorreo();
+                        setDatos({
+                            email: "",
+                            password: ""
+                        })
+
                     } else if (status === 401 || data.message === "Contraseña incorrecta") {
                         showErrorContraseña();
+                        setDatos(prevDatos => ({
+                            ...prevDatos,
+                            password: ''
+                        }));
                     }
                 } else {
                     toast.error("Ocurrió un error inesperado");
                 }
-
-                setDatos(prevDatos => ({
-                    ...prevDatos,
-                    password: ''
-                }));
+                setDatos({
+                    email: "",
+                    password: ""
+                })
             });
     };
 

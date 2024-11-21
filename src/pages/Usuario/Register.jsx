@@ -37,8 +37,23 @@ export function Register() {
                 showSucess()
             })
             .catch((error) => {
-                console.log(error)
-                showErrorPeticion()
+                console.error(error);
+
+                if (error.response) {
+                    const { status, data } = error.response;
+
+                    if (status === 409 || data.message === "user already exist") {
+                        showErrorPeticion();
+                        setDatos(prevDatos => ({
+                            ...prevDatos,
+                            email: "",
+                        }));
+                    } else {
+                        toast.error("Ocurrió un error inesperado");
+                    }
+                } else {
+                    toast.error("INTERNAL SERVER ERROR");
+                }
             })
     }
 
