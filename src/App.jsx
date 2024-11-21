@@ -17,6 +17,7 @@ import { LayoutComponent } from './pages/LayoutComponent';
 import { PerfilUsuario } from './pages/Perfil/PerfilUsuario';
 import { useState } from 'react';
 import { RefreshProvider } from './providers/RefreshProvider.jsx';
+import { VistaInformacionChat } from './components/VistaChats/VistaInformacionChat.jsx';
 
 const App = () => {
   const [refresh, setRefresh] = useState(false)
@@ -45,7 +46,11 @@ const App = () => {
             path: 'postForm',
             element: <PostForm />
           }
-        ]
+        ],
+      },
+      {
+        path: 'infoChat',
+        element: <VistaInformacionChat />
       },
       {
         path: 'homepage',

@@ -27,7 +27,7 @@ export function GuiaEstilos() {
                             <li>Inter:  Es una fuente de código abierto diseñada principalmente para pantallas y lectura en interfaces digitales y va a ser usada para textos generales con tipografia base de 16 px. </li>
                         </ul>
                     </div>
-                    <div className="h-screen w-screen !xs:pr-4 xs:bg-[#E7E7E7] !xs:mt-4 !xs:m-[16px] !xs:bg-fuchsia-50 ">
+                    <div className="!xs:h-full !xs:pr-4 bg-[#E7E7E7] !xs:mt-4 !xs:m-[16px] !xs:bg-fuchsia-50 ">
                         <section className="border-b-2 border-[#ABABAB]">
                             <div className="flex ml-2 mt-2 items-center gap-4 relative group">
                                 <button className="transition-transform transform group-hover:-translate-x-1 group-hover:-translate-y-1">
