@@ -12,13 +12,12 @@ export const ListaPublicaciones = ({ENDPOINT}) => {
         axios.get(ENDPOINT)
             .then((respuesta) => {
                 setPosts(respuesta.data)
-                console.log(respuesta.data)
                 setRefresh(false)
             })
             .catch((error) => {
                 console.log(error)
             })
-    }, [refresh, setRefresh])
+    }, [refresh, setRefresh, ENDPOINT])
      
 
     return (<>

@@ -15,7 +15,6 @@ export function PerfilUsuario() {
         axios.get(process.env.REACT_APP_API + '/users/' + id)
             .then((respuesta) => {
                 setUser(respuesta.data)
-                console.log("esta es la respuesta"+respuesta.data)
             })
             .catch((error) => {
                 console.log("este es el error"+error)
