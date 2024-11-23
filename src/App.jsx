@@ -17,6 +17,7 @@ import { LayoutComponent } from './pages/LayoutComponent';
 import { PerfilUsuario } from './pages/Perfil/PerfilUsuario';
 import { useState } from 'react';
 import { RefreshProvider } from './providers/RefreshProvider.jsx';
+import { BusquedaComunidades } from './components/BusquedaComunidades.jsx';
 
 const App = () => {
   const [refresh, setRefresh] = useState(false)
@@ -60,6 +61,10 @@ const App = () => {
             element: <VistaPublicacion />
           }
         ]
+      },
+      {
+        path: 'search',
+        element: <BusquedaComunidades/>
       },
       {
         path: 'perfil/:id',
