@@ -60,10 +60,6 @@ export function Login() {
                 } else {
                     toast.error("Ocurrió un error inesperado");
                 }
-                setDatos({
-                    email: "",
-                    password: ""
-                })
             });
     };
 

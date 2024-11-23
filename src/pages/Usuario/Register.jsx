@@ -6,13 +6,21 @@ import { Password, Update, Visibility, VisibilityOff } from '@mui/icons-material
 import { toast, ToastContainer } from 'react-toastify';
 import axios from 'axios';
 import { useAuth } from '../../providers/AuthProvider';
+import { useNavigate } from 'react-router-dom';
 
 
 export function Register() {
     const ENDPOINT = process.env.REACT_APP_API + '/auth/register'
     const showErrorInformacion = () => toast.info("Campos sin informacion")
-    const showSucess = () => toast.success("Registrado Exitosamente")
+    const navigate = useNavigate();
+    const showSucess = () => toast.success("Registrado Exitosamente", {
+        onClose: () => {
+            navigate('/homepage');
+        },
+        autoClose: 2000,
+    })
     const showErrorPeticion = () => toast.error("Usuario ya existe")
+
 
     const { updateToken } = useAuth()
 
@@ -32,9 +40,9 @@ export function Register() {
         }
         axios.post(ENDPOINT, datos)
             .then((respuesta) => {
-                console.log(respuesta.data.access_token)
-                updateToken(respuesta.data.access_token)
-                showSucess()
+                console.log(respuesta.data.access_token);
+                updateToken(respuesta.data.access_token);
+                showSucess();
             })
             .catch((error) => {
                 console.error(error);
@@ -51,8 +59,6 @@ export function Register() {
                     } else {
                         toast.error("Ocurrió un error inesperado");
                     }
-                } else {
-                    toast.error("INTERNAL SERVER ERROR");
                 }
             })
     }
