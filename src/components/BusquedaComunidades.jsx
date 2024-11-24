@@ -1,30 +1,155 @@
+import { useState } from 'react';
+import icono from '../assets/avatares/neutro.png';
 
-import { TextField, styled } from "@mui/material";
+const personas = [
+  { id: 1, nombre: 'usuario234', perfil: icono, isFollowing: true },
+  { id: 2, nombre: 'usuario446', perfil: icono, isFollowing: true },
+  { id: 3, nombre: 'usuario566', perfil: icono, isFollowing: false },
+  { id: 4, nombre: 'usuario234', perfil: icono, isFollowing: false },
+];
 
-
+const comunidades = [
+  { id: 1, nombre: 'Los Buhos prohibidos', perfil: icono, isFollowing: false },
+  { id: 2, nombre: 'El consejo de las plumas', perfil: icono, isFollowing: true },
+  { id: 3, nombre: 'Ojitos chiquititos', perfil: icono, isFollowing: true },
+  { id: 4, nombre: 'Los Buhos prohibidos 2', perfil: icono, isFollowing: false },
+];
 
 export function BusquedaComunidades() {
+  const [communities, setCommunities] = useState(comunidades);
+  const [people, setPeople] = useState(personas);
+  const [searchTerm, setSearchTerm] = useState(''); // Estado para el término de búsqueda
+  const [activeSection, setActiveSection] = useState('personas'); // Estado para alternar secciones
+
+  const toggleFollow = (list, setList, id) => {
+    const updatedList = list.map((item) =>
+      item.id === id ? { ...item, isFollowing: !item.isFollowing } : item
+    );
+    setList(updatedList);
+  };
+
+  // Filtrar resultados basados en el término de búsqueda
+  const filteredPeople = people.filter((persona) =>
+    persona.nombre.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+  const filteredCommunities = communities.filter((comunidad) =>
+    comunidad.nombre.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <>
       <section className="flex border-b border-gray-400">
-        <div className="w-full">
-          <form action="" className="w-1/3">
-            <div class="flex items-center border rounded-2xl bg-gray-200 p-2 w-full max-w-lg">         
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-5 h-5 text-gray-600 mr-2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
-              </svg>       
+        <div className="w-full pb-3 pt-2 flex items-center justify-center">
+          <form action="" className="w-full flex items-center justify-center">
+            <div className="flex items-center border rounded-2xl bg-gray-200 m-2 w-[85%]">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                className="w-5 h-5 text-gray-600 mr-2"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
+                />
+              </svg>
               <input
                 type="text"
                 placeholder="Escribe el nombre de la persona o comunidad"
-                class="w-full bg-transparent outline-none border-none text-gray-700 placeholder-gray-600 focus:ring-0 focus:outline-none text-xl"
+                className="w-full bg-transparent outline-none border-none text-gray-700 placeholder-gray-600 focus:ring-0 focus:outline-none text-xl"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)} // Actualizar el término de búsqueda
               />
             </div>
           </form>
         </div>
       </section>
-      <section>
 
+      <section className="flex flex-col-2 justify-around">
+        <div className="items-center">
+          <h3
+            onClick={() => setActiveSection('personas')}
+            className={`cursor-pointer text-3xl font-normal flex items-center justify-center mb-2 ${activeSection === 'personas' ? 'text-black' : 'text-gray-500'
+              }`}
+          >
+            Personas
+          </h3>
+          <div
+            className={`flex flex-col items-center justify-between text-white text-sm ${activeSection === 'personas' ? 'block' : 'hidden'
+              }`}
+          >
+            {filteredPeople.map((persona) => (
+              <article key={persona.id} className="flex items-center gap-4 mb-4">
+                <div className="flex items-center gap-1">
+                  <img
+                    src={persona.perfil}
+                    alt={`Perfil de ${persona.nombre}`}
+                    className="w-16 h-16 rounded-full"
+                  />
+                  <div className="flex flex-col">
+                    <span className="text-black font-medium">{persona.nombre}</span>
+                  </div>
+                </div>
+                <div>
+                  <button
+                    onClick={() => toggleFollow(people, setPeople, persona.id)}
+                    className={`btn btn-font-black border ${persona.isFollowing
+                        ? 'border-red-500 text-white'
+                        : 'border-blue-500 text-white'
+                      }`}
+                  >
+                    {persona.isFollowing ? 'Eliminar' : 'Añadir'}
+                  </button>
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+        <div className="items-start justify-start">
+          <h3
+            onClick={() => setActiveSection('comunidades')}
+            className={`cursor-pointer text-3xl font-normal flex items-center justify-center mb-2 ${activeSection === 'comunidades' ? 'text-black' : 'text-gray-500'
+              }`}
+          >
+            Comunidades
+          </h3>
+          <div
+            className={`flex flex-col items-start justify-between text-white text-sm ${activeSection === 'comunidades' ? 'block' : 'hidden'
+              }`}
+          >
+            {filteredCommunities.map((comunidad) => (
+              <article
+                key={comunidad.id}
+                className="flex items-start gap-4 mb-4 justify-start"
+              >
+                <div className="flex items-center gap-1">
+                  <img
+                    src={comunidad.perfil}
+                    alt={`Perfil de ${comunidad.nombre}`}
+                    className="w-16 h-16 rounded-full"
+                  />
+                  <div className="flex flex-col w-[110px]">
+                    <span className="text-black font-medium">{comunidad.nombre}</span>
+                  </div>
+                </div>
+                <button
+                  onClick={() =>
+                    toggleFollow(communities, setCommunities, comunidad.id)
+                  }
+                  className={`btn btn-font-black border ${comunidad.isFollowing
+                      ? 'border-red-500 text-white'
+                      : 'border-blue-500 text-white'
+                    }`}
+                >
+                  {comunidad.isFollowing ? 'Eliminar' : 'Añadir'}
+                </button>
+              </article>
+            ))}
+          </div>
+        </div>
       </section>
     </>
-  )
+  );
 }
