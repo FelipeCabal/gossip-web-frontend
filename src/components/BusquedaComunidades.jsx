@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
-import icono from '../assets/avatares/neutro.png';
 import axios from 'axios';
 
 export function BusquedaComunidades() {
   const API_ENDPOINT_PEOPLE = process.env.REACT_APP_API + '/users'
   const API_ENDPOINT_COMUNIDADES = process.env.REACT_APP_API + '/chats/community'
+  const API_ENDPOINT_SOLICITUDES = process.env.REACT_APP_API + '/friend-request/request/'
   const [communities, setCommunities] = useState([]);
   const [people, setPeople] = useState([]);
   const [searchTerm, setSearchTerm] = useState(''); // Estado para el término de búsqueda
@@ -15,30 +15,64 @@ export function BusquedaComunidades() {
       item.id === id ? { ...item, isFollowing: !item.isFollowing } : item
     );
     setList(updatedList);
+
+    const selectedItem = list.find((item) => item.id === id);
+
+    if (!selectedItem.isFollowing) {
+      // Construye el endpoint dinámicamente con el `id`
+      const endpoint = `${process.env.REACT_APP_API}/friend-request/request/${id}`;
+      axios
+        .post(endpoint, {
+          status: 'P', // Estado inicial: pendiente
+        })
+        .then(() => {
+          console.log(`Solicitud enviada con estado "P" para el ID ${id}`);
+        })
+        .catch((error) => {
+          console.error("Error al enviar la solicitud:", error);
+          // Revertir estado local en caso de error
+          const revertedList = list.map((item) =>
+            item.id === id ? { ...item, isFollowing: !item.isFollowing } : item
+          );
+          setList(revertedList);
+        });
+    } else {
+      console.log(`Gestión adicional para eliminar seguimiento del ID ${id}`);
+    }
   };
 
   useEffect(() => {
-    axios.get(API_ENDPOINT_PEOPLE)
+    axios
+      .get(API_ENDPOINT_PEOPLE)
       .then((respuesta) => {
-        setPeople(respuesta.data)
-        console.log(respuesta.data)
+        // Agregamos `isFollowing` inicialmente como false para cada usuario
+        const peopleWithFollowing = respuesta.data.map((persona) => ({
+          ...persona,
+          isFollowing: false, // Estado inicial
+        }));
+        setPeople(peopleWithFollowing);
       })
       .catch((error) => {
-        console.log("este es el error",error)
-      })
-
-  })
+        console.log("Este es el error", error);
+      });
+  }, []); // Asegúrate de incluir el array de dependencias vacío para evitar múltiples llamadas
 
   useEffect(() => {
-    axios.get(API_ENDPOINT_COMUNIDADES)
+    axios
+      .get(API_ENDPOINT_COMUNIDADES)
       .then((respuesta) => {
-        setCommunities(respuesta.data)
+        // Agregamos `isFollowing` inicialmente como false para cada comunidad
+        const communitiesWithFollowing = respuesta.data.map((comunidad) => ({
+          ...comunidad,
+          isFollowing: false, // Estado inicial
+        }));
+        setCommunities(communitiesWithFollowing);
       })
       .catch((error) => {
-       console.log("este es el erros de comunidades",error)
-    })
-    
-  })
+        console.log("Este es el error de comunidades", error);
+      });
+  }, []);
+
 
   // Filtrar resultados basados en el término de búsqueda
   const filteredPeople = people.filter((persona) =>
