@@ -6,7 +6,7 @@ import './ChatStyle.css';
 
 const ChatComponent = () => {
     // ESTAS CONSTANTES SE DEBEN ENVIAR A ESTE COMPONENTE YA SEA POR PARAMETRO O COMO PROP
-    const chatId = '4';
+    const chatId = '1';
     const chatType = 'group';
 
     const { usuario, token } = useAuth();
@@ -25,6 +25,7 @@ const ChatComponent = () => {
         try {
             const response = await axios.get(`${process.env.REACT_APP_API}/chats/${chatType}/${chatId}`);
             const chatData = response.data;
+            console.log(chatData)
             setChat(chatData);
 
             if (chatType !== 'private') {
@@ -50,9 +51,9 @@ const ChatComponent = () => {
                     if (miembroUsuario.id !== usuario.id) {
                         acc[miembroUsuario.id] = miembroUsuario;
                     }
+                    console.log(miembroUsuario)
                     return acc;
                 }, {});
-
                 setUsersCache(userDictionary);
             }
         } catch (error) {
@@ -136,7 +137,7 @@ const ChatComponent = () => {
 
     useEffect(() => {
         fetchChatData();
-    }, [chatId, chatType]);
+    }, [chatId, chatType, usuario]);
 
     useEffect(() => {
         scrollToBottom();
@@ -174,7 +175,9 @@ const ChatComponent = () => {
                     ) : (
                         <>
                             {messages.map((msg, index) => {
+                                console.log(msg)
                                 const user = usersCache[msg.usuarioId];
+                                console.log(usersCache)
                                 const myMessage = msg.usuarioId === usuario.id;
                                 return (
                                     <div
@@ -202,14 +205,11 @@ const ChatComponent = () => {
                                             }
                                         >
                                             <span className="text-base font-bold">
-                                                {user ? (
-                                                    myMessage ? (
-                                                        <p className="text-end">@Me</p>
-                                                    ) : (
-                                                        <p>@{user.nombre}</p>
-                                                    )
+                                                {myMessage ? (
+                                                    <p className="text-end">@Me</p>
                                                 ) : (
-                                                    'Cargando usuario...'
+                                                    user ? <p>@{user.nombre}</p> :
+                                                        'Cargando usuario...'
                                                 )}
                                             </span>
                                             <p className="text-[17px]">{msg.message}</p>
