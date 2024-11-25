@@ -1,0 +1,48 @@
+.contenedor-chats-page {
+    display: grid;
+    grid-template-areas: "chats-communities vista-chat";
+    grid-template-columns: 1fr 2fr;
+    grid-auto-flow: column;
+    column-gap: 5px;
+    margin-top: 15px;
+}
+
+.left-column-chats {
+    margin-left: 10px;
+
+}
+
+.left-column-chats .searchChatCommunity {
+    display: flex;
+    flex-direction: row;
+}
+
+.left-column-chats .searchChatCommunity .community {
+    margin-top: 4px;
+    margin-left: 7px;
+    color: #374957;
+}
+
+.left-column-chats .searchChatCommunity .personalChat {
+    margin-top: 4px;
+    margin-left: 7px;
+    color: #918ef4;
+}
+
+.left-column-chats .searchChatCommunity .settings {
+    margin-top: 4px;
+    margin-left: 7px;
+    color: #374957;
+}
+
+.left-column-chats .searchChats {
+    background-color: #d9d9d9;
+    border-radius: 20px;
+    width: 280px;
+    height: 40px;
+    text-align: center;
+}
+
+.left-column-chats .searchChats::placeholder {
+    text-align: center;
+}

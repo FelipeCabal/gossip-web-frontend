@@ -24,7 +24,7 @@ const Navbar = () => {
                     <div className=" h-20 text-slate-950 flex items-center justify-center ">
                         <Link to={'/perfil/' + usuario.id} className="flex flex-row items-center justify-center p-2">
                             <img src={img} alt="Gossip-web" className="max-w-full w-20" />
-                            <h1 className="hidden -m-1 -mt-3.5 px-5 text-3xl sm:block">Username</h1>
+                            <h1 className="hidden -m-1 -mt-3.5 px-5 text-3xl sm:block">{usuario.nombre}</h1>
                         </Link>
                     </div>
                     <div className=" h-20 text-slate-950 flex items-center justify-center ">
@@ -47,22 +47,22 @@ const Navbar = () => {
                             <Link to="/homepage/postForm" className="flex-1 flex items-center justify-center hover:text-gray-300">
                                 <img src={imgCommunity} alt="Comunidades" className="max-w-full w-8 sm:w-12" />
                             </Link>
-                            <Link to="/messaging" className="flex-1 flex items-center justify-center hover:text-gray-300">
+                            <Link to="/chatsPage" className="flex-1 flex items-center justify-center hover:text-gray-300">
                                 <img src={imgMensajes} alt="Mensajes" className="max-w-full w-8 sm:w-12" />
                             </Link>
-  
-                        <div className="relative flex-1 flex">
-                            <button onClick={toggleDropdown} className="flex-1 flex items-center justify-center hover:text-gray-300">
-                                <img src={imgNotification} alt="Notificaciones" className="max-w-full w-8 sm:w-12" />
-                            </button>
-                            <div className={`absolute right-0 mt-10 ${isDropdownVisible ? 'block' : 'hidden'}`}>
-                                <DropdownSolicitudes />
+
+                            <div className="relative flex-1 flex">
+                                <button onClick={toggleDropdown} className="flex-1 flex items-center justify-center hover:text-gray-300">
+                                    <img src={imgNotification} alt="Notificaciones" className="max-w-full w-8 sm:w-12" />
+                                </button>
+                                <div className={`absolute right-0 mt-10 ${isDropdownVisible ? 'block' : 'hidden'}`}>
+                                    <DropdownSolicitudes />
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </nav>
-        </header>: <></>
+                </nav>
+            </header> : <></>
         }
     </>
 };

@@ -17,6 +17,7 @@ import { LayoutComponent } from './pages/LayoutComponent';
 import { PerfilUsuario } from './pages/Perfil/PerfilUsuario';
 import { useState } from 'react';
 import { RefreshProvider } from './providers/RefreshProvider.jsx';
+import { PaginaChats } from './pages/PaginaChats/paginaChats.jsx';
 
 const App = () => {
   const [refresh, setRefresh] = useState(false)
@@ -58,8 +59,12 @@ const App = () => {
           {
             path: 'post/:post',
             element: <VistaPublicacion />
-          }
+          },
         ]
+      },
+      {
+        path: 'chatsPage',
+        element: <PaginaChats />
       },
       {
         path: 'perfil/:id',
