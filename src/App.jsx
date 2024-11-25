@@ -17,6 +17,7 @@ import { LayoutComponent } from './pages/LayoutComponent';
 import { PerfilUsuario } from './pages/Perfil/PerfilUsuario';
 import { useState } from 'react';
 import { RefreshProvider } from './providers/RefreshProvider.jsx';
+import ChatComponent from './components/Chat/ChatComponent.jsx';
 
 const App = () => {
   const [refresh, setRefresh] = useState(false)
@@ -37,40 +38,45 @@ const App = () => {
     {
       path: '',
       element: <LayoutComponent />,
-      children: [{
-        path: 'style-guide',
-        element: <GuiaEstilos />,
-        children: [
-          {
-            path: 'postForm',
-            element: <PostForm />
-          }
-        ]
-      },
-      {
-        path: 'homepage',
-        element: <HomePage />,
-        children: [
-          {
-            path: 'Postform',
-            element: <PostForm />
-          },
-          {
-            path: 'post/:post',
-            element: <VistaPublicacion />
-          }
-        ]
-      },
-      {
-        path: 'perfil/:id',
-        element: <PerfilUsuario />,
-        children: [
-          {
-            path: 'post/:post',
-            element: <VistaPublicacion />
-          }
-        ]
-      }
+      children: [
+        {
+          path: 'chat',
+          element: <ChatComponent />,
+        },
+        {
+          path: 'style-guide',
+          element: <GuiaEstilos />,
+          children: [
+            {
+              path: 'postForm',
+              element: <PostForm />
+            }
+          ]
+        },
+        {
+          path: 'homepage',
+          element: <HomePage />,
+          children: [
+            {
+              path: 'Postform',
+              element: <PostForm />
+            },
+            {
+              path: 'post/:post',
+              element: <VistaPublicacion />
+            }
+          ]
+        },
+        {
+          path: 'perfil/:id',
+          element: <PerfilUsuario />,
+          children: [
+            {
+              path: 'post/:post',
+              element: <VistaPublicacion />
+            }
+          ]
+        }
       ]
     }
   ])
