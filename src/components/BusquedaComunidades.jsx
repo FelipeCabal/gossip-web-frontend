@@ -2,25 +2,10 @@ import { useEffect, useState } from 'react';
 import icono from '../assets/avatares/neutro.png';
 import axios from 'axios';
 
-const personas = [
-  { id: 1, nombre: 'usuario234', perfil: icono, isFollowing: true },
-  { id: 2, nombre: 'usuario446', perfil: icono, isFollowing: true },
-  { id: 3, nombre: 'usuario566', perfil: icono, isFollowing: false },
-  { id: 4, nombre: 'usuario234', perfil: icono, isFollowing: false },
-];
-
-const comunidades = [
-  { id: 1, nombre: 'Los Buhos prohibidos', perfil: icono, isFollowing: false },
-  { id: 2, nombre: 'El consejo de las plumas', perfil: icono, isFollowing: true },
-  { id: 3, nombre: 'Ojitos chiquititos', perfil: icono, isFollowing: true },
-  { id: 4, nombre: 'Los Buhos prohibidos 2', perfil: icono, isFollowing: false },
-];
-
-
-
 export function BusquedaComunidades() {
   const API_ENDPOINT_PEOPLE = process.env.REACT_APP_API + '/users'
-  const [communities, setCommunities] = useState(comunidades);
+  const API_ENDPOINT_COMUNIDADES = process.env.REACT_APP_API + '/chats/community'
+  const [communities, setCommunities] = useState([]);
   const [people, setPeople] = useState([]);
   const [searchTerm, setSearchTerm] = useState(''); // Estado para el término de búsqueda
   const [activeSection, setActiveSection] = useState('personas'); // Estado para alternar secciones
@@ -42,6 +27,17 @@ export function BusquedaComunidades() {
         console.log("este es el error",error)
       })
 
+  })
+
+  useEffect(() => {
+    axios.get(API_ENDPOINT_COMUNIDADES)
+      .then((respuesta) => {
+        setCommunities(respuesta.data)
+      })
+      .catch((error) => {
+       console.log("este es el erros de comunidades",error)
+    })
+    
   })
 
   // Filtrar resultados basados en el término de búsqueda
@@ -100,11 +96,11 @@ export function BusquedaComunidades() {
               <article key={persona.id} className="flex items-center gap-4 mb-4">
                 <div className="flex items-center gap-1">
                   <img
-                    src={persona.perfil}
+                    src={persona.imagen_perfil}
                     alt={`Perfil de ${persona.nombre}`}
                     className="w-16 h-16 rounded-full"
                   />
-                  <div className="flex flex-col">
+                  <div className="flex flex-col w-[70px]">
                     <span className="text-black font-medium">{persona.nombre}</span>
                   </div>
                 </div>
@@ -146,7 +142,7 @@ export function BusquedaComunidades() {
                     alt={`Perfil de ${comunidad.nombre}`}
                     className="w-16 h-16 rounded-full"
                   />
-                  <div className="flex flex-col w-[110px]">
+                  <div className="flex flex-col w-[100px]">
                     <span className="text-black font-medium">{comunidad.nombre}</span>
                   </div>
                 </div>
