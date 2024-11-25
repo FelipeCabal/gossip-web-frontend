@@ -1,0 +1,47 @@
+/* Contenedor de la tarjeta */
+.tarjeta-chat {
+  display: flex;
+  align-items: center;
+  padding: 16px;
+  border-bottom: 1px solid #d1d5db; /* Línea separadora */
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.tarjeta-chat:hover {
+  background-color: #f3f4f6; /* Cambia el fondo al pasar el mouse */
+}
+
+/* Imagen del chat */
+.tarjeta-chat__imagen {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%; /* Imagen redonda */
+  object-fit: cover; /* Ajusta la imagen al tamaño del contenedor */
+}
+
+/* Contenedor del texto */
+.tarjeta-chat__contenido {
+  margin-left: 16px;
+  flex: 1;
+  overflow: hidden; /* Evita desbordes de texto */
+}
+
+/* Nombre del chat */
+.tarjeta-chat__nombre {
+  font-weight: bold;
+  color: #1f2937; /* Color gris oscuro */
+  font-size: 14px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis; /* Muestra '...' si el texto es muy largo */
+}
+
+/* Último mensaje */
+.tarjeta-chat__ultimo-mensaje {
+  color: #6b7280; /* Gris medio */
+  font-size: 12px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis; /* Muestra '...' si el texto es muy largo */
+}
