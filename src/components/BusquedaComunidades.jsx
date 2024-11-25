@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import icono from '../assets/avatares/neutro.png';
+import axios from 'axios';
 
 const personas = [
   { id: 1, nombre: 'usuario234', perfil: icono, isFollowing: true },
@@ -15,9 +16,12 @@ const comunidades = [
   { id: 4, nombre: 'Los Buhos prohibidos 2', perfil: icono, isFollowing: false },
 ];
 
+
+
 export function BusquedaComunidades() {
+  const API_ENDPOINT_PEOPLE = process.env.REACT_APP_API + '/users'
   const [communities, setCommunities] = useState(comunidades);
-  const [people, setPeople] = useState(personas);
+  const [people, setPeople] = useState([]);
   const [searchTerm, setSearchTerm] = useState(''); // Estado para el término de búsqueda
   const [activeSection, setActiveSection] = useState('personas'); // Estado para alternar secciones
 
@@ -27,6 +31,18 @@ export function BusquedaComunidades() {
     );
     setList(updatedList);
   };
+
+  useEffect(() => {
+    axios.get(API_ENDPOINT_PEOPLE)
+      .then((respuesta) => {
+        setPeople(respuesta.data)
+        console.log(respuesta.data)
+      })
+      .catch((error) => {
+        console.log("este es el error",error)
+      })
+
+  })
 
   // Filtrar resultados basados en el término de búsqueda
   const filteredPeople = people.filter((persona) =>
@@ -96,8 +112,8 @@ export function BusquedaComunidades() {
                   <button
                     onClick={() => toggleFollow(people, setPeople, persona.id)}
                     className={`btn btn-font-black border ${persona.isFollowing
-                        ? 'border-red-500 text-white'
-                        : 'border-blue-500 text-white'
+                      ? 'border-red-500 text-white'
+                      : 'border-blue-500 text-white'
                       }`}
                   >
                     {persona.isFollowing ? 'Eliminar' : 'Añadir'}
@@ -139,8 +155,8 @@ export function BusquedaComunidades() {
                     toggleFollow(communities, setCommunities, comunidad.id)
                   }
                   className={`btn btn-font-black border ${comunidad.isFollowing
-                      ? 'border-red-500 text-white'
-                      : 'border-blue-500 text-white'
+                    ? 'border-red-500 text-white'
+                    : 'border-blue-500 text-white'
                     }`}
                 >
                   {comunidad.isFollowing ? 'Eliminar' : 'Añadir'}
