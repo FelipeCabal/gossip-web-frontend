@@ -40,10 +40,6 @@ const App = () => {
       element: <LayoutComponent />,
       children: [
         {
-          path: 'chat',
-          element: <ChatComponent />,
-        },
-        {
           path: 'style-guide',
           element: <GuiaEstilos />,
           children: [

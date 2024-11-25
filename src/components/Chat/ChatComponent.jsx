@@ -5,7 +5,7 @@ import axios from 'axios';
 import './ChatStyle.css';
 
 const ChatComponent = () => {
-    // ESTAS CONSTANTES SE DEBEN ENVIAR A ESTE COMPONENTE YA SEA POR PARAMETRO O COMO PROP
+    // ESTAS CONSTANTES SE DEBEN ENVIAR A ESTE COMPONENTE YA SEA POR PARÁMETRO O COMO PROP
     const chatId = '1';
     const chatType = 'group';
 
@@ -25,7 +25,6 @@ const ChatComponent = () => {
         try {
             const response = await axios.get(`${process.env.REACT_APP_API}/chats/${chatType}/${chatId}`);
             const chatData = response.data;
-            console.log(chatData)
             setChat(chatData);
 
             if (chatType !== 'private') {
@@ -51,7 +50,7 @@ const ChatComponent = () => {
                     if (miembroUsuario.id !== usuario.id) {
                         acc[miembroUsuario.id] = miembroUsuario;
                     }
-                    console.log(miembroUsuario)
+                    console.log(miembroUsuario);
                     return acc;
                 }, {});
                 setUsersCache(userDictionary);
@@ -144,25 +143,43 @@ const ChatComponent = () => {
     }, [messages]);
 
     return (
-        <div>
-            <div style={{ maxWidth: '700px', margin: '0 auto' }}>
+        <div className='flex'>
+            <div className='w-full'>
                 <div className="flex justify-between items-center border-b-2 border-slate-900">
                     <h2>{title ? title : <>Cargando Chat</>}</h2>
-                    <svg
-                        onClick={handleToggleInfo}
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        strokeWidth="1.5"
-                        stroke="currentColor"
-                        className="size-9"
-                    >
-                        <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M12 6.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 12.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 18.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5Z"
-                        />
-                    </svg>
+                    {toggleInfo ? (
+                        <svg
+                            onClick={handleToggleInfo}
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            strokeWidth="1.5"
+                            stroke="currentColor"
+                            className="size-8 cursor-pointer"
+                        >
+                            <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3"
+                            />
+                        </svg>
+                    ) : (
+                        <svg
+                            onClick={handleToggleInfo}
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            strokeWidth="1.5"
+                            stroke="currentColor"
+                            className="size-9 cursor-pointer"
+                        >
+                            <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="M12 6.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 12.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 18.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5Z"
+                            />
+                        </svg>
+                    )}
                 </div>
                 <div
                     className="chatContainer overflow-y-scroll p-[10px] mb-2"
@@ -175,9 +192,7 @@ const ChatComponent = () => {
                     ) : (
                         <>
                             {messages.map((msg, index) => {
-                                console.log(msg)
                                 const user = usersCache[msg.usuarioId];
-                                console.log(usersCache)
                                 const myMessage = msg.usuarioId === usuario.id;
                                 return (
                                     <div
@@ -204,17 +219,18 @@ const ChatComponent = () => {
                                                     }
                                             }
                                         >
-                                            <span className="text-base font-bold">
+                                            <span className="text-[10px] font-bold">
                                                 {myMessage ? (
                                                     <p className="text-end">@Me</p>
+                                                ) : user ? (
+                                                    <p>@{user.nombre}</p>
                                                 ) : (
-                                                    user ? <p>@{user.nombre}</p> :
-                                                        'Cargando usuario...'
+                                                    'Cargando usuario...'
                                                 )}
                                             </span>
-                                            <p className="text-[17px]">{msg.message}</p>
+                                            <p className="text-[16px]">{msg.message}</p>
                                             <div className="w-full text-end -mt-3">
-                                                <span className="text-sm text-end text-slate-500 text-[14px]">
+                                                <span className="text-end text-slate-500 text-[9px]">
                                                     {formatTime(msg.createdAt)}
                                                 </span>
                                             </div>
@@ -237,13 +253,13 @@ const ChatComponent = () => {
                             if (e.key === 'Enter') sendMessage();
                         }}
                     />
-                    <button
-                        className="buttonSend"
-                        onClick={sendMessage}
-                    >
+                    <button className="buttonSend" onClick={sendMessage}>
                         Enviar
                     </button>
                 </div>
+            </div>
+            <div className={toggleInfo ? 'block' : 'hidden'}>
+                {/* Aquí debe ir el componente de la información del chat y pasarle las props necesarias */}
             </div>
         </div>
     );
