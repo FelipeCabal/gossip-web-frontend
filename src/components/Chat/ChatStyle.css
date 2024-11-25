@@ -18,9 +18,10 @@
 }
 
 .inputMessage{
+    width: 80%;
+    padding: 5px;
     background-color: rgb(226, 231, 236);
     border-radius: 15px;
     overflow-wrap: break-word; /* Rompe palabras largas */
     word-break: break-word; /* Asegura el corte de palabras largas */
-    white-space: pre-wrap; /* Opcional, para soportar saltos de línea */
 }

@@ -5,12 +5,9 @@ import axios from 'axios';
 import './ChatStyle.css';
 
 const ChatComponent = () => {
-
-
-    //ESTAS CONSTANTES SE DEBEN ENVIAR A ESTE COMPONENTE YA SEA POR PARAMETRO O COMO PROP
-    const chatId = '4'
-    const chatType = 'group'
-
+    // ESTAS CONSTANTES SE DEBEN ENVIAR A ESTE COMPONENTE YA SEA POR PARAMETRO O COMO PROP
+    const chatId = '4';
+    const chatType = 'group';
 
     const { usuario, token } = useAuth();
     const socketRef = useRef(null);
@@ -19,39 +16,75 @@ const ChatComponent = () => {
     const [newMessage, setNewMessage] = useState('');
     const [loadingMessages, setLoadingMessages] = useState(true);
     const messagesEndRef = useRef(null);
-    const [chat, setChat] = useState([])
-    const [title, setTitle] = useState(null)
-    const [imagen, setImagen] = useState('')
+    const [chat, setChat] = useState([]);
+    const [title, setTitle] = useState(null);
+    const [imagen, setImagen] = useState(null);
+    const [toggleInfo, setToggleInfo] = useState(false);
+
+    const fetchChatData = async () => {
+        try {
+            const response = await axios.get(`${process.env.REACT_APP_API}/chats/${chatType}/${chatId}`);
+            const chatData = response.data;
+            setChat(chatData);
+
+            if (chatType !== 'private') {
+                setTitle(chatData.nombre);
+                setImagen(chatData.imagen || '');
+            }
+
+            if (chatType === 'private') {
+                const relatedUser =
+                    chatData.amistad.userEnvia.id === usuario.id
+                        ? chatData.amistad.userRecibe
+                        : chatData.amistad.userEnvia;
+
+                setUsersCache({
+                    [relatedUser.id]: relatedUser,
+                });
+
+                setTitle(relatedUser.nombre);
+                setImagen(relatedUser.imagen || '');
+            } else if (chatType === 'group' || chatType === 'community') {
+                const userDictionary = chatData.miembros.reduce((acc, miembro) => {
+                    const miembroUsuario = chatType === 'group' ? miembro : miembro.usuario;
+                    if (miembroUsuario.id !== usuario.id) {
+                        acc[miembroUsuario.id] = miembroUsuario;
+                    }
+                    return acc;
+                }, {});
+
+                setUsersCache(userDictionary);
+            }
+        } catch (error) {
+            console.error('Error al cargar el chat:', error);
+        }
+    };
+
+    const sendMessage = () => {
+        if (newMessage.trim() && socketRef.current) {
+            socketRef.current.emit('sendMessage', { chatId, chatType, message: newMessage });
+            setNewMessage('');
+        }
+    };
+
+    const formatTime = (isoDate) => {
+        const date = new Date(isoDate);
+        return date.toLocaleTimeString('en-US', {
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: true,
+        });
+    };
+
+    const handleToggleInfo = () => {
+        setToggleInfo(!toggleInfo);
+    };
 
     const scrollToBottom = () => {
         if (messagesEndRef.current) {
             messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
         }
     };
-
-    useEffect(() => {
-        const fetchChatData = async () => {
-            try {
-                const response = await axios.get(`${process.env.REACT_APP_API}/chats/${chatType}/${chatId}`);
-                setChat(response.data);
-
-                if (chatType !== 'private') {
-                    setTitle(response.data.nombre || 'Chat sin título');
-                    setImagen(response.data.imagen || '');
-                } else {
-                    setTitle(null);
-                }
-            } catch (error) {
-                console.error('Error al obtener los datos del chat:', error);
-            }
-        };
-
-        fetchChatData();
-    }, [chatId, chatType]);
-
-    useEffect(() => {
-        scrollToBottom();
-    }, [messages])
 
     useEffect(() => {
         if (!token) {
@@ -71,8 +104,8 @@ const ChatComponent = () => {
         socketInstance.on('connect', () => {
             axios
                 .get(`${process.env.REACT_APP_API}/chats/mensajes/${chatId}/type/${chatType}`)
-                .then((r) => {
-                    setMessages(r.data);
+                .then((response) => {
+                    setMessages(response.data);
                     setLoadingMessages(false);
                 })
                 .catch((err) => {
@@ -102,144 +135,116 @@ const ChatComponent = () => {
     }, [token, chatId, chatType]);
 
     useEffect(() => {
-        const fetchUsers = async () => {
-            const userIds = messages.map((msg) => msg.usuarioId);
-            const uniqueUserIds = [...new Set(userIds)];
-            const filteredUserIds = uniqueUserIds.filter((id) => id !== usuario.id);
+        fetchChatData();
+    }, [chatId, chatType]);
 
-            const usersData = {};
-
-            for (const userId of uniqueUserIds) {
-                if (!usersCache[userId]) {
-                    try {
-                        const response = await axios.get(`${process.env.REACT_APP_API}/users/${userId}`);
-                        usersData[userId] = response.data;
-                    } catch (error) {
-                        console.error(`Error obteniendo información del usuario ${userId}:`, error);
-                    }
-                }
-            }
-            if (filteredUserIds.length === 1 && chatType == 'private') {
-                const friendId = filteredUserIds[0];
-                const friend = usersData[friendId];
-                if (friend) {
-                    setTitle(friend.nombre);
-                    setImagen(friend.imagen);
-                }
-            }
-
-            setUsersCache((prevCache) => ({ ...prevCache, ...usersData }));
-        };
-
-        if (messages.length > 0) {
-            fetchUsers();
-        }
-    }, [messages, usersCache, title, chatType]);
-
-
-    const sendMessage = () => {
-        if (newMessage.trim() && socketRef.current) {
-            socketRef.current.emit('sendMessage', { chatId, chatType, message: newMessage });
-            setNewMessage('');
-        }
-    };
-
-    const formatTime = (isoDate) => {
-        const date = new Date(isoDate);
-        return date.toLocaleTimeString('en-US', {
-            hour: '2-digit',
-            minute: '2-digit',
-            hour12: true,
-        });
-    };
+    useEffect(() => {
+        scrollToBottom();
+    }, [messages]);
 
     return (
-        <div style={{ maxWidth: '400px', margin: '0 auto' }}>
-            <h2>{title ? title : <>Cargando Chat</>}</h2>
-            <div
-                className="chatContainer"
-                style={{
-                    border: '1px solid #ccc',
-                    padding: '10px',
-                    marginBottom: '10px',
-                    height: '300px',
-                    overflowY: 'scroll',
-                    scrollbarWidth: 'thin',
-                }}
-            >
-                {loadingMessages ? (
-                    <div>Cargando mensajes...</div>
-                ) : (
-                    <>
-                        {messages.map((msg, index) => {
-                            const user = usersCache[msg.usuarioId];
-                            const myMessage = msg.usuarioId === usuario.id;
-                            return (
-                                <div
-                                    key={index}
-                                    className={
-                                        myMessage
-                                            ? 'mb-4 w-full flex justify-end'
-                                            : 'mb-4 w-full flex justify-start'
-                                    }
-                                >
+        <div>
+            <div style={{ maxWidth: '700px', margin: '0 auto' }}>
+                <div className="flex justify-between items-center border-b-2 border-slate-900">
+                    <h2>{title ? title : <>Cargando Chat</>}</h2>
+                    <svg
+                        onClick={handleToggleInfo}
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth="1.5"
+                        stroke="currentColor"
+                        className="size-9"
+                    >
+                        <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M12 6.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 12.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 18.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5Z"
+                        />
+                    </svg>
+                </div>
+                <div
+                    className="chatContainer overflow-y-scroll p-[10px] mb-2"
+                    style={{
+                        height: '300px',
+                    }}
+                >
+                    {loadingMessages ? (
+                        <div>Cargando mensajes...</div>
+                    ) : (
+                        <>
+                            {messages.map((msg, index) => {
+                                const user = usersCache[msg.usuarioId];
+                                const myMessage = msg.usuarioId === usuario.id;
+                                return (
                                     <div
-                                        className="max-w-[70%] w-auto border border-slate-600 p-3"
-                                        style={
+                                        key={index}
+                                        className={
                                             myMessage
-                                                ? {
-                                                    borderTopLeftRadius: '12px',
-                                                    borderTopRightRadius: '12px',
-                                                    borderBottomLeftRadius: '12px',
-                                                }
-                                                : {
-                                                    borderTopLeftRadius: '12px',
-                                                    borderTopRightRadius: '12px',
-                                                    borderBottomRightRadius: '12px',
-                                                }
+                                                ? 'mb-4 w-full flex justify-end'
+                                                : 'mb-4 w-full flex justify-start'
                                         }
                                     >
-                                        <span className="text-base font-bold">
-                                            {user ? (
-                                                myMessage ? (
-                                                    <p className="text-end">@Me</p>
+                                        <div
+                                            className="max-w-[70%] w-auto border border-slate-600 p-3"
+                                            style={
+                                                myMessage
+                                                    ? {
+                                                        borderTopLeftRadius: '12px',
+                                                        borderTopRightRadius: '12px',
+                                                        borderBottomLeftRadius: '12px',
+                                                    }
+                                                    : {
+                                                        borderTopLeftRadius: '12px',
+                                                        borderTopRightRadius: '12px',
+                                                        borderBottomRightRadius: '12px',
+                                                    }
+                                            }
+                                        >
+                                            <span className="text-base font-bold">
+                                                {user ? (
+                                                    myMessage ? (
+                                                        <p className="text-end">@Me</p>
+                                                    ) : (
+                                                        <p>@{user.nombre}</p>
+                                                    )
                                                 ) : (
-                                                    <p>@{user.nombre}</p>
-                                                )
-                                            ) : (
-                                                'Cargando usuario...'
-                                            )}
-                                        </span>
-                                        <p className="text-[17px]">{msg.message}</p>
-                                        <div className='w-full text-end -mt-3'>
-                                            <span className="text-sm text-gray-500 text-end">
-                                                {formatTime(msg.createdAt)}
+                                                    'Cargando usuario...'
+                                                )}
                                             </span>
+                                            <p className="text-[17px]">{msg.message}</p>
+                                            <div className="w-full text-end -mt-3">
+                                                <span className="text-sm text-end text-slate-500 text-[14px]">
+                                                    {formatTime(msg.createdAt)}
+                                                </span>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            );
-                        })}
-                        <div ref={messagesEndRef}></div>
-                    </>
-                )}
+                                );
+                            })}
+                            <div ref={messagesEndRef} />
+                        </>
+                    )}
+                </div>
+                <div>
+                    <input
+                        type="text"
+                        className="inputMessage"
+                        placeholder="Escribe tu mensaje..."
+                        value={newMessage}
+                        onChange={(e) => setNewMessage(e.target.value)}
+                        onKeyDown={(e) => {
+                            if (e.key === 'Enter') sendMessage();
+                        }}
+                    />
+                    <button
+                        className="buttonSend"
+                        onClick={sendMessage}
+                    >
+                        Enviar
+                    </button>
+                </div>
             </div>
-            <input
-                className='inputMessage'
-                type="text"
-                value={newMessage}
-                onChange={(e) => setNewMessage(e.target.value)}
-                onKeyDown={(e) => {
-                    if (e.key === 'Enter') {
-                        sendMessage();
-                    }
-                }}
-                placeholder="Escribe un mensaje..."
-                style={{ width: '80%', padding: '5px' }}
-            />
-            <button className="buttonSend" onClick={sendMessage}>
-                Enviar
-            </button>
         </div>
     );
 };
