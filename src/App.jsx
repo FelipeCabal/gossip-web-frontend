@@ -18,7 +18,8 @@ import { PerfilUsuario } from './pages/Perfil/PerfilUsuario';
 import { useState } from 'react';
 import { RefreshProvider } from './providers/RefreshProvider.jsx';
 import ChatComponent from './components/Chat/ChatComponent.jsx';
-
+import { CreateGroup } from './components/createGroup/createGroup.jsx';
+import { CreateComunity } from './components/createGroup/createComunity.jsx';
 const App = () => {
   const [refresh, setRefresh] = useState(false)
 
@@ -54,13 +55,22 @@ const App = () => {
           element: <HomePage />,
           children: [
             {
+              path: 'CreateGroup',
+              element: <CreateGroup />
+            },
+            {
+              path: "CreateComunity",
+              element: <CreateComunity />
+            },
+            {
               path: 'Postform',
               element: <PostForm />
             },
             {
               path: 'post/:post',
               element: <VistaPublicacion />
-            }
+            },
+
           ]
         },
         {
