@@ -69,6 +69,13 @@
     background: #c32700;
 }
 
+.btn-5 {
+    background: #6F9CEB;
+}
+
+.btn-5::before {
+    background: #78a2ec;
+}
 .btn-4::before {
     background: #9f2000;
 }
