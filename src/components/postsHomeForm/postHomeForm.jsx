@@ -78,7 +78,7 @@ export function PostHomeForm({ context }) {
                 console.log("Image/Video URL updated:", url);
             }
         } catch (error) {
-            console.error("Upload error:", error);
+            console.log("Upload error:", error);
         } finally {
             setIsUploading(false);
             setFileExist(true);

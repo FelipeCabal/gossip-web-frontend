@@ -1,23 +1,20 @@
-import { useState } from "react"
-import anonimo from '../../assets/icons/Buho.png'
+import { useState } from "react";
+import anonimo from '../../assets/icons/Buho.png';
 import { FormComment } from "../Comentarios/FormComment";
 import { Link } from "react-router-dom";
-
 
 export function PublicacionHome({ userName, img, texto, perfil, esAnonimo, postId }) {
   const [expandir, setExpandir] = useState(false); // Controla si la publicación está extendida
   const toggleExpandir = () => setExpandir(!expandir); // Alterna el estado
-  const [likeIt, setLikeIt] = useState(false)
-  const heartStroke = likeIt ? '#99b4ff' : 'currentColor'
-  const heartFill = likeIt ? '#99b4ff' : 'none'
+  const [likeIt, setLikeIt] = useState(false);
+  const heartStroke = likeIt ? '#99b4ff' : 'currentColor';
+  const heartFill = likeIt ? '#99b4ff' : 'none';
   const fotoPerfil = esAnonimo ? anonimo : perfil ? perfil : anonimo;
   const nombre = esAnonimo ? 'anonimo' : userName;
 
-
   const handleClick = () => {
-    setLikeIt(!likeIt)
-  }
-
+    setLikeIt(!likeIt);
+  };
 
   const maxWords = img ? '100' : '300';
   const wordsArray = texto.split(' ');
@@ -26,6 +23,7 @@ export function PublicacionHome({ userName, img, texto, perfil, esAnonimo, postI
     : texto;
 
   const currentPath = window.location.pathname;
+
   return (
     <>
       <div className="w-full flex justify-center place-items-center">
@@ -38,14 +36,20 @@ export function PublicacionHome({ userName, img, texto, perfil, esAnonimo, postI
             <aside className="flex-col flex justify-center items-center relative">
               <Link to={currentPath + '/post/' + postId}>
                 <div className="max-w-[468px] max-h-[468px] overflow-hidden xs:max-w-[428px] xs:max-h-[428px] pr-4 pl-3">
-                  <img className="w-full h-full object-cover" src={img} alt="" />
+                  {img ? (
+                    <img className="w-full h-full object-cover" src={img} alt="Publicación" />
+                  ) : (
+                    <div className="w-full h-full flex justify-center items-center bg-gray-200">
+                      <span className="text-gray-500"></span>
+                    </div>
+                  )}
                 </div>
-                <div className="w-full p-6 ">
+                <div className="w-full p-6">
                   <span className="text-xl font-roboto">{truncatedText}</span>
                 </div>
               </Link>
               <section className="bottom-0 right-0 flex space-x-3 p-4 w-full">
-                <div className=" absolute bottom-0 right-0 flex justify-end space-x-3 pt-6 pb-4 pr-4 w-full">
+                <div className="absolute bottom-0 right-0 flex justify-end space-x-3 pt-6 pb-4 pr-4 w-full">
                   <button onClick={handleClick}>
                     <svg
                       data-slot="icon"
@@ -85,7 +89,6 @@ export function PublicacionHome({ userName, img, texto, perfil, esAnonimo, postI
           </article>
         </div>
       </div>
-
     </>
-  )
+  );
 }

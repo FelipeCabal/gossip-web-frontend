@@ -34,4 +34,9 @@
     .right-column {
         grid-column: 2 / 3;
     }
+
+    .right{
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+    }
 }
