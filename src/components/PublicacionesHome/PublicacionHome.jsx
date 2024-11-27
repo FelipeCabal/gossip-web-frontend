@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import anonimo from '../../assets/icons/Buho.png';
 import { FormComment } from "../Comentarios/FormComment";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 export function PublicacionHome({ userName, img, texto, perfil, esAnonimo, postId }) {
   const [expandir, setExpandir] = useState(false); // Controla si la publicación está extendida
@@ -12,9 +13,14 @@ export function PublicacionHome({ userName, img, texto, perfil, esAnonimo, postI
   const fotoPerfil = esAnonimo ? anonimo : perfil ? perfil : anonimo;
   const nombre = esAnonimo ? 'anonimo' : userName;
 
+
   const handleClick = () => {
-    setLikeIt(!likeIt);
+    axios.post(process.env.REACT_APP_API + "/likes/" + postId)
+      .then(() => setLikeIt(!likeIt))
+      .catch((error) => { console.log(error) })
   };
+
+
 
   const maxWords = img ? '100' : '300';
   const wordsArray = texto.split(' ');
@@ -23,6 +29,7 @@ export function PublicacionHome({ userName, img, texto, perfil, esAnonimo, postI
     : texto;
 
   const currentPath = window.location.pathname;
+
 
   return (
     <>

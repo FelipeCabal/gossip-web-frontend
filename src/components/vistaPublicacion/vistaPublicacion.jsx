@@ -14,6 +14,7 @@ export function VistaPublicacion() {
     const [likeIt, setLikeIt] = useState(false)
     const heartStroke = likeIt ? '#99b4ff' : 'currentColor'
     const heartFill = likeIt ? '#99b4ff' : 'none'
+    const [likes, setLikes] = useState(null)
     useEffect(() => {
         axios.get(endpoint)
             .then(res => {
@@ -21,6 +22,14 @@ export function VistaPublicacion() {
                 setPublicacion(data)
             }).catch(e => console.log(e));
     }, []);
+    useEffect(() => {
+        axios.get(process.env.REACT_APP_API + "/likes/" + post)
+            .then((respuesta) => {
+                setLikes(respuesta.data)
+                console.log(respuesta.data)
+            })
+            .catch((error) => { console.log(error) })
+    }, [likeIt])
 
     const currentPath = window.location.pathname
     const pathParts = currentPath.split('/');
@@ -33,8 +42,11 @@ export function VistaPublicacion() {
     }
 
     const handleClick = () => {
-        setLikeIt(!likeIt)
-    }
+        axios.post(process.env.REACT_APP_API + "/likes/" + post)
+            .then(() => setLikeIt(!likeIt))
+            .catch((error) => { console.log(error) })
+    };
+
     return <>
         {
             publicacion ? <div className="modal-fade animate__animated animate__fadeIn">
@@ -82,7 +94,7 @@ export function VistaPublicacion() {
                                         </path>
                                     </svg>
                                 </button>
-                                <p className="font-bold">Le gusta a orlando y 20 personas mas</p>
+                                <p className="font-bold">Le gusta a {likes ? likes[0].user.nombre : <></>} y {likes ? likes.length : <></>} personas mas</p>
                             </div>
                         </div>
                         <div>
