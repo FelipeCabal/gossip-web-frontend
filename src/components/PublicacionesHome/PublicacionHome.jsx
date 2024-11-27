@@ -3,8 +3,10 @@ import anonimo from '../../assets/icons/Buho.png';
 import { FormComment } from "../Comentarios/FormComment";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { useAuth } from "../../providers/AuthProvider";
 
 export function PublicacionHome({ userName, img, texto, perfil, esAnonimo, postId }) {
+  const {usuario} = useAuth()
   const [expandir, setExpandir] = useState(false); // Controla si la publicación está extendida
   const toggleExpandir = () => setExpandir(!expandir); // Alterna el estado
   const [likeIt, setLikeIt] = useState(false);
@@ -20,7 +22,17 @@ export function PublicacionHome({ userName, img, texto, perfil, esAnonimo, postI
       .catch((error) => { console.log(error) })
   };
 
-
+  useEffect(() => {
+    axios.get(process.env.REACT_APP_API + "/likes/" + postId)
+      .then((respuesta) => {
+        respuesta.data.map((like) => {
+          if (usuario.id == like.user.id) {
+            setLikeIt(true)
+          }
+        })
+      })
+      .catch((error) => { console.log(error) })
+  }, [likeIt, usuario])
 
   const maxWords = img ? '100' : '300';
   const wordsArray = texto.split(' ');

@@ -6,9 +6,11 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { FormComment } from "../Comentarios/FormComment";
 import { Comentarios } from "../Comentarios/Comentarios";
+import { useAuth } from "../../providers/AuthProvider";
 
 export function VistaPublicacion() {
     const { post } = useParams()
+    const {usuario} = useAuth()
     const [publicacion, setPublicacion] = useState(null);
     const endpoint = process.env.REACT_APP_API + "/posts/" + post
     const [likeIt, setLikeIt] = useState(false)
@@ -27,9 +29,14 @@ export function VistaPublicacion() {
             .then((respuesta) => {
                 setLikes(respuesta.data)
                 console.log(respuesta.data)
+                respuesta.data.map((like) => {
+                    if (usuario.id == like.user.id) {
+                        setLikeIt(true)
+                    }
+                })
             })
             .catch((error) => { console.log(error) })
-    }, [likeIt])
+    }, [likeIt, usuario])
 
     const currentPath = window.location.pathname
     const pathParts = currentPath.split('/');
@@ -94,7 +101,13 @@ export function VistaPublicacion() {
                                         </path>
                                     </svg>
                                 </button>
-                                <p className="font-bold">Le gusta a {likes ? likes[0].user.nombre : <></>} y {likes ? likes.length : <></>} personas mas</p>
+                                {
+                                    likes ?
+                                        likes.length > 1 ?
+                                            <p>Le gusta a {likes[0].user.nombre} y a {likes.length - 1} personas mas</p>
+                                            : likeIt ? <p>Te gusta</p> : <p>a { likes[0].user.nombre} le gusta</p>
+                                        : <p>Indica que te gusta</p>
+                               }
                             </div>
                         </div>
                         <div>
