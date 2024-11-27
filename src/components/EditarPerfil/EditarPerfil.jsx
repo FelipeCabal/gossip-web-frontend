@@ -62,7 +62,7 @@ export function EditarPerfil() {
             setError('');
             setSuccess('');
 
-            await axios.put(process.env.REACT_APP_API + '/users/' + id); // Cambia por la ruta de tu API
+            await axios.put(process.env.REACT_APP_API + '/users/' + id);
             setSuccess('Perfil actualizado correctamente.');
         } catch (error) {
             console.log(error)
@@ -108,7 +108,7 @@ export function EditarPerfil() {
                     <label className='mx-6 mt-4 font-bold'>Pais:</label>
                     <input className='w-full mr-5 mb-6 mt-5 rounded-lg shadow-md border border-b-2 border-b-purple-500'
                         type="text"
-                        name="Pais"
+                        name="pais"
                         value={profile.pais}
                         onChange={handleChange}
                         required
