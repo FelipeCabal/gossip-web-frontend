@@ -1,57 +1,9 @@
 import { Outlet } from "react-router-dom"
-import Comunidades from "../../components/ComunidadesDesplegables"
 
 import './paginaChats.css'
 import ChatComponent from "../../components/Chat/ChatComponent"
-import { useState } from "react"
-import axios from "axios"
 
 export function PaginaChats() {
-
-    const ChatList = ({ chats, onSelectChat }) => {
-        return (
-            <div className="chat-list">
-                {chats.map((chat) => (
-                    <div
-                        key={chat.id}
-                        className="chat-item"
-                        onClick={() => onSelectChat(chat)}
-                    >
-                        <p>{chat.name}</p>
-                    </div>
-                ))}
-            </div>
-        );
-    };
-
-    const [chats, setChats] = useState([
-        {
-            id: 1,
-            name: "Juan",
-            messages: [{ text: "Hola!", isOwn: false }],
-        },
-        {
-            id: 2,
-            name: "Ana",
-            messages: [{ text: "¿Cómo estás?", isOwn: false }],
-        },
-    ]);
-
-
-    const [activeChat, setActiveChat] = useState(null);
-
-    const handleSelectChat = (chat) => {
-        setActiveChat(chat);
-    }
-
-    const handleSendMessage = (chatId, text) => {
-        setChats((prevChats) =>
-            prevChats.map((chat) =>
-                chat.id === chatId ? [...chat.messages, { text, isOwn: true }]
-                    : chat
-            )
-        );
-    };
 
 
     return (<>
@@ -60,15 +12,6 @@ export function PaginaChats() {
 
         <div className="contenedor-chats-page">
             <div className="left-column-chats">
-                <div>
-                    {chats.map((chat) => (
-                        <div key={chat.id}
-                            className="chat-item"
-                            onClick={() => onSelectChat(chat)}>
-                            <p>{chat.name}</p>
-                        </div>
-                    ))}
-                </div>
                 <div className="searchChatCommunity">
                     <input type="search" className="searchChats" placeholder="Buscar o iniciar un chat" />
                     <div className="icon-text-group">
@@ -101,19 +44,12 @@ export function PaginaChats() {
                     </div>
 
                 </div>
+
             </div>
 
             <div className="right-column-chats">
-                <ChatList chats={chats} onSelectChat={handleSelectChat} />
 
-                {activeChat ? (
-                    <ChatComponent activeChat={activeChat} onSendMessage={handleSendMessage} />
-                ) : <img className="no-selected-chat" src="https://i.pinimg.com/474x/e7/a7/89/e7a789d3da94210f9bfa806806f3dafb.jpg" alt="selecciona un chat" />
-                }
-
-                {
-                    //<div className="vistaChat"><ChatComponent /></div>
-                }
+                <div className="vistaChat"><ChatComponent /></div>
 
                 {
                     //SECCION PARA VISTA DE CHAT PERSONAL 
