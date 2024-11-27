@@ -17,6 +17,7 @@ import { LayoutComponent } from './pages/LayoutComponent';
 import { PerfilUsuario } from './pages/Perfil/PerfilUsuario';
 import { useState } from 'react';
 import { RefreshProvider } from './providers/RefreshProvider.jsx';
+import { EditarPerfil } from './components/EditarPerfil/EditarPerfil.jsx';
 import { VistaInformacionChat } from './components/VistaChats/VistaInformacionChat.jsx';
 import { BusquedaComunidades } from './components/BusquedaComunidades.jsx';
 import { CreateGroup } from './components/createGroup/createGroup.jsx';
@@ -84,12 +85,16 @@ const App = () => {
       {
         path: 'perfil/:id',
         element: <PerfilUsuario />,
-        children: [
+        children: [,
           {
             path: 'post/:post',
             element: <VistaPublicacion />
-          }
+          },
         ]
+      },
+      {
+        path: 'update',
+        element: <EditarPerfil />
       }
       ]
     }

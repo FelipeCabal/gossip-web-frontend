@@ -4,7 +4,6 @@ import "../css/buttons/buttons.css"
 import { Outlet } from "react-router-dom";
 import foto from '../assets/avatares/mujer.png'
 
-
 export function GuiaEstilos() {
     const chats = [
         { nombre: "Chat 1", imagen: "imagen1.png", ultimoMensaje: "Mensaje 1" },

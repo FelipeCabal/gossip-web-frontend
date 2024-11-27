@@ -4,20 +4,23 @@ import { ListaPublicaciones } from '../../components/PublicacionesHome/ListaPubl
 import { useAuth } from '../../providers/AuthProvider'
 import axios from 'axios'
 import { useEffect, useState } from 'react'
+import { EditarPerfil } from '../../components/EditarPerfil/EditarPerfil'
+import { Link } from 'react-router-dom'
 
 export function PerfilUsuario() {
     const { usuario } = useAuth()
     const { id } = useParams()
     const [user, setUser] = useState(null)
-    
+
 
     useEffect(() => {
+        // eslint-disable-next-line no-undef
         axios.get(process.env.REACT_APP_API + '/users/' + id)
             .then((respuesta) => {
                 setUser(respuesta.data)
             })
             .catch((error) => {
-                console.log("este es el error"+error)
+                console.log("este es el error" + error)
             })
     }, [id])
 
@@ -44,9 +47,12 @@ export function PerfilUsuario() {
                         <div className='flex h-fit pt-10'>
                             <div className='flex sm:flex-col'>
                                 {usuario.id == id ? (<div>
-                                    <button className='btn btn-font-black border border-blue-500  text-black mr-4'>
-                                        Editar perfil
-                                    </button>
+                                    <Link to={`/update`}>
+                                        <button className='btn btn-font-black border border-blue-500  text-black mr-4'>
+                                            Editar perfil
+                                        </button>
+                                    </Link>
+
                                     <button className='btn btn-font-black border border-blue-500 text-black '>
                                         Solicitudes
                                     </button>
@@ -67,7 +73,7 @@ export function PerfilUsuario() {
                             <h3 className='border-t-2 mt-[-2px] border-black w-fit'>Publicaciones</h3>
                         </div>
                         <div className='w-full flex flex-col justify-center sm:w-10/12 md:w-3/4'>
-                            <ListaPublicaciones ENDPOINT={process.env.REACT_APP_API + '/posts/user/' + id}/>
+                            <ListaPublicaciones ENDPOINT={process.env.REACT_APP_API + '/posts/user/' + id} />
                         </div>
                     </section>
 
