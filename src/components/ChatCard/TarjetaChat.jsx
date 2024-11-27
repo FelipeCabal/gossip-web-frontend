@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-
+import icono from '../../assets/avatares/neutro.png';
 
 export function TarjetaChat({ nombre, imagen, chatid, tipoChat }) {
 
@@ -23,8 +23,7 @@ export function TarjetaChat({ nombre, imagen, chatid, tipoChat }) {
             {chatid && (
                 <div className="flex items-center p-4 border-b border-gray-300 hover:bg-gray-100 cursor-pointer">
                     <img
-                        src={imagen}
-                        alt={`Imagen de usuario`}
+                        src={imagen || icono}
                         className="w-12 h-12 rounded-full object-cover"
                     />
                     <div className="ml-4 flex-1">
