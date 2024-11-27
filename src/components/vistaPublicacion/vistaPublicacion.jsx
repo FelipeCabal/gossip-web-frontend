@@ -18,17 +18,22 @@ export function VistaPublicacion() {
     const heartFill = likeIt ? '#99b4ff' : 'none'
     const [likes, setLikes] = useState(null)
     useEffect(() => {
+        if (!usuario) {
+            return
+        }
         axios.get(endpoint)
             .then(res => {
                 const data = res.data;
                 setPublicacion(data)
             }).catch(e => console.log(e));
-    }, []);
+    }, [usuario]);
     useEffect(() => {
+        if (!usuario) {
+            return
+        }
         axios.get(process.env.REACT_APP_API + "/likes/" + post)
             .then((respuesta) => {
                 setLikes(respuesta.data)
-                console.log(respuesta.data)
                 respuesta.data.map((like) => {
                     if (usuario.id == like.user.id) {
                         setLikeIt(true)
@@ -69,7 +74,7 @@ export function VistaPublicacion() {
                         <Link to={pathDireccion} className="modal-closer">
                             <span className="material-symbols-outlined text-black">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-9">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
                                 </svg>
                             </span>
                         </Link>

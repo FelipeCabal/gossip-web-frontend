@@ -50,7 +50,6 @@ const ChatComponent = () => {
                     if (miembroUsuario.id !== usuario.id) {
                         acc[miembroUsuario.id] = miembroUsuario;
                     }
-                    console.log(miembroUsuario);
                     return acc;
                 }, {});
                 setUsersCache(userDictionary);
@@ -117,7 +116,6 @@ const ChatComponent = () => {
         });
 
         socketInstance.on('messageReceived', (message) => {
-            console.log('Nuevo mensaje recibido:', message);
             setMessages((prevMessages) => [...prevMessages, message]);
         });
 

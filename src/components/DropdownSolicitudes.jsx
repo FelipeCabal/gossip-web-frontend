@@ -11,38 +11,46 @@ import axios from 'axios';
 
 const DropdownSolicitudes = () => {
     const enpoint = process.env.REACT_APP_API + "/friend-request/user/received"
+    const enpoint2 = process.env.REACT_APP_API + "/chats/group-invitation"
     const [solicitudesAmistad, setSolicitudesAmistad] = useState([])
     const [visibleSection, setVisibleSection] = useState('amistad');
-    const [solicitudes, setSolicitudes] = useState([
-        { id: 1, name: 'ElBuhoDeTuVidabb', type: 'amistad', status: 'pendiente' },
-        { id: 2, name: 'Carlitxs 123', type: 'amistad', status: 'pendiente' },
-        { id: 3, name: 'TeamGossip', type: 'grupo', status: 'pendiente' },
-        { id: 4, name: 'LosPanes:)', type: 'grupo', status: 'pendiente' }
-    ]);
+    const [solicitudesGrupo, setSolicitudesGrupo] = useState(null)
 
     const toggleDropdown = (section) => {
         setVisibleSection(visibleSection === section ? null : section);
     };
 
-    const handleActionAccept = (id) => {
+    const handleActionAcceptSol = (id) => {
         const accept = {
             newStatus: "A"
         }
         axios.patch(process.env.REACT_APP_API + `/friend-request/request/${id}/status`, accept)
             .then((r) => {
-                console.log(r.data)
                 setSolicitudesAmistad(solicitudesAmistad.filter(solicitud => solicitud.id !== id));
             })
 
     };
-    const handleActionReject = (id) => {
+    const handleActionRejectSol = (id) => {
         const deny = {
             newStatus: "R"
         }
         axios.patch(process.env.REACT_APP_API + `/friend-request/request/${id}/status`, deny)
             .then((r) => {
-                console.log(r.data)
                 setSolicitudesAmistad(solicitudesAmistad.filter(solicitud => solicitud.id !== id));
+            })
+
+    };
+    const handleActionAcceptInv = (id) => {
+        axios.post(process.env.REACT_APP_API + `/chats/group-invitation/${id}/accept`)
+            .then((r) => {
+                setSolicitudesGrupo(solicitudesGrupo.filter(solicitud => solicitud.id !== id));
+            })
+
+    };
+    const handleActionRejectInv = (id) => {
+        axios.delete(process.env.REACT_APP_API + `/chats/group-invitation/${id}/reject`)
+            .then((r) => {
+                setSolicitudesGrupo(solicitudesGrupo.filter(solicitud => solicitud.id !== id));
             })
 
     };
@@ -53,15 +61,19 @@ const DropdownSolicitudes = () => {
                 const response = await axios.get(enpoint);
                 setSolicitudesAmistad(response.data);
             } catch (e) {
-                console.log(e);
+                console.error("Error en solicitudes de amistad:", e);
+            }
+
+            try {
+                const response = await axios.get(enpoint2);
+                setSolicitudesGrupo(response.data);
+            } catch (e) {
+                console.error("Error en solicitudes de grupo:", e);
             }
         };
 
         fetchData();
     }, [enpoint]);
-
-
-    const solicitudesGrupo = solicitudes.filter(solicitud => solicitud.type === 'grupo');
 
     return (
         <div className="dropdownCentral dropdown-container flex flex-col items-center space-y-4 relative">
@@ -88,10 +100,10 @@ const DropdownSolicitudes = () => {
                                     <img src={img} alt="foto de perfil" className='w-28' />
                                     <span className="text-black">{solicitud.name}</span>
                                     <div className="actions flex space-x-2">
-                                        <button onClick={() => handleActionAccept(solicitud.id)}>
+                                        <button onClick={() => handleActionAcceptSol(solicitud.id)}>
                                             <img src={aceptar} alt="aceptar" className="w-8 h-8" />
                                         </button>
-                                        <button onClick={() => handleActionReject(solicitud.id)}>
+                                        <button onClick={() => handleActionRejectSol(solicitud.id)}>
                                             <img src={no_aceptar} alt="no aceptar" className="w-8 h-8" />
                                         </button>
                                     </div>
@@ -105,17 +117,17 @@ const DropdownSolicitudes = () => {
                                         <img src={img} alt="foto de perfil" className='w-28' />
                                         <span className="text-black">{solicitud.name}</span>
                                         <div className="actions flex space-x-2">
-                                            <button onClick={() => handleAction(solicitud.id)}>
+                                            <button onClick={() => handleActionAcceptInv(solicitud.id)}>
                                                 <img src={aceptar} alt="aceptar" className="w-8 h-8" />
                                             </button>
-                                            <button onClick={() => handleAction(solicitud.id)}>
+                                            <button onClick={() => handleActionRejectInv(solicitud.id)}>
                                                 <img src={no_aceptar} alt="no aceptar" className="w-8 h-8" />
                                             </button>
                                         </div>
                                     </li>
                                 ))
                             ) : (
-                                <></>
+                                    <><p className='text-black'>No tienes invitaciones a grupos</p></>
                             )}
                     </ul>
                 </div>

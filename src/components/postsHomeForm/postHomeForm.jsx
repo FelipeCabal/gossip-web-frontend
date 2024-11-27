@@ -3,6 +3,7 @@ import { deleteFile, uploadFile } from "../../services/firebase-services";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useRefresh } from "../../providers/RefreshProvider";
+import { useState } from "react";
 
 export function PostHomeForm({ context }) {
     const { setRefresh } = useRefresh();
@@ -22,7 +23,6 @@ export function PostHomeForm({ context }) {
         if (!postContent.description && !asset) return;
 
         axios.post(`${process.env.REACT_APP_API}/posts`, postContent).then(() => {
-            console.log('Post submitted:', postContent);
             setIsToggled(false);
             setPostContent({ description: '', imagen: '', esAnonimo: false });
             setRefresh(true)
