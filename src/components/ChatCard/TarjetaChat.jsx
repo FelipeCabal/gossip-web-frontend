@@ -1,6 +1,5 @@
 
 import { useAuth } from '../../providers/AuthProvider';
-import './TarjetaChat.css';
 import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
 import axios from 'axios';
@@ -10,11 +9,10 @@ import icono from '../../assets/avatares/neutro.png';
 
 export function TarjetaChat() {
 
-    const tipoChat = "chatPrivado";
+    const tipoChat = "private";
     const { chatid } = useParams();
     // eslint-disable-next-line no-undef
     const ENDPOINT_MENSAJES = `${process.env.REACT_APP_API}}/chats/mensajes/${chatid}/type/${tipoChat}/`;
-    const { usuario } = useAuth();
 
     useEffect(() => {
         axios.get(ENDPOINT_MENSAJES)
