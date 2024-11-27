@@ -3,6 +3,7 @@ import axios from 'axios';
 import icono from '../../assets/avatares/neutro.png';
 
 export function EditarPerfil() {
+    const [id, setId] = useState(null);
     const [profile, setProfile] = useState({
         name: '',
         password: '',
@@ -12,7 +13,9 @@ export function EditarPerfil() {
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
 
-    useEffect(() => {
+    const fetchProfile = async () => {
+        const userId = 'someUserId'; // Replace with actual user ID logic
+        setId(userId);
         const fetchProfile = async () => {
             try {
                 setLoading(true);
@@ -31,7 +34,7 @@ export function EditarPerfil() {
         };
 
         fetchProfile();
-    }, []);
+    };
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -59,10 +62,10 @@ export function EditarPerfil() {
         e.preventDefault();
         try {
             setLoading(true);
-            setError('');
+            await axios.patch(process.env.REACT_APP_API + '/users/' + id, profile);
             setSuccess('');
 
-            await axios.put(process.env.REACT_APP_API + '/users/' + id);
+            await axios.patch(process.env.REACT_APP_API + '/users/' + id);
             setSuccess('Perfil actualizado correctamente.');
         } catch (error) {
             console.log(error)
@@ -114,16 +117,7 @@ export function EditarPerfil() {
                         required
                     />
                 </div>
-                <div className='mt-10 border flex -mx-40 border-gray-300 rounded-lg shadow-md'>
-                    <label className='mx-6 mt-4 font-bold'>Contraseña:</label>
-                    <input className='w-full mr-5 mb-6 mt-5 rounded-lg shadow-md border border-b-2 border-b-purple-500'
-                        type="password"
-                        name="password"
-                        value={profile.password}
-                        onChange={handleChange}
-                        placeholder="Dejar vacío para no cambiar"
-                    />
-                </div>
+
                 <div class="mt-16 mb-16 py-6 space-x-10 flex -w-80">
                     <button className='btn btn-2 text-lg w-52' type="submit" disabled={loading}>
                         {loading ? 'Guardando...' : 'Aceptar'}
