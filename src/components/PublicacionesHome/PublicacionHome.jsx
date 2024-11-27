@@ -23,6 +23,9 @@ export function PublicacionHome({ userName, img, texto, perfil, esAnonimo, postI
   };
 
   useEffect(() => {
+    if (!usuario) {
+      return
+    }
     axios.get(process.env.REACT_APP_API + "/likes/" + postId)
       .then((respuesta) => {
         respuesta.data.map((like) => {
@@ -31,7 +34,6 @@ export function PublicacionHome({ userName, img, texto, perfil, esAnonimo, postI
           }
         })
       })
-      .catch((error) => { console.log(error) })
   }, [likeIt, usuario])
 
   const maxWords = img ? '100' : '300';

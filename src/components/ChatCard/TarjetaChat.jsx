@@ -1,7 +1,5 @@
-import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useRefresh } from '../../providers/RefreshProvider';
 
 
 export function TarjetaChat({ nombre, imagen, chatid, tipoChat }) {

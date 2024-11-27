@@ -2,7 +2,7 @@ import { createTheme, IconButton, InputAdornment, TextField, ThemeProvider } fro
 import './Fondo.css'
 import { Link } from 'react-router-dom'
 import { useState } from 'react';
-import { Password, Update, Visibility, VisibilityOff } from '@mui/icons-material';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { toast, ToastContainer } from 'react-toastify';
 import axios from 'axios';
 import { useAuth } from '../../providers/AuthProvider';

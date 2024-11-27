@@ -2,13 +2,17 @@ import { PublicacionHome } from "./PublicacionHome"
 import { useEffect, useState } from "react"
 import axios from "axios"
 import { useRefresh } from "../../providers/RefreshProvider"
-import { ConstructionOutlined } from "@mui/icons-material"
+import { useAuth } from "../../providers/AuthProvider"
 
-export const ListaPublicaciones = ({ENDPOINT}) => {
+export const ListaPublicaciones = ({ ENDPOINT }) => {
+    const {usuario} = useAuth()
     const { refresh, setRefresh } = useRefresh();
     const [posts, setPosts] = useState(null)
 
     useEffect(() => {
+        if (!usuario) {
+            return
+        }
         axios.get(ENDPOINT)
             .then((respuesta) => {
                 setPosts(respuesta.data)
@@ -17,7 +21,7 @@ export const ListaPublicaciones = ({ENDPOINT}) => {
             .catch((error) => {
                 console.log(error)
             })
-    }, [refresh, setRefresh, ENDPOINT])
+    }, [refresh, setRefresh, ENDPOINT, usuario ])
      
 
     return (<>

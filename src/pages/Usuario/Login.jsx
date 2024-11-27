@@ -1,8 +1,8 @@
 import { IconButton, InputAdornment, TextField } from '@mui/material'
 import { Link, useNavigate } from 'react-router-dom'
 import { createTheme, ThemeProvider } from '@mui/material';
-import { useEffect, useState } from 'react';
-import { Password, Visibility, VisibilityOff } from '@mui/icons-material';
+import { useState } from 'react';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
 import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
 import { useAuth } from '../../providers/AuthProvider';

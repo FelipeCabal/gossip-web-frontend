@@ -1,5 +1,3 @@
-import { useAuth } from "../../providers/AuthProvider"
-import foto from '../../assets/avatares/mujer.png'
 import { Link, useNavigate, useParams } from "react-router-dom"
 import axios from "axios"
 import { toast } from "react-toastify"

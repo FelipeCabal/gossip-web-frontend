@@ -1,4 +1,3 @@
-import { useContext, useState } from "react";
 import { ImagenPreview } from "../../partials/ImagenPreview/imagenPreview";
 import { deleteFile, uploadFile } from "../../services/firebase-services";
 import axios from "axios";

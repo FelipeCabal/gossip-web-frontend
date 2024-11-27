@@ -19,7 +19,6 @@ import { useState } from 'react';
 import { RefreshProvider } from './providers/RefreshProvider.jsx';
 import { VistaInformacionChat } from './components/VistaChats/VistaInformacionChat.jsx';
 import { BusquedaComunidades } from './components/BusquedaComunidades.jsx';
-import ChatComponent from './components/Chat/ChatComponent.jsx';
 import { CreateGroup } from './components/createGroup/createGroup.jsx';
 import { CreateComunity } from './components/createGroup/createComunity.jsx';
 
