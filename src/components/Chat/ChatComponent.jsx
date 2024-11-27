@@ -3,11 +3,14 @@ import { io } from 'socket.io-client';
 import { useAuth } from '../../providers/AuthProvider';
 import axios from 'axios';
 import './ChatStyle.css';
+import { useParams } from 'react-router-dom';
 
 const ChatComponent = () => {
+
+    const {id, type} = useParams()
     // ESTAS CONSTANTES SE DEBEN ENVIAR A ESTE COMPONENTE YA SEA POR PARÁMETRO O COMO PROP
-    const chatId = '1';
-    const chatType = 'group';
+    const chatId = id;
+    const chatType = type;
 
     const { usuario, token } = useAuth();
     const socketRef = useRef(null);

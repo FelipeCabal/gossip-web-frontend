@@ -81,7 +81,13 @@ const App = () => {
         },
         {
           path: 'chatsPage',
-          element: <PaginaChats />
+          element: <PaginaChats />,
+          children: [
+            {
+              path: ':id/:type',
+              element: <ChatComponent />,
+            }
+          ]
         },
         {
           path: 'perfil/:id',
