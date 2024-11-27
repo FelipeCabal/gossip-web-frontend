@@ -42,7 +42,7 @@ export function VistaInformacionChat(imagen, chatId, userId, nombre, chatType) {
                         </div>
                         {chatType === "private" ? <><div className="flex  justify-evenly mt-5 mb-4">
                             <div className="flex flex-col items-center relative group">
-                                <Link to={`/perfil/${usuario.id}`} className=" transition-transform transform group-hover:-translate-x-1 group-hover:-translate-y-1">
+                                <Link to={`/perfil/${userId}`} className=" transition-transform transform group-hover:-translate-x-1 group-hover:-translate-y-1">
                                     <svg xmlns="http://www.w3.org/2000/svg"
                                         fill="none"
                                         viewBox="0 0 22 22"
@@ -72,7 +72,7 @@ export function VistaInformacionChat(imagen, chatId, userId, nombre, chatType) {
                                 <h3 className="text-2xl font-medium ml-3">Integrantes</h3>
                                 {miembros.map((miembro) => (
                                     <div key={miembro.id} className="w-full flex gap-2 ml-3 mt-2 mb-4 items-center border-none">
-                                        <img src={miembro.imagen_perfil} alt="" className="h-12 w-12 rounded-full border-none" />
+                                        <img src={miembro.imagen} alt="" className="h-12 w-12 rounded-full border-none" />
                                         <span className="h-auto flex text-xl font-semibold items-center justify-start flex-wrap w-full" style={{wordBreak:"break-word"}}>{miembro.nombre}</span>
                                         <div className=" flex justify-end gap-3 items-center relative group mr-4">
                                             <button onClick={eliminar_user(miembro.id)} className="transition-transform transform group-hover:-translate-x-1 group-hover:-translate-y-1">
