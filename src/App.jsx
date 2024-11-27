@@ -20,6 +20,7 @@ import { RefreshProvider } from './providers/RefreshProvider.jsx';
 import ChatComponent from './components/Chat/ChatComponent.jsx';
 import { CreateGroup } from './components/createGroup/createGroup.jsx';
 import { CreateComunity } from './components/createGroup/createComunity.jsx';
+import { EditarPerfil } from './components/EditarPerfil/EditarPerfil.jsx';
 const App = () => {
   const [refresh, setRefresh] = useState(false)
 
@@ -86,6 +87,10 @@ const App = () => {
               element: <VistaPublicacion />
             }
           ]
+        },
+        {
+          path: 'update',
+          element: <EditarPerfil />
         }
       ]
     }

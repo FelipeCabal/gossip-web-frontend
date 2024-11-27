@@ -2,7 +2,7 @@ import { createTheme, IconButton, InputAdornment, TextField, ThemeProvider } fro
 import './Fondo.css'
 import { Link } from 'react-router-dom'
 import { useState } from 'react';
-import { Password, Update, Visibility, VisibilityOff } from '@mui/icons-material';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { toast, ToastContainer } from 'react-toastify';
 import axios from 'axios';
 import { useAuth } from '../../providers/AuthProvider';
@@ -40,7 +40,6 @@ export function Register() {
         }
         axios.post(ENDPOINT, datos)
             .then((respuesta) => {
-                console.log(respuesta.data.access_token);
                 updateToken(respuesta.data.access_token);
                 showSucess();
             })

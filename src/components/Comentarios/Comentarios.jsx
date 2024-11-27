@@ -18,9 +18,6 @@ export const Comentarios = ({ postid }) => {
                 setComments(respuesta.data)
                 setRefresh(false)
             })
-            .catch((error) => {
-                console.log(error)
-            })
     }, [refresh, setRefresh])
 
 
