@@ -1,8 +1,8 @@
 import { IconButton, InputAdornment, TextField } from '@mui/material'
 import { Link, useNavigate } from 'react-router-dom'
 import { createTheme, ThemeProvider } from '@mui/material';
-import { useEffect, useState } from 'react';
-import { Password, Visibility, VisibilityOff } from '@mui/icons-material';
+import { useState } from 'react';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
 import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
 import { useAuth } from '../../providers/AuthProvider';
@@ -29,22 +29,39 @@ export function Login() {
         setDatos(prevDatos => ({ ...prevDatos, [name]: value }))
     }
 
+
     const handleIngresar = () => {
         axios.post(ENDPOINT, datos)
             .then((respuesta) => {
-                console.log(respuesta.data.access_token)
                 updateToken(respuesta.data.access_token)
                 showSucess()
             })
             .catch((error) => {
-                console.log(error)
-                showErrorContraseña()
-                setDatos({
-                    email: datos.email,
-                    password: ''
-                })
-            })
-    }
+                console.error(error);
+
+                if (error.response) {
+                    const { status, data } = error.response;
+
+                    if (status === 404 || data.message === "Usuario no encontrado") {
+                        showErrorCorreo();
+                        setDatos({
+                            email: "",
+                            password: ""
+                        })
+
+                    } else if (status === 401 || data.message === "Contraseña incorrecta") {
+                        showErrorContraseña();
+                        setDatos(prevDatos => ({
+                            ...prevDatos,
+                            password: ''
+                        }));
+                    }
+                } else {
+                    toast.error("Ocurrió un error inesperado");
+                }
+            });
+    };
+
     const [showPassword, setShowPassword] = useState(false);
 
     const handleClickShowPassword = () => setShowPassword((show) => !show);

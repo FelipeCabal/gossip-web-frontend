@@ -18,6 +18,10 @@ import { PerfilUsuario } from './pages/Perfil/PerfilUsuario';
 import { useState } from 'react';
 import { RefreshProvider } from './providers/RefreshProvider.jsx';
 import { EditarPerfil } from './components/EditarPerfil/EditarPerfil.jsx';
+import { VistaInformacionChat } from './components/VistaChats/VistaInformacionChat.jsx';
+import { BusquedaComunidades } from './components/BusquedaComunidades.jsx';
+import { CreateGroup } from './components/createGroup/createGroup.jsx';
+import { CreateComunity } from './components/createGroup/createComunity.jsx';
 
 const App = () => {
   const [refresh, setRefresh] = useState(false)
@@ -46,12 +50,24 @@ const App = () => {
             path: 'postForm',
             element: <PostForm />
           }
-        ]
+        ],
+      },
+      {
+        path: 'infoChat',
+        element: <VistaInformacionChat />
       },
       {
         path: 'homepage',
         element: <HomePage />,
-        children: [
+        children: [                     
+            {
+              path: 'CreateGroup',
+              element: <CreateGroup />
+            },
+            {
+              path: "CreateComunity",
+              element: <CreateComunity />
+            },
           {
             path: 'Postform',
             element: <PostForm />
@@ -61,6 +77,10 @@ const App = () => {
             element: <VistaPublicacion />
           }
         ]
+      },
+      {
+        path: 'search',
+        element: <BusquedaComunidades/>
       },
       {
         path: 'perfil/:id',
