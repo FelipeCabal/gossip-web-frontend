@@ -17,6 +17,7 @@ import { LayoutComponent } from './pages/LayoutComponent';
 import { PerfilUsuario } from './pages/Perfil/PerfilUsuario';
 import { useState } from 'react';
 import { RefreshProvider } from './providers/RefreshProvider.jsx';
+import { VistaInformacionChat } from './components/VistaChats/VistaInformacionChat.jsx';
 import { BusquedaComunidades } from './components/BusquedaComunidades.jsx';
 import ChatComponent from './components/Chat/ChatComponent.jsx';
 import { CreateGroup } from './components/createGroup/createGroup.jsx';
@@ -49,7 +50,11 @@ const App = () => {
             path: 'postForm',
             element: <PostForm />
           }
-        ]
+        ],
+      },
+      {
+        path: 'infoChat',
+        element: <VistaInformacionChat />
       },
       {
         path: 'homepage',

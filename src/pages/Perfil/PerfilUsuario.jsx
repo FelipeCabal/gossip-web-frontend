@@ -73,7 +73,7 @@ export function PerfilUsuario() {
 
                 </div>
                 <Outlet />
-            </> : <></>
+            </> : <>No se encontro informacion del usuario</>
         }
     </>
     )
