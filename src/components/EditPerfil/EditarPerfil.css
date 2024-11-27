@@ -1,0 +1,71 @@
+.container {
+  max-width: "600px";
+  margin: "0 auto";
+  padding: "20px";
+  border: "1px solid #ddd";
+  border-radius: "8px";
+  background: "#f9f9f9";
+}
+.profileImageContainer {
+  text-align: "center";
+  margin-bottom: "20px";
+}
+.profileImage {
+  width: "120px";
+  height: "120px";
+  border-radius: "50%";
+  object-fit: "cover";
+}
+.fileInput {
+  margin-top: "10px";
+}
+.form {
+  display: "flex";
+  flex-direction: "column";
+}
+.formGroup {
+  marginbottom: "15px";
+}
+.input {
+  width: "100%";
+  padding: "8px";
+  borderradius: "4px";
+  border: "1px solid #ddd";
+}
+.textarea {
+  width: "100%";
+  padding: "8px";
+  borderradius: "4px";
+  border: "1px solid #ddd";
+  minheight: "60px";
+}
+.select {
+  width: "100%";
+  padding: "8px";
+  borderradius: "4px";
+  border: "1px solid #ddd";
+}
+.buttonGroup {
+  display: "flex";
+  justifycontent: "space-between";
+}
+.updateButton {
+  padding: "10px 20px";
+  background: "#4caf50";
+  color: "white";
+  border: "none";
+  borderradius: "4px";
+  cursor: "pointer";
+}
+.discardButton {
+  padding: "10px 20px";
+  background: "#f44336";
+  color: "white";
+  border: "none";
+  borderradius: "4px";
+  cursor: "pointer";
+}
+.error {
+  color: "red";
+  fontsize: "12px";
+}

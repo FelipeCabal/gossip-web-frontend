@@ -1,12 +1,17 @@
-import Navbar from "../partials/navbar";
+import { TarjetaChat } from "../components/ChatCard/TarjetaChat";
 import ComunidadesDesplegables from "../components/ComunidadesDesplegables";
-import { Comentarios } from "../components/Comentarios/Comentarios"
 import "../css/buttons/buttons.css"
-import { PostHomeForm } from "../components/postsHomeForm/postHomeForm";
 import { Outlet } from "react-router-dom";
 import foto from '../assets/avatares/mujer.png'
 
+
 export function GuiaEstilos() {
+    const chats = [
+        { nombre: "Chat 1", imagen: "imagen1.png", ultimoMensaje: "Mensaje 1" },
+        { nombre: "Chat 2", imagen: "imagen2.png", ultimoMensaje: "Mensaje 2" },
+        { nombre: "Chat 3", imagen: "imagen3.png", ultimoMensaje: "Mensaje 3" }
+    ];
+
     return (
         <>
             <div className="containerHome">
@@ -108,6 +113,18 @@ export function GuiaEstilos() {
                 </div>
 
 
+                <br />
+                <br />
+                <div>
+                    {chats.map((chat, index) => (
+                        <TarjetaChat
+                            key={index}
+                            nombre={chat.nombre}
+                            imagen={chat.imagen}
+                            ultimoMensaje={chat.ultimoMensaje}
+                        />
+                    ))}
+                </div>
                 <br />
                 <br />
                 <div className="flex justify-evenly">
