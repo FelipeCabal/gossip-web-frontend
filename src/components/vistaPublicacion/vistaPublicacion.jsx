@@ -6,14 +6,17 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { FormComment } from "../Comentarios/FormComment";
 import { Comentarios } from "../Comentarios/Comentarios";
+import { useAuth } from "../../providers/AuthProvider";
 
 export function VistaPublicacion() {
     const { post } = useParams()
+    const {usuario} = useAuth()
     const [publicacion, setPublicacion] = useState(null);
     const endpoint = process.env.REACT_APP_API + "/posts/" + post
     const [likeIt, setLikeIt] = useState(false)
     const heartStroke = likeIt ? '#99b4ff' : 'currentColor'
     const heartFill = likeIt ? '#99b4ff' : 'none'
+    const [likes, setLikes] = useState(null)
     useEffect(() => {
         axios.get(endpoint)
             .then(res => {
@@ -21,6 +24,19 @@ export function VistaPublicacion() {
                 setPublicacion(data)
             }).catch(e => console.log(e));
     }, []);
+    useEffect(() => {
+        axios.get(process.env.REACT_APP_API + "/likes/" + post)
+            .then((respuesta) => {
+                setLikes(respuesta.data)
+                console.log(respuesta.data)
+                respuesta.data.map((like) => {
+                    if (usuario.id == like.user.id) {
+                        setLikeIt(true)
+                    }
+                })
+            })
+            .catch((error) => { console.log(error) })
+    }, [likeIt, usuario])
 
     const currentPath = window.location.pathname
     const pathParts = currentPath.split('/');
@@ -33,8 +49,11 @@ export function VistaPublicacion() {
     }
 
     const handleClick = () => {
-        setLikeIt(!likeIt)
-    }
+        axios.post(process.env.REACT_APP_API + "/likes/" + post)
+            .then(() => setLikeIt(!likeIt))
+            .catch((error) => { console.log(error) })
+    };
+
     return <>
         {
             publicacion ? <div className="modal-fade animate__animated animate__fadeIn">
@@ -82,7 +101,13 @@ export function VistaPublicacion() {
                                         </path>
                                     </svg>
                                 </button>
-                                <p className="font-bold">Le gusta a orlando y 20 personas mas</p>
+                                {
+                                    likes ?
+                                        likes.length > 1 ?
+                                            <p>Le gusta a {likes[0].user.nombre} y a {likes.length - 1} personas mas</p>
+                                            : likeIt ? <p>Te gusta</p> : <p>a { likes[0].user.nombre} le gusta</p>
+                                        : <p>Indica que te gusta</p>
+                               }
                             </div>
                         </div>
                         <div>
