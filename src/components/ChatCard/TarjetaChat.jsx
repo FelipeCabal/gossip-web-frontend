@@ -18,14 +18,16 @@ export function TarjetaChat({ nombre, imagen, chatid, tipoChat }) {
             });
     }, []);
 
+
+
     return (
         <>
             {chatid && (
                 <div className="flex items-center p-4 border-b border-gray-300 hover:bg-gray-100 cursor-pointer">
                     <img
                         src={imagen}
-                        alt={`Imagen de usuario`}
-                        className="w-12 h-12 rounded-full object-cover"
+                        alt={``}
+                        className="w-24 rounded-full object-cover"
                     />
                     <div className="ml-4 flex-1">
                         <h3 className="font-bold text-gray-800 text-sm sm:text-base truncate">
