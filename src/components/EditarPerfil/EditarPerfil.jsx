@@ -81,9 +81,9 @@ export function EditarPerfil() {
 
             <div className="flex flex-col items-center mb-6 mx-auto">
                 <img
-                    src={profile.image || { icono }}
+                    src={profile.image || icono}
                     alt="foto de perfil"
-                    className="w-32 h-52 rounded-full object-cover border mb-10"
+                    className="w-52 rounded-full object-cover border mb-10"
                 />
                 <input
                     type="file"
