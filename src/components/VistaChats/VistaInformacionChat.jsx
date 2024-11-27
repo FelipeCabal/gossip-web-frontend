@@ -4,29 +4,7 @@ import { Link, useNavigate, useParams } from "react-router-dom"
 import axios from "axios"
 import { toast } from "react-toastify"
 
-
-
-const chatType = "group"
-const miembros = [
-    {
-        id: 1,
-        nombre: "felipe",
-        imagen_perfil: foto,
-    },
-    {
-        id: 2,
-        nombre: "nath",
-        imagen_perfil: null,
-    }
-]
-
-const usuario = {
-    id: 1,
-    nombre: "BuhitoSilencioso",
-    imagen_perfil: foto,
-}
-
-export function VistaInformacionChat(imagen, chatId, userId, nombre) {
+export function VistaInformacionChat(imagen, chatId, userId, nombre, chatType) {
     const navigate = useNavigate()
     const alerta = () => toast.error('Saliste del chat exitosamente')
     
