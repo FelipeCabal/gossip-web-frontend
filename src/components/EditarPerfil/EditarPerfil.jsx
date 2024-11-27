@@ -1,173 +1,109 @@
-import { useState } from "react";
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 
-const EditarPerfil = () => {
-    const [formData, setFormData] = useState({
-        name: "Carlitos el más bonito",
-        username: "amoaminovia",
-        description: "hola, soy un buhofiel",
-        email: "yoqnmas123@buomail.com",
-        birthDate: "",
-        gender: "",
-        profileImage: null,
-        previewImage: "/path/to/default-image.png", // Imagen inicial por defecto
+export function EditarPerfil() {
+    const [profile, setProfile] = useState({
+        name: '',
+        password: '',
+        pais: ''
     });
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState('');
+    const [success, setSuccess] = useState('');
 
-    const [errors, setErrors] = useState({});
+    // Obtener datos del perfil cuando se monta el componente
+    useEffect(() => {
+        const fetchProfile = async () => {
+            try {
+                setLoading(true);
+                // eslint-disable-next-line no-undef
+                const response = await axios.get(process.env.REACT_APP_API + '/users/' + id); // Cambia por la ruta de tu API
+                setProfile({
+                    name: response.data.nombre,
+                    password: response.data.password,
+                    pais: response.data.pais
+                });
+            } catch (error) {
+                console.log(error)
+                setError('Error al cargar los datos del perfil.');
+            } finally {
+                setLoading(false);
+            }
+        };
 
-    const validate = () => {
-        const newErrors = {};
-        if (!formData.email.includes("@")) {
-            newErrors.email = "Por favor, ingresa un correo electrónico válido.";
-        }
-        if (formData.name.length < 3) {
-            newErrors.name = "El nombre debe tener al menos 3 caracteres.";
-        }
-        setErrors(newErrors);
-        return Object.keys(newErrors).length === 0;
+        fetchProfile();
+    }, []);
+
+    // Manejar cambios en el formulario
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setProfile((prev) => ({
+            ...prev,
+            [name]: value,
+        }));
     };
 
-    const handleInputChange = (e) => {
-        setFormData({
-            ...formData,
-            [e.target.name]: e.target.value,
-        });
-    };
+    // Enviar formulario
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            setLoading(true);
+            setError('');
+            setSuccess('');
 
-    const handleImageChange = (e) => {
-        const file = e.target.files[0];
-        if (file) {
-            setFormData({
-                ...formData,
-                profileImage: file,
-                previewImage: URL.createObjectURL(file),
-            });
+            // eslint-disable-next-line no-undef
+            await axios.put(process.env.REACT_APP_API + '/users/' + id); // Cambia por la ruta de tu API
+            setSuccess('Perfil actualizado correctamente.');
+        } catch (error) {
+            console.log(error)
+            setError('Error al actualizar el perfil.');
+        } finally {
+            setLoading(false);
         }
-    };
-
-    const handleUpdate = () => {
-        if (validate()) {
-            console.log("Datos guardados:", formData);
-            // Aquí puedes agregar la lógica para guardar en la base de datos
-        }
-    };
-
-    const handleDiscard = () => {
-        setFormData({
-            ...formData,
-            name: "Carlitos el más bonito",
-            username: "amoaminovia",
-            description: "hola, soy un buhofiel",
-            email: "yoqnmas123@buomail.com",
-            birthDate: "",
-            gender: "",
-            profileImage: null,
-            previewImage: "/path/to/default-image.png",
-        });
-        setErrors({});
     };
 
     return (
-        <div className="mx-auto p-6 bg-white border border-gray-300 rounded-lg shadow-md">
-            <h2 className="text-xl font-semibold text-center mb-4">Foto de Perfil</h2>
+        <div>
+            <h2>Editar Perfil</h2>
+            {loading && <p>Cargando...</p>}
+            {error && <p style={{ color: 'red' }}>{error}</p>}
+            {success && <p style={{ color: 'green' }}>{success}</p>}
 
-            <div className="flex flex-col items-center mb-6">
-                <img
-                    src={formData.previewImage}
-                    alt="Profile"
-                    className="w-28 h-28 rounded-full object-cover mb-4"
-                />
-                <input
-                    type="file"
-                    accept="image/*"
-                    onChange={handleImageChange}
-                    className="text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-100 file:text-blue-700 hover:file:bg-blue-200"
-                />
-            </div>
-
-            <form className="space-y-4">
+            <form onSubmit={handleSubmit}>
                 <div>
-                    <label className="block text-sm font-medium text-gray-700">Nombre:</label>
+                    <label>Nombre:</label>
                     <input
                         type="text"
                         name="name"
-                        value={formData.name}
-                        onChange={handleInputChange}
-                        className="mt-1 w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                        value={profile.name}
+                        onChange={handleChange}
+                        required
                     />
-                    {errors.name && <span className="text-red-500 text-xs">{errors.name}</span>}
                 </div>
                 <div>
-                    <label className="block text-sm font-medium text-gray-700">Nombre de usuario:</label>
+                    <label>Pais</label>
                     <input
                         type="text"
-                        name="username"
-                        value={formData.username}
-                        onChange={handleInputChange}
-                        className="mt-1 w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                        name="Pais"
+                        value={profile.pais}
+                        onChange={handleChange}
+                        required
                     />
                 </div>
                 <div>
-                    <label className="block text-sm font-medium text-gray-700">Descripción:</label>
-                    <textarea
-                        name="description"
-                        value={formData.description}
-                        onChange={handleInputChange}
-                        className="mt-1 w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
-                    />
-                </div>
-                <div>
-                    <label className="block text-sm font-medium text-gray-700">Correo electrónico:</label>
+                    <label>Contraseña:</label>
                     <input
-                        type="email"
-                        name="email"
-                        value={formData.email}
-                        onChange={handleInputChange}
-                        className="mt-1 w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
-                    />
-                    {errors.email && <span className="text-red-500 text-xs">{errors.email}</span>}
-                </div>
-                <div>
-                    <label className="block text-sm font-medium text-gray-700">Fecha de nacimiento:</label>
-                    <input
-                        type="date"
-                        name="birthDate"
-                        value={formData.birthDate}
-                        onChange={handleInputChange}
-                        className="mt-1 w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                        type="password"
+                        name="password"
+                        value={profile.password}
+                        onChange={handleChange}
+                        placeholder="Dejar vacío para no cambiar"
                     />
                 </div>
-                <div>
-                    <label className="block text-sm font-medium text-gray-700">Género:</label>
-                    <select
-                        name="gender"
-                        value={formData.gender}
-                        onChange={handleInputChange}
-                        className="mt-1 w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
-                    >
-                        <option value="">Seleccionar</option>
-                        <option value="male">Masculino</option>
-                        <option value="female">Femenino</option>
-                        <option value="other">Otro</option>
-                    </select>
-                </div>
+                <button type="submit" disabled={loading}>
+                    {loading ? 'Guardando...' : 'Guardar Cambios'}
+                </button>
             </form>
-
-            <div className="flex justify-between mt-6">
-                <button
-                    onClick={handleUpdate}
-                    className="px-4 py-2 btn btn-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:ring focus:ring-blue-300"
-                >
-                    Actualizar
-                </button>
-                <button
-                    onClick={handleDiscard}
-                    className="px-4 py-2 btn btn-4 bg-red-500 text-white rounded-md hover:bg-red-600 focus:ring focus:ring-red-300"
-                >
-                    Descartar
-                </button>
-            </div>
         </div>
     );
 };
-
-export default EditarPerfil;
