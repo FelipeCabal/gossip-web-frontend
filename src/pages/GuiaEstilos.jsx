@@ -4,8 +4,7 @@ import { Comentarios } from "../components/Comentarios/Comentarios"
 import "../css/buttons/buttons.css"
 import { PostHomeForm } from "../components/postsHomeForm/postHomeForm";
 import { Outlet } from "react-router-dom";
-import editarPerfil from "../components/EditarPerfil/EditarPerfil";
-import EditarPerfil from "../components/EditarPerfil/EditarPerfil";
+import { EditarPerfil } from "../components/EditarPerfil/EditarPerfil";
 
 export function GuiaEstilos() {
     return (

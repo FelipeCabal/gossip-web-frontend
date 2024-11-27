@@ -1,5 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, } from 'react';
 import axios from 'axios';
+import icono from '../../assets/avatares/neutro.png';
 
 export function EditarPerfil() {
     const [profile, setProfile] = useState({
@@ -11,13 +12,11 @@ export function EditarPerfil() {
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
 
-    // Obtener datos del perfil cuando se monta el componente
     useEffect(() => {
         const fetchProfile = async () => {
             try {
                 setLoading(true);
-                // eslint-disable-next-line no-undef
-                const response = await axios.get(process.env.REACT_APP_API + '/users/' + id); // Cambia por la ruta de tu API
+                const response = await axios.get(process.env.REACT_APP_API + '/users/' + id);
                 setProfile({
                     name: response.data.nombre,
                     password: response.data.password,
@@ -25,7 +24,7 @@ export function EditarPerfil() {
                 });
             } catch (error) {
                 console.log(error)
-                setError('Error al cargar los datos del perfil.');
+                setError('');
             } finally {
                 setLoading(false);
             }
@@ -34,7 +33,6 @@ export function EditarPerfil() {
         fetchProfile();
     }, []);
 
-    // Manejar cambios en el formulario
     const handleChange = (e) => {
         const { name, value } = e.target;
         setProfile((prev) => ({
@@ -43,7 +41,20 @@ export function EditarPerfil() {
         }));
     };
 
-    // Enviar formulario
+    const handleImageChange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setProfile((prev) => ({
+                    ...prev,
+                    image: reader.result,
+                }));
+            };
+            reader.readAsDataURL(file);
+        }
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
@@ -51,7 +62,6 @@ export function EditarPerfil() {
             setError('');
             setSuccess('');
 
-            // eslint-disable-next-line no-undef
             await axios.put(process.env.REACT_APP_API + '/users/' + id); // Cambia por la ruta de tu API
             setSuccess('Perfil actualizado correctamente.');
         } catch (error) {
@@ -63,16 +73,30 @@ export function EditarPerfil() {
     };
 
     return (
-        <div>
-            <h2>Editar Perfil</h2>
+        <div className="max-w-md mt-32 mx-auto p-6 bg-white rounded-lg ">
+            <h2 className='text-center mb-16 font-bold'>Editar Perfil</h2>
             {loading && <p>Cargando...</p>}
             {error && <p style={{ color: 'red' }}>{error}</p>}
             {success && <p style={{ color: 'green' }}>{success}</p>}
 
+            <div className="flex flex-col items-center mb-6 mx-auto">
+                <img
+                    src={profile.image || { icono }}
+                    alt="foto de perfil"
+                    className="w-32 h-52 rounded-full object-cover border mb-10"
+                />
+                <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleImageChange}
+                    className="text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-100 file:text-blue-700 hover:file:bg-blue-200"
+                />
+            </div>
+
             <form onSubmit={handleSubmit}>
-                <div>
-                    <label>Nombre:</label>
-                    <input
+                <div className='mt-10 border -mx-40 flex border-gray-300 rounded-lg shadow-md' >
+                    <label className='mx-6 mt-4 font-bold'>Nombre:</label>
+                    <input className='w-full mr-5 mb-6 mt-5 rounded-lg shadow-md border border-b-2 border-b-purple-500'
                         type="text"
                         name="name"
                         value={profile.name}
@@ -80,9 +104,9 @@ export function EditarPerfil() {
                         required
                     />
                 </div>
-                <div>
-                    <label>Pais</label>
-                    <input
+                <div className='mt-10 border flex -mx-40 border-gray-300 rounded-lg shadow-md'>
+                    <label className='mx-6 mt-4 font-bold'>Pais:</label>
+                    <input className='w-full mr-5 mb-6 mt-5 rounded-lg shadow-md border border-b-2 border-b-purple-500'
                         type="text"
                         name="Pais"
                         value={profile.pais}
@@ -90,9 +114,9 @@ export function EditarPerfil() {
                         required
                     />
                 </div>
-                <div>
-                    <label>Contraseña:</label>
-                    <input
+                <div className='mt-10 border flex -mx-40 border-gray-300 rounded-lg shadow-md'>
+                    <label className='mx-6 mt-4 font-bold'>Contraseña:</label>
+                    <input className='w-full mr-5 mb-6 mt-5 rounded-lg shadow-md border border-b-2 border-b-purple-500'
                         type="password"
                         name="password"
                         value={profile.password}
@@ -100,9 +124,14 @@ export function EditarPerfil() {
                         placeholder="Dejar vacío para no cambiar"
                     />
                 </div>
-                <button type="submit" disabled={loading}>
-                    {loading ? 'Guardando...' : 'Guardar Cambios'}
-                </button>
+                <div class="mt-16 mb-16 py-6 space-x-10 flex -w-80">
+                    <button className='btn btn-2 text-lg w-52' type="submit" disabled={loading}>
+                        {loading ? 'Guardando...' : 'Aceptar'}
+                    </button>
+                    <button className='btn btn-4 text-lg w-52' type="submit" disabled={loading}>
+                        {loading ? 'Cancelando...' : 'Descartar'}
+                    </button>
+                </div>
             </form>
         </div>
     );

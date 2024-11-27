@@ -65,16 +65,16 @@ const App = () => {
       {
         path: 'perfil/:id',
         element: <PerfilUsuario />,
-        children: [
+        children: [,
           {
             path: 'post/:post',
             element: <VistaPublicacion />
           },
-          {
-            path: 'update',
-            element: <EditarPerfil />
-          }
         ]
+      },
+      {
+        path: 'update/:id',
+        element: <EditarPerfil />
       }
       ]
     }
