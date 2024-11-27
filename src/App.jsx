@@ -17,9 +17,11 @@ import { LayoutComponent } from './pages/LayoutComponent';
 import { PerfilUsuario } from './pages/Perfil/PerfilUsuario';
 import { useState } from 'react';
 import { RefreshProvider } from './providers/RefreshProvider.jsx';
+import { BusquedaComunidades } from './components/BusquedaComunidades.jsx';
 import ChatComponent from './components/Chat/ChatComponent.jsx';
 import { CreateGroup } from './components/createGroup/createGroup.jsx';
 import { CreateComunity } from './components/createGroup/createComunity.jsx';
+
 const App = () => {
   const [refresh, setRefresh] = useState(false)
 
@@ -39,21 +41,20 @@ const App = () => {
     {
       path: '',
       element: <LayoutComponent />,
-      children: [
-        {
-          path: 'style-guide',
-          element: <GuiaEstilos />,
-          children: [
-            {
-              path: 'postForm',
-              element: <PostForm />
-            }
-          ]
-        },
-        {
-          path: 'homepage',
-          element: <HomePage />,
-          children: [
+      children: [{
+        path: 'style-guide',
+        element: <GuiaEstilos />,
+        children: [
+          {
+            path: 'postForm',
+            element: <PostForm />
+          }
+        ]
+      },
+      {
+        path: 'homepage',
+        element: <HomePage />,
+        children: [                     
             {
               path: 'CreateGroup',
               element: <CreateGroup />
@@ -62,27 +63,30 @@ const App = () => {
               path: "CreateComunity",
               element: <CreateComunity />
             },
-            {
-              path: 'Postform',
-              element: <PostForm />
-            },
-            {
-              path: 'post/:post',
-              element: <VistaPublicacion />
-            },
-
-          ]
-        },
-        {
-          path: 'perfil/:id',
-          element: <PerfilUsuario />,
-          children: [
-            {
-              path: 'post/:post',
-              element: <VistaPublicacion />
-            }
-          ]
-        }
+          {
+            path: 'Postform',
+            element: <PostForm />
+          },
+          {
+            path: 'post/:post',
+            element: <VistaPublicacion />
+          }
+        ]
+      },
+      {
+        path: 'search',
+        element: <BusquedaComunidades/>
+      },
+      {
+        path: 'perfil/:id',
+        element: <PerfilUsuario />,
+        children: [
+          {
+            path: 'post/:post',
+            element: <VistaPublicacion />
+          }
+        ]
+      }
       ]
     }
   ])
