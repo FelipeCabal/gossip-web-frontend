@@ -4,9 +4,10 @@ import { FormComment } from "../Comentarios/FormComment";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { useAuth } from "../../providers/AuthProvider";
+import { useRefresh } from "../../providers/RefreshProvider";
 
 export function PublicacionHome({ userName, img, texto, perfil, esAnonimo, postId }) {
-  const {usuario} = useAuth()
+  const { usuario } = useAuth()
   const [expandir, setExpandir] = useState(false); // Controla si la publicación está extendida
   const toggleExpandir = () => setExpandir(!expandir); // Alterna el estado
   const [likeIt, setLikeIt] = useState(false);
@@ -14,6 +15,7 @@ export function PublicacionHome({ userName, img, texto, perfil, esAnonimo, postI
   const heartFill = likeIt ? '#99b4ff' : 'none';
   const fotoPerfil = esAnonimo ? anonimo : perfil ? perfil : anonimo;
   const nombre = esAnonimo ? 'anonimo' : userName;
+  const { refresh, setRefresh } = useRefresh();
 
 
   const handleClick = () => {
@@ -28,13 +30,16 @@ export function PublicacionHome({ userName, img, texto, perfil, esAnonimo, postI
     }
     axios.get(process.env.REACT_APP_API + "/likes/" + postId)
       .then((respuesta) => {
+        setRefresh(false)
         respuesta.data.map((like) => {
           if (usuario.id == like.user.id) {
             setLikeIt(true)
+          } else {
+            setLikeIt(false)
           }
         })
       })
-  }, [likeIt, usuario])
+  }, [likeIt, usuario, refresh])
 
   const maxWords = img ? '100' : '300';
   const wordsArray = texto.split(' ');

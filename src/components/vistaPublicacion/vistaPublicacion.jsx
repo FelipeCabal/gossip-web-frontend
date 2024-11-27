@@ -7,16 +7,18 @@ import axios from "axios";
 import { FormComment } from "../Comentarios/FormComment";
 import { Comentarios } from "../Comentarios/Comentarios";
 import { useAuth } from "../../providers/AuthProvider";
+import { useRefresh } from "../../providers/RefreshProvider";
 
 export function VistaPublicacion() {
     const { post } = useParams()
-    const {usuario} = useAuth()
+    const { usuario } = useAuth()
     const [publicacion, setPublicacion] = useState(null);
     const endpoint = process.env.REACT_APP_API + "/posts/" + post
     const [likeIt, setLikeIt] = useState(false)
     const heartStroke = likeIt ? '#99b4ff' : 'currentColor'
     const heartFill = likeIt ? '#99b4ff' : 'none'
     const [likes, setLikes] = useState(null)
+    const { refresh, setRefresh } = useRefresh();
     useEffect(() => {
         if (!usuario) {
             return
@@ -55,7 +57,10 @@ export function VistaPublicacion() {
 
     const handleClick = () => {
         axios.post(process.env.REACT_APP_API + "/likes/" + post)
-            .then(() => setLikeIt(!likeIt))
+            .then(() => {
+                setLikeIt(!likeIt)
+                setRefresh(!refresh)
+            })
             .catch((error) => { console.log(error) })
     };
 
@@ -110,9 +115,9 @@ export function VistaPublicacion() {
                                     likes ?
                                         likes.length > 1 ?
                                             <p>Le gusta a {likes[0].user.nombre} y a {likes.length - 1} personas mas</p>
-                                            : likeIt ? <p>Te gusta</p> : <p>a { likes[0].user.nombre} le gusta</p>
+                                            : likeIt ? <p>Te gusta</p> : <p>a {likes[0].user.nombre} le gusta</p>
                                         : <p>Indica que te gusta</p>
-                               }
+                                }
                             </div>
                         </div>
                         <div>
