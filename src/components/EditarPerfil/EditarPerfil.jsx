@@ -12,7 +12,6 @@ export function EditarPerfil() {
             return
         }
         setUser(usuario)
-        console.log(user)
     }, [usuario, user])
 
     const handleChange = (e) => {

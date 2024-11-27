@@ -47,7 +47,7 @@ export function PerfilUsuario() {
                         <div className='flex h-fit pt-10'>
                             <div className='flex sm:flex-col'>
                                 {usuario.id == id ? (<div>
-                                    <Link to={`/update/${id}`}>
+                                    <Link to={`/update`}>
                                         <button className='btn btn-font-black border border-blue-500  text-black mr-4'>
                                             Editar perfil
                                         </button>

@@ -73,7 +73,7 @@ const App = () => {
         ]
       },
       {
-        path: 'update/:id',
+        path: 'update',
         element: <EditarPerfil />
       }
       ]
