@@ -48,7 +48,7 @@ const Navbar = () => {
                                 <Link to="/homepage/postForm" className="flex-1 flex items-center justify-center hover:text-gray-300">
                                     <img src={imgCommunity} alt="Comunidades" className="max-w-full w-8 sm:w-12" />
                                 </Link>
-                                <Link to="/chatsPage" className="flex-1 flex items-center justify-center hover:text-gray-300">
+                                <Link to="/chats" className="flex-1 flex items-center justify-center hover:text-gray-300">
                                     <img src={imgMensajes} alt="Mensajes" className="max-w-full w-8 sm:w-12" />
                                 </Link>
 

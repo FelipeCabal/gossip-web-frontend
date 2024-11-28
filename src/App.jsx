@@ -22,6 +22,7 @@ import { PaginaChats } from './pages/PaginaChats/paginaChats.jsx';
 import { CreateGroup } from './components/createGroup/createGroup.jsx';
 import { CreateComunity } from './components/createGroup/createComunity.jsx';
 import { EditarPerfil } from './components/EditarPerfil/EditarPerfil.jsx';
+import { BusquedaComunidades } from './components/BusquedaComunidades.jsx';
 
 const App = () => {
   const [refresh, setRefresh] = useState(false)
@@ -44,8 +45,8 @@ const App = () => {
       element: <LayoutComponent />,
       children: [
         {
-          path: 'chat',
-          element: <ChatComponent />,
+          path: 'search',
+          element: <BusquedaComunidades />,
         },
         {
           path: 'style-guide',
@@ -80,7 +81,7 @@ const App = () => {
           ]
         },
         {
-          path: 'chatsPage',
+          path: 'chats',
           element: <PaginaChats />,
           children: [
             {
