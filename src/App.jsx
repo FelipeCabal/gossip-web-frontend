@@ -87,7 +87,6 @@ const App = () => {
               path: 'post/:post',
               element: <VistaPublicacion />
             },
-            { path: '*', element: <NotFound /> }
           ]
         },
         {
@@ -97,8 +96,7 @@ const App = () => {
             {
               path: ':id/:type',
               element: <ChatComponent />,
-            },
-            { path: '*', element: <NotFound /> }
+            }
           ]
         },
         {
@@ -108,15 +106,13 @@ const App = () => {
             {
               path: 'post/:post',
               element: <VistaPublicacion />
-            },
-            { path: '*', element: <NotFound /> }
+            }
           ]
         },
         {
           path: 'update',
           element: <EditarPerfil />
-        },
-        { path: '*', element: <NotFound /> }
+        }
       ]
     },
     { path: '*', element: <NotFound /> }
