@@ -11,7 +11,7 @@ export function Login() {
     const ENDPOINT = process.env.REACT_APP_API + '/auth/login'
     const showSucess = () => toast.success("Logueado Correctamente", {
         onClose: () => {
-            navigate('/Homepage');
+            navigate('/homepage');
         },
         autoClose: 2000,
     });

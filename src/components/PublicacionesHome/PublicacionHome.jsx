@@ -52,28 +52,27 @@ export function PublicacionHome({ userName, img, texto, perfil, esAnonimo, postI
 
   return (
     <>
-      <div className="w-full flex justify-center place-items-center">
-        <div className="w-full max-h-[900px] bg-gray-50 place-items-center sm:w-3/4">
-          <article className="flex-col border-b border-gray-400 mb-4">
+      <div className="w-full h-auto overflow-hidden flex justify-center place-items-center">
+        <div className="w-full h-auto overflow-hidden max-h-[900px] bg-gray-50 place-items-center sm:w-3/4">
+          <article className="w-full h-full overflow-hidden flex-col border-b border-gray-400 mb-4">
             <div className="w-full flex pt-2 pl-1 pb-2 gap-2">
               <img src={fotoPerfil} alt="perfil" className="w-20" />
               <span className="flex items-center justify-center text-xl font-bold">@{nombre}</span>
             </div>
-            <aside className="flex-col flex justify-center items-center relative">
-              <Link to={currentPath + '/post/' + postId}>
-                <div className="max-w-[468px] max-h-[468px] overflow-hidden xs:max-w-[428px] xs:max-h-[428px] pr-4 pl-3">
+            <aside className="flex-col h-full overflow-hidden flex justify-center items-center relative">
+              <Link className="w-full h-full overflow-hidden flex items-center text-center flex-col" to={currentPath + '/post/' + postId}>
+                <div className="max-w-[720px] max-h-[468px] overflow-hidden xs:max-w-[428px] xs:max-h-[428px] pr-4 pl-3">
                   {img ? (
-                    <img className="w-full h-full object-cover" src={img} alt="Publicación" />
-                  ) : (
-                    <div className="w-full h-full flex justify-center items-center bg-gray-200">
-                      <span className="text-gray-500"></span>
-                    </div>
-                  )}
+                    <img className="max-w h-[auto]" src={img} alt="Publicación" />
+                  ) :
+                    <></>
+                  }
                 </div>
                 <div className="w-full p-6">
                   <span className="text-xl font-roboto">{truncatedText}</span>
                 </div>
               </Link>
+
               <section className="bottom-0 right-0 flex space-x-3 p-4 w-full">
                 <div className="absolute bottom-0 right-0 flex justify-end space-x-3 pt-6 pb-4 pr-4 w-full">
                   <button onClick={handleClick}>
