@@ -41,6 +41,9 @@ export function VistaPublicacion() {
                         setLikeIt(true)
                     }
                 })
+            }).catch(() => {
+                setLikes(null)
+                setLikeIt(false)
             })
     }, [likeIt, usuario, refresh])
 
@@ -54,7 +57,7 @@ export function VistaPublicacion() {
         pathDireccion = '/' + pathParts[1] + '/' + pathParts[2]
     }
 
-    const handleClick = () => {
+    const handleClick = async () => {
         axios.post(process.env.REACT_APP_API + "/likes/" + post)
             .then(() => {
                 setLikeIt(!likeIt)
