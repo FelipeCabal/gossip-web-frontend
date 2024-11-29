@@ -42,8 +42,7 @@ export function VistaPublicacion() {
                     }
                 })
             })
-            .catch((error) => { console.log(error) })
-    }, [likeIt, usuario])
+    }, [likeIt, usuario, refresh])
 
     const currentPath = window.location.pathname
     const pathParts = currentPath.split('/');
@@ -59,9 +58,8 @@ export function VistaPublicacion() {
         axios.post(process.env.REACT_APP_API + "/likes/" + post)
             .then(() => {
                 setLikeIt(!likeIt)
-                setRefresh(!refresh)
+                setRefresh(true)
             })
-            .catch((error) => { console.log(error) })
     };
 
     return <>
