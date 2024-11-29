@@ -30,15 +30,14 @@ export function PublicacionHome({ userName, img, texto, perfil, esAnonimo, postI
     }
     axios.get(process.env.REACT_APP_API + "/likes/" + postId)
       .then((respuesta) => {
-        setRefresh(false)
+        setLikeIt(false)
         respuesta.data.map((like) => {
           if (usuario.id == like.user.id) {
             setLikeIt(true)
-          } else {
-            setLikeIt(false)
           }
         })
-      })
+        setRefresh(false)
+      }).catch(() => setLikeIt(false))
   }, [likeIt, usuario, refresh])
 
   const maxWords = img ? '100' : '300';
@@ -47,7 +46,15 @@ export function PublicacionHome({ userName, img, texto, perfil, esAnonimo, postI
     ? wordsArray.slice(0, maxWords).join(' ') + '...'
     : texto;
 
-  const currentPath = window.location.pathname;
+  const currentPath = window.location.pathname
+  const pathParts = currentPath.split('/');
+  let pathDireccion = ''
+
+  if (pathParts[1] == 'homepage') {
+    pathDireccion = '/homepage'
+  } else {
+    pathDireccion = '/' + pathParts[1] + '/' + pathParts[2]
+  }
 
 
   return (
@@ -60,7 +67,7 @@ export function PublicacionHome({ userName, img, texto, perfil, esAnonimo, postI
               <span className="flex items-center justify-center text-xl font-bold">@{nombre}</span>
             </div>
             <aside className="flex-col flex justify-center items-center relative">
-              <Link to={currentPath + '/post/' + postId}>
+              <Link to={pathDireccion + '/post/' + postId}>
                 <div className="max-w-[468px] max-h-[468px] overflow-hidden xs:max-w-[428px] xs:max-h-[428px] pr-4 pl-3">
                   {img ? (
                     <img className="w-full h-full object-cover" src={img} alt="Publicación" />
