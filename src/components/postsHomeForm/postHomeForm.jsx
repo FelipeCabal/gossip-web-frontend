@@ -34,6 +34,7 @@ export function PostHomeForm({ context }) {
     const handleDelete = () => {
         try {
             deleteFile(asset);
+            setPostContent(prevContent => ({ ...prevContent, imagen: '' }));
         } catch {
             console.log("El archivo no pudo ser eliminado");
         } finally {
