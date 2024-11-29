@@ -61,7 +61,7 @@ export function EditarPerfil() {
                     <img
                         src={user.imagen || icono}
                         alt="foto de perfil"
-                        className="w-52 rounded-full object-cover border mb-10  group-hover:brightness-50"
+                        className="w-52 rounded-full object-cover border-4 border-sky-700 mb-10  group-hover:brightness-50"
                     />
                     <div className="absolute -mt-10 inset-0 flex flex-col gap-2 items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out top-0">
                         <button onClick={() => toggleCambiarFoto()} className="bg-opacity-70 text-white rounded hover:bg-opacity-90">Cambiar</button>
