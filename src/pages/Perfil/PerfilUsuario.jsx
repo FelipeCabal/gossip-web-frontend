@@ -30,7 +30,7 @@ export function PerfilUsuario() {
                 <div className="flex flex-col items-center ">
                     < section className='flex justify-between !xs:w-3/5 border-b-2 border-gray-300 pb-10 mt-6' style={{ maxwidth: '100%' }}>
                         <div className='mr-12 flex items-center'>
-                            <img src={user.imagen ? user.imagen : neutro} alt="perfil" className='w-80 ' />
+                            <img src={user.imagen ? user.imagen : neutro} alt="perfil" className='w-80 h-80 rounded-full object-cover border-4 border-[#306bac]' />
                         </div>
                         <div className='mr-12 w-auto'>
                             <h2 className='font-semibold h-fit pt-10 '>

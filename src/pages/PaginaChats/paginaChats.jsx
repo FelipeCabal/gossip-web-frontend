@@ -69,17 +69,18 @@ export function PaginaChats() {
 
                     </div>
                 </div>
-
-                {chats.length > 0 ?
-                    chats.map(chat => (
-                        type !== 'private' ?
-                            <TarjetaChat onClick={abrirChat(type, chat.id)} nombre={chat.nombre} tipoChat={type} chatid={chat.id} imagen={chat.imagen} />
-                            :
-                            <TarjetaChat onClick={abrirChat(type, chat.id)} nombre={chat.friend.nombre} tipoChat={type} chatid={chat.id} imagen={chat.friend.imagen} />
-                    ))
-                    :
-                    <p>No hay chats</p>
-                }
+                <div className="overflow-y-auto">
+                    {chats.length > 0 ?
+                        chats.map(chat => (
+                            type !== 'private' ?
+                                <TarjetaChat onClick={abrirChat(type, chat.id)} nombre={chat.nombre} tipoChat={type} chatid={chat.id} imagen={chat.imagen} />
+                                :
+                                <TarjetaChat onClick={abrirChat(type, chat.id)} nombre={chat.friend.nombre} tipoChat={type} chatid={chat.id} imagen={chat.friend.imagen} />
+                        ))
+                        :
+                        <p>No hay chats</p>
+                    }
+                </div>
             </div>
 
             <div className="right-column-chats">
