@@ -52,9 +52,9 @@ export function PublicacionHome({ userName, img, texto, perfil, esAnonimo, postI
 
   return (
     <>
-      <div className="w-full flex justify-center place-items-center">
+      <div className="w-full flex justify-center place-items-center mb-4">
         <div className="w-full max-h-[900px] bg-gray-50 place-items-center sm:w-3/4">
-          <article className="flex-col border-b border-gray-400 mb-4">
+          <article className="flex-col border-b border-gray-400">
             <div className="w-full flex pt-2 pl-1 pb-2 gap-2">
               <img src={fotoPerfil} alt="perfil" className="w-20 h-20 rounded-full object-cover" />
               <span className="flex items-center justify-center text-xl font-bold">@{nombre}</span>

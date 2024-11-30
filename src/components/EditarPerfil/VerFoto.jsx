@@ -15,7 +15,7 @@ export function VerFoto({ salir, foto }) {
                     <img
                         src={foto}
                         alt="foto de perfil"
-                        className="w-[70%] object-cover border mb-10  group-hover:brightness-50"
+                        className="w-[70%] h-full object-contain border mb-10  group-hover:brightness-50"
                     />
                 </div>
             </div>

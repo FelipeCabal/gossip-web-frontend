@@ -27,7 +27,7 @@ export function PerfilUsuario() {
     return (<>
         {
             user && usuario ? <>
-                <div className="flex flex-col items-center ">
+                <div className="flex flex-col items-center h-full overflow-y-scroll">
                     < section className='flex justify-between !xs:w-3/5 border-b-2 border-gray-300 pb-10 mt-6' style={{ maxwidth: '100%' }}>
                         <div className='mr-12 flex items-center'>
                             <img src={user.imagen ? user.imagen : neutro} alt="perfil" className='w-80 h-80 rounded-full object-cover border-4 border-[#306bac]' />
@@ -72,7 +72,7 @@ export function PerfilUsuario() {
                         <div className='flex justify-center'>
                             <h3 className='border-t-2 mt-[-2px] border-black w-fit'>Publicaciones</h3>
                         </div>
-                        <div className='w-full flex flex-col justify-center sm:w-10/12 md:w-3/4'>
+                        <div className='w-full flex flex-col justify-center sm:w-10/12 md:w-3/4 mb-[100px]'>
                             <ListaPublicaciones ENDPOINT={process.env.REACT_APP_API + '/posts/user/' + id} />
                         </div>
                     </section>

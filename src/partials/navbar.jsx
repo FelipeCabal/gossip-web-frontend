@@ -20,7 +20,7 @@ const Navbar = () => {
     return <>
         {
             usuario ?
-                <header>
+                <header className='h-fit'>
                     <nav className="w-full h-17 flex justify-between items-center ">
                         <div className=" h-20 text-slate-950 flex items-center justify-center ">
                             <Link to={'/perfil/' + usuario.id} className="flex flex-row items-center justify-center p-2">

@@ -9,9 +9,9 @@ export function HomePage() {
             <div className="left-column">
                 <Comunidades />
             </div>
-            <div className=" overflow-y-scroll h-full">
+            <div className=" overflow-y-auto max-h-full">
 
-                <div className="right-column flex flex-col justify-center xs:pr-2 w-full">
+                <div className="right-column flex flex-col justify-center xs:pr-2 w-full pb-[100px]">
                     <PostHomeForm />
                     <ListaPublicaciones ENDPOINT={process.env.REACT_APP_API + '/posts/'} />
                 </div>

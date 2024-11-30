@@ -53,7 +53,7 @@ export function EditarPerfil() {
 
 
     return (
-        <div className="max-w-md mt-32 mx-auto p-6 bg-white rounded-lg ">
+        <div className="max-w-md mx-auto p-6 bg-white rounded-lg ">
             <h2 className='text-center mb-16 font-bold'>Editar Perfil</h2>
             {loading && <p>Cargando...</p>}
             <div className='flex justify-center'>
