@@ -119,6 +119,9 @@ export function Register() {
                     label="Nombre"
                     value={datos.nombre}
                     onChange={handleChange}
+                    onKeyUp={(e) => {
+                        if (e.key === 'Enter') handleIngresar();
+                    }}
                     variant="standard"
                 />
                 <TextField
@@ -128,6 +131,9 @@ export function Register() {
                     label='email'
                     value={datos.email}
                     onChange={handleChange}
+                    onKeyUp={(e) => {
+                        if (e.key === 'Enter') handleIngresar();
+                    }}
                     variant='standard'
                 />
                 <TextField
@@ -136,6 +142,9 @@ export function Register() {
                     label='Password'
                     value={datos.password}
                     onChange={handleChange}
+                    onKeyUp={(e) => {
+                        if (e.key === 'Enter') handleIngresar();
+                    }}
                     variant='standard'
                     type={showPassword ? 'text' : 'password'}
                     InputProps={{
@@ -160,6 +169,9 @@ export function Register() {
                     label='Fecha de Nacimiento'
                     variant='standard'
                     onChange={handleChange}
+                    onKeyUp={(e) => {
+                        if (e.key === 'Enter') handleIngresar();
+                    }}
                     InputLabelProps={{
                         shrink: true,
                     }}
@@ -174,6 +186,9 @@ export function Register() {
                     label='Genero'
                     variant='standard'
                     onChange={handleChange}
+                    onKeyUp={(e) => {
+                        if (e.key === 'Enter') handleIngresar();
+                    }}
                 />
                 <TextField
                     id='pais'
@@ -182,13 +197,19 @@ export function Register() {
                     type='text'
                     value={datos.pais}
                     onChange={handleChange}
+                    onKeyUp={(e) => {
+                        if (e.key === 'Enter') handleIngresar();
+                    }}
                     variant='standard'
                 />
             </ThemeProvider>
 
         </form>
         <button className='btn btn-3' style={{ marginBottom: '10px' }}
-            onClick={handleIngresar}>
+            onClick={handleIngresar}
+            onKeyUp={(e) => {
+                if (e.key === 'Enter') handleIngresar();
+            }}>
             Registrarse
         </button>
         <Link to={'/'} style={{ fontSize: '15px', textDecoration: 'underline', color: '#306BAC' }}>Iniciar Sesión</Link>
