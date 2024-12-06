@@ -4,10 +4,11 @@ import { useAuth } from '../../providers/AuthProvider';
 import axios from 'axios';
 import './ChatStyle.css';
 import { useParams } from 'react-router-dom';
+import { VistaInformacionChat } from '../VistaChats/VistaInformacionChat';
 
 const ChatComponent = () => {
 
-    const {id, type} = useParams()
+    const { id, type } = useParams()
     // ESTAS CONSTANTES SE DEBEN ENVIAR A ESTE COMPONENTE YA SEA POR PARÁMETRO O COMO PROP
     const chatId = id;
     const chatType = type;
@@ -260,7 +261,7 @@ const ChatComponent = () => {
                 </div>
             </div>
             <div className={toggleInfo ? 'block' : 'hidden'}>
-                {/* Aquí debe ir el componente de la información del chat y pasarle las props necesarias */}
+                {VistaInformacionChat}
             </div>
         </div>
     );
