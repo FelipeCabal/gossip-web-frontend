@@ -1,13 +1,23 @@
 import React, { useState } from "react";
-import { uploadFile, deleteFile } from "../../services/firebase-services"; // Ajusta según tu estructura
-import { ImagenPreview } from "../../partials/ImagenPreview/imagenPreview"; // Ajusta según tu estructura
+import axios from "axios"; // Importar Axios
+import { uploadFile, deleteFile } from "../../services/firebase-services";
+import { ImagenPreview } from "../../partials/ImagenPreview/imagenPreview";
+import { useAuth } from '../../providers/AuthProvider';
+import { toast, ToastContainer } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
-const CrearComunidadModal = ({ onClose }) => {
-    const [communityName, setCommunityName] = useState("");
-    const [communityDescription, setCommunityDescription] = useState("");
+
+const CrearGrupoModal = ({ onClose }) => {
+    const [GroupInfo, setGroupInfo] = useState({
+        nombre: '',
+        descripcion: '',
+        imagen: '',
+    });
     const [asset, setAsset] = useState(null);
     const [isUploading, setIsUploading] = useState(false);
     const [fileExist, setFileExist] = useState(false);
+    const { usuario } = useAuth()
+    const navigate = useNavigate()
 
     const handleFileChange = async (e) => {
         const file = e.target.files[0];
@@ -20,9 +30,9 @@ const CrearComunidadModal = ({ onClose }) => {
         }
 
         const newAsset = {
-            type: 'comunidades',
+            type: 'Grupos',
             name: file.name,
-            url: URL.createObjectURL(file), // Vista previa local
+            url: URL.createObjectURL(file),
             file,
         };
 
@@ -36,37 +46,59 @@ const CrearComunidadModal = ({ onClose }) => {
                 }
             });
             if (url) {
-                console.log("Image URL updated:", url);
+                setCommunityInfo((prev) => ({ ...prev, imagen: url }));
             }
         } catch (error) {
-            console.log("Upload error:", error);
+            console.error("Upload error:", error);
         } finally {
             setIsUploading(false);
             setFileExist(true);
         }
     };
 
+
+    const showSucess = () => toast.success("Grupo creado correctamente", {
+        onClose: () => {
+            navigate(`/chats/group/user/${usuario.id}`);
+        },
+        autoClose: 2000,
+    });
+
+    const showError = () => toast.error("¿que tan bruto hay que ser para no saber que no se pudo crear?")
+
     const handleDelete = () => {
         try {
             deleteFile(asset);
         } catch {
-            console.log("El archivo no pudo ser eliminado");
+            console.error("El archivo no pudo ser eliminado");
         } finally {
             setAsset(null);
             setFileExist(false);
+            setGroupInfo((prev) => ({ ...prev, imagen: '' }));
         }
+    };
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setGroupInfo((prev) => ({ ...prev, [name]: value }));
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        if (!GroupInfo.nombre || !GroupInfo.descripcion) return;
 
+        axios
+            .post(`${process.env.REACT_APP_API}/chats/group`, GroupInfo)
+            .then(() => {
+                console.log("Grupo creado:", GroupInfo);
+                setGroupInfo({ nombre: '', descripcion: '', imagen: '' });
+                setAsset(null);
+                showSucess();
+            })
+            .catch((e) => console.error(e));
 
-        console.log("Comunidad creada:", {
-            communityName,
-            communityDescription,
-            asset,
-        });
     };
+
 
     return (
         <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
@@ -80,34 +112,36 @@ const CrearComunidadModal = ({ onClose }) => {
                     ✖
                 </button>
 
-                <div className="flex justify-center">
-                    <h2 className="text-5xl font-semibold text-gray-800 mb-12">Crear comunidad</h2>
-                </div>
+                <h2 className="text-5xl font-semibold text-gray-800 mb-12 text-center">
+                    Crear Grupo
+                </h2>
 
                 <div className="mt-10 flex border-gray-300 rounded-lg shadow-md">
-                    <label htmlFor="community-name" className="mx-6 mt-4 font-bold">
-                        Nombre de la comunidad:
+                    <label htmlFor="nombre" className="mx-6 mt-4 font-bold">
+                        Nombre de el Grupo:
                     </label>
                     <input
                         type="text"
-                        id="community-name"
-                        value={communityName}
-                        onChange={(e) => setCommunityName(e.target.value)}
-                        placeholder="La Comunidad del pan"
+                        id="nombre"
+                        name="nombre"
+                        value={GroupInfo.nombre}
+                        onChange={handleChange}
+                        placeholder="Dairo Moreno mentiroso"
                         className="w-full mr-5 mb-6 mt-5 rounded-lg shadow-md border border-b-2 border-b-blue-500"
                     />
                 </div>
 
                 <div className="mt-10 flex border-gray-300 rounded-lg shadow-md">
-                    <label htmlFor="community-description" className="mx-6 mt-4 font-bold">
+                    <label htmlFor="descripcion" className="mx-6 mt-4 font-bold">
                         Descripción:
                     </label>
                     <input
                         type="text"
-                        id="community-description"
-                        value={communityDescription}
-                        onChange={(e) => setCommunityDescription(e.target.value)}
-                        placeholder="Aquí solo hablamos de pan"
+                        id="descripcion"
+                        name="descripcion"
+                        value={GroupInfo.descripcion}
+                        onChange={handleChange}
+                        placeholder="Su papa no lo quiere"
                         className="w-full mr-5 mb-6 mt-5 rounded-lg shadow-md border border-b-2 border-b-blue-500"
                     />
                 </div>
@@ -127,10 +161,8 @@ const CrearComunidadModal = ({ onClose }) => {
                         {fileExist ? "Cambiar imagen" : "Cargar imagen"}
                     </label>
 
-                    {(!isUploading && asset) ? (
-                        <ImagenPreview file={asset} handleDelete={handleDelete} />
-                    ) : (
-                        asset && (
+                    {asset && (
+                        isUploading ? (
                             <div className="w-full flex items-center justify-center">
                                 <img
                                     className="w-24 h-24"
@@ -138,6 +170,8 @@ const CrearComunidadModal = ({ onClose }) => {
                                     alt="Cargando..."
                                 />
                             </div>
+                        ) : (
+                            <ImagenPreview file={asset} handleDelete={handleDelete} />
                         )
                     )}
                 </div>
@@ -152,15 +186,26 @@ const CrearComunidadModal = ({ onClose }) => {
                     </button>
                     <button
                         type="button"
-                        className="px-4 py-2 btn btn-4 text-white text-sm font-medium rounded-md hover:bg-red-600"
                         onClick={onClose}
+                        className="px-4 py-2 btn btn-4 text-white text-sm font-medium rounded-md hover:bg-red-600"
                     >
                         Cancelar
                     </button>
                 </div>
             </div>
+            <ToastContainer
+                position="bottom-left"
+                autoClose={5000}
+                hideProgressBar={true}
+                newestOnTop={false}
+                rtl={false}
+                pauseOnFocusLoss
+                pauseOnHover
+                theme="dark"
+            />
         </div>
+
     );
 };
 
-export default CrearComunidadModal;
+export default CrearGrupoModal;

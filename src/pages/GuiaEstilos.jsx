@@ -1,5 +1,5 @@
 import { TarjetaChat } from "../components/ChatCard/TarjetaChat";
-import CrearComunidades from "../components/CrearComunidades/CrearComunidades";
+import CrearComunidades from "../components/CrearCom-grupos/CrearGrupos";
 import ComunidadesDesplegables from "../components/ComunidadesDesplegables";
 import "../css/buttons/buttons.css"
 import { Outlet } from "react-router-dom";
