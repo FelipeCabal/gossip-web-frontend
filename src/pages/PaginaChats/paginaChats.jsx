@@ -11,52 +11,32 @@ export function PaginaChats() {
     const [chats, setChats] = useState([]);
     const [type, setType] = useState('private');
     const navigate = useNavigate();
+    const [searchQuery, setSearchQuery] = useState("");
 
-    const endpoindPrivate = process.env.REACT_APP_API + "/chats/private";
-    const endpoindGroup = process.env.REACT_APP_API + "/chats/group";
-
-    const abrirChat = (type, id) => {
-        const ruta = id + "/" + type;
-        navigate(ruta);
+    const endpointMap = {
+        private: process.env.REACT_APP_API + "/chats/private",
+        group: process.env.REACT_APP_API + "/chats/group",
+        community: `${process.env.REACT_APP_API}/chats/community/${usuario?.id}`,
     };
 
-    const [filter, setFilter] = useState("private");
-    const [searchQuery, setSearchQuery] = useState("");
-    const [results, setResults] = useState([]);
+    const abrirChat = (type, id) => {
+        const ruta = `${id}/${type}`;
+        navigate(ruta);
+    };
 
     useEffect(() => {
         if (!usuario) return;
 
-        if (type === "private") {
-            axios.get(endpoindPrivate).then(r => setChats(r.data));
-        } else if (type === "group") {
-            axios.get(endpoindGroup).then(r => setChats(r.data));
-        } else if (type === "community") {
-            axios.get(`${process.env.REACT_APP_API}/chats/community/${usuario.id}`)
-                .then(r => setChats(r.data));
+        if (endpointMap[type]) {
+            axios
+                .get(endpointMap[type])
+                .then((response) => setChats(response.data || []))
+                .catch(() => setChats([]));
         } else {
-            console.log("tipo de chat invalido");
+            console.error("Tipo de chat inválido.");
+            setChats([]);
         }
-
-        let filteredChats;
-
-        if (endpoindPrivate) {
-            axios.get(endpoindPrivate).then((r) => {
-                filteredChats = r.data.filter(chat =>
-                    chat.friend.nombre.toLowerCase().includes(searchQuery.toLowerCase())
-                );
-                setChats(filteredChats);
-            })
-        } else if (endpoindGroup) {
-            axios.get(endpoindGroup).then((r) => {
-                filteredChats = r.data.filter(chat =>
-                    chat.nombre.toLowerCase().includes(searchQuery.toLowerCase())
-                );
-                setChats(filteredChats);
-            })
-        }
-
-    }, [type, usuario, searchQuery]);
+    }, [type, usuario]);
 
     const handleSearchChange = (e) => {
         setSearchQuery(e.target.value);
@@ -65,7 +45,16 @@ export function PaginaChats() {
     const handleTypeChange = (newType) => {
         setType(newType);
         setSearchQuery("");
-    }
+    };
+
+    const filteredChats = Array.isArray(chats)
+        ? chats.filter((chat) => {
+            if (!searchQuery) return true;
+            const chatName = type === "private" ? chat?.friend?.nombre : chat?.nombre;
+            return chatName?.toLowerCase().includes(searchQuery.toLowerCase());
+        })
+        : [];
+
 
     return (
         <div className="contenedor-chats-page">
@@ -103,29 +92,37 @@ export function PaginaChats() {
                     </div>
                 </div>
 
-                {chats.length > 0 ?
-                    chats.map(chat => (
-                        type !== 'private' ?
-                            <TarjetaChat onClick={abrirChat(type, chat.id)} nombre={chat.nombre} tipoChat={type} chatid={chat.id} imagen={chat.imagen} />
-                            :
-                            <TarjetaChat onClick={abrirChat(type, chat.id)} nombre={chat.friend.nombre} tipoChat={type} chatid={chat.id} imagen={chat.friend.imagen} />
+                {filteredChats.length > 0 ? (
+                    filteredChats.map((chat) => (
+                        <TarjetaChat
+                            key={chat.id}
+                            onClick={() => abrirChat(type, chat.id)}
+                            nombre={type === "private" ? chat?.friend?.nombre : chat?.nombre}
+                            tipoChat={type}
+                            chatid={chat.id}
+                            imagen={type === "private" ? chat?.friend?.imagen : chat?.imagen}
+                        />
                     ))
-                    :
-                    <div>{type === 'community' ? 'No perteneces a ninguna comunidad.' : type === 'group' ? 'No perteneces a ningun grupo.' : 'No hay chats.'} </div>
-                }
+                ) : (
+                    <div>
+                        {type === "community"
+                            ? "No perteneces a ninguna comunidad."
+                            : type === "group"
+                                ? "No perteneces a ningún grupo."
+                                : "No hay chats."}
+                    </div>
+                )}
             </div>
-
             <div className="right-column-chats">
-                {chats.length === 0 ?
+                {filteredChats.length === 0 ? (
                     <div className="image-container">
                         <img src={imgNoChats} alt="no chats yet" className="img-placeholder" />
                     </div>
-                    : (
-                        <div className="vistaChat">
-                            <Outlet />
-                        </div>
-                    )
-                }
+                ) : (
+                    <div className="vistaChat">
+                        <Outlet />
+                    </div>
+                )}
             </div>
         </div>
     );
