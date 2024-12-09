@@ -58,7 +58,7 @@ export function EditarPerfil() {
                     <input className='w-full mr-5 mb-6 mt-5 rounded-lg shadow-md border border-b-2 border-b-purple-500'
                         type="text"
                         name="name"
-                        value={user.nombre}
+
                         onChange={handleChange}
                         required
                     />
