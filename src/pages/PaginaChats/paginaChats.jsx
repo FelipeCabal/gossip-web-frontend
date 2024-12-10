@@ -19,7 +19,7 @@ export function PaginaChats() {
         community: `${process.env.REACT_APP_API}/chats/community/${usuario?.id}`,
     };
 
-    const abrirChat = (type, id) => {
+    const abrirChat = (id, type) => {
         const ruta = `${id}/${type}`;
         navigate(ruta);
     };
@@ -42,9 +42,9 @@ export function PaginaChats() {
         setSearchQuery(e.target.value);
     };
 
-    const handleTypeChange = (newType) => {
-        setType(newType);
+    const handleTypeChange = async (newType) => {
         setSearchQuery("");
+        setType(newType);
     };
 
     const filteredChats = Array.isArray(chats)
@@ -96,7 +96,7 @@ export function PaginaChats() {
                     filteredChats.map((chat) => (
                         <TarjetaChat
                             key={chat.id}
-                            onClick={() => abrirChat(type, chat.id)}
+                            onClick={abrirChat(chat.id, type)}
                             nombre={type === "private" ? chat?.friend?.nombre : chat?.nombre}
                             tipoChat={type}
                             chatid={chat.id}
