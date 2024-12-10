@@ -96,7 +96,7 @@ export function PaginaChats() {
                     filteredChats.map((chat) => (
                         <TarjetaChat
                             key={chat.id}
-                            onClick={abrirChat(chat.id, type)}
+                            onClick={() => abrirChat(chat.id, type)}
                             nombre={type === "private" ? chat?.friend?.nombre : chat?.nombre}
                             tipoChat={type}
                             chatid={chat.id}

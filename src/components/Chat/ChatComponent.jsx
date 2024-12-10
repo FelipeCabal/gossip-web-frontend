@@ -5,6 +5,7 @@ import axios from 'axios';
 import './ChatStyle.css';
 import { useParams } from 'react-router-dom';
 import { VistaInformacionChat } from '../VistaChats/VistaInformacionChat';
+import imgNoChats from "../../assets/imgNoChats/imgNoChats.png";
 
 const ChatComponent = () => {
 
@@ -20,7 +21,7 @@ const ChatComponent = () => {
     const [newMessage, setNewMessage] = useState('');
     const [loadingMessages, setLoadingMessages] = useState(true);
     const messagesEndRef = useRef(null);
-    const [chat, setChat] = useState([]);
+    const [chat, setChat] = useState(null);
     const [title, setTitle] = useState(null);
     const [imagen, setImagen] = useState(null);
     const [toggleInfo, setToggleInfo] = useState(false);
@@ -29,7 +30,7 @@ const ChatComponent = () => {
         try {
             const response = await axios.get(`${process.env.REACT_APP_API}/chats/${chatType}/${chatId}`);
             const chatData = response.data;
-            setChat(chatData);
+            setChat(chatData)
 
             if (chatType !== 'private') {
                 setTitle(chatData.nombre);
@@ -58,8 +59,10 @@ const ChatComponent = () => {
                 }, {});
                 setUsersCache(userDictionary);
             }
+
         } catch (error) {
-            console.error('Error al cargar el chat:', error);
+            console.error('Error al cargar el chat:', error)
+            setChat(null);
         }
     };
 
@@ -145,125 +148,137 @@ const ChatComponent = () => {
     }, [messages]);
 
     return (
-        <div className='flex'>
-            <div className='w-full'>
-                <div className="flex justify-between items-center border-b-2 border-slate-900">
-                    <h2>{title ? title : <>Cargando Chat</>}</h2>
-                    {toggleInfo ? (
-                        <svg
-                            onClick={handleToggleInfo}
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            strokeWidth="1.5"
-                            stroke="currentColor"
-                            className="size-8 cursor-pointer"
-                        >
-                            <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3"
-                            />
-                        </svg>
-                    ) : (
-                        <svg
-                            onClick={handleToggleInfo}
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            strokeWidth="1.5"
-                            stroke="currentColor"
-                            className="size-9 cursor-pointer"
-                        >
-                            <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                d="M12 6.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 12.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 18.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5Z"
-                            />
-                        </svg>
-                    )}
-                </div>
-                <div
-                    className="chatContainer overflow-y-scroll p-[10px] mb-2"
-                    style={{
-                        height: '300px',
-                    }}
-                >
-                    {loadingMessages ? (
-                        <div>Cargando mensajes...</div>
-                    ) : (
-                        <>
-                            {messages.map((msg, index) => {
-                                const user = usersCache[msg.usuarioId];
-                                const myMessage = msg.usuarioId === usuario.id;
-                                return (
-                                    <div
-                                        key={index}
-                                        className={
-                                            myMessage
-                                                ? 'mb-4 w-full flex justify-end'
-                                                : 'mb-4 w-full flex justify-start'
-                                        }
+        <>
+            {
+                chat ? <>
+                    <div className='flex'>
+                        <div className='w-full'>
+                            <div className="flex justify-between items-center border-b-2 border-slate-900">
+                                <h2>{title ? title : <>Cargando Chat</>}</h2>
+                                {toggleInfo ? (
+                                    <svg
+                                        onClick={handleToggleInfo}
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        strokeWidth="1.5"
+                                        stroke="currentColor"
+                                        className="size-8 cursor-pointer"
                                     >
-                                        <div
-                                            className="max-w-[70%] w-auto border border-slate-600 p-3"
-                                            style={
-                                                myMessage
-                                                    ? {
-                                                        borderTopLeftRadius: '12px',
-                                                        borderTopRightRadius: '12px',
-                                                        borderBottomLeftRadius: '12px',
+                                        <path
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3"
+                                        />
+                                    </svg>
+                                ) : (
+                                    <svg
+                                        onClick={handleToggleInfo}
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        strokeWidth="1.5"
+                                        stroke="currentColor"
+                                        className="size-9 cursor-pointer"
+                                    >
+                                        <path
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            d="M12 6.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 12.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 18.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5Z"
+                                        />
+                                    </svg>
+                                )}
+                            </div>
+                            <div
+                                className="chatContainer overflow-y-scroll p-[10px] mb-2"
+                                style={{
+                                    height: '300px',
+                                }}
+                            >
+                                {loadingMessages ? (
+                                    <div>Cargando mensajes...</div>
+                                ) : (
+                                    <>
+                                        {messages.map((msg, index) => {
+                                            const user = usersCache[msg.usuarioId];
+                                            const myMessage = msg.usuarioId === usuario.id;
+                                            return (
+                                                <div
+                                                    key={index}
+                                                    className={
+                                                        myMessage
+                                                            ? 'mb-4 w-full flex justify-end'
+                                                            : 'mb-4 w-full flex justify-start'
                                                     }
-                                                    : {
-                                                        borderTopLeftRadius: '12px',
-                                                        borderTopRightRadius: '12px',
-                                                        borderBottomRightRadius: '12px',
-                                                    }
-                                            }
-                                        >
-                                            <span className="text-[10px] font-bold">
-                                                {myMessage ? (
-                                                    <p className="text-end">@Me</p>
-                                                ) : user ? (
-                                                    <p>@{user.nombre}</p>
-                                                ) : (
-                                                    'Cargando usuario...'
-                                                )}
-                                            </span>
-                                            <p className="text-[16px]">{msg.message}</p>
-                                            <div className="w-full text-end -mt-3">
-                                                <span className="text-end text-slate-500 text-[9px]">
-                                                    {formatTime(msg.createdAt)}
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                );
-                            })}
-                            <div ref={messagesEndRef} />
-                        </>
-                    )}
-                </div>
-                <div>
-                    <input
-                        type="text"
-                        className="inputMessage"
-                        placeholder="Escribe tu mensaje..."
-                        value={newMessage}
-                        onChange={(e) => setNewMessage(e.target.value)}
-                        onKeyDown={(e) => {
-                            if (e.key === 'Enter') sendMessage();
-                        }}
-                    />
-                    <button className="buttonSend" onClick={sendMessage}>
-                        Enviar
-                    </button>
-                </div>
-            </div>
-            <div className={toggleInfo ? 'block' : 'hidden'}>
-                {VistaInformacionChat}
-            </div>
-        </div>
+                                                >
+                                                    <div
+                                                        className="max-w-[70%] w-auto border border-slate-600 p-3"
+                                                        style={
+                                                            myMessage
+                                                                ? {
+                                                                    borderTopLeftRadius: '12px',
+                                                                    borderTopRightRadius: '12px',
+                                                                    borderBottomLeftRadius: '12px',
+                                                                }
+                                                                : {
+                                                                    borderTopLeftRadius: '12px',
+                                                                    borderTopRightRadius: '12px',
+                                                                    borderBottomRightRadius: '12px',
+                                                                }
+                                                        }
+                                                    >
+                                                        <span className="text-[10px] font-bold">
+                                                            {myMessage ? (
+                                                                <p className="text-end">@Me</p>
+                                                            ) : user ? (
+                                                                <p>@{user.nombre}</p>
+                                                            ) : (
+                                                                'Cargando usuario...'
+                                                            )}
+                                                        </span>
+                                                        <p className="text-[16px]">{msg.message}</p>
+                                                        <div className="w-full text-end -mt-3">
+                                                            <span className="text-end text-slate-500 text-[9px]">
+                                                                {formatTime(msg.createdAt)}
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            );
+                                        })}
+                                        <div ref={messagesEndRef} />
+                                    </>
+                                )}
+                            </div>
+                            <div>
+                                <input
+                                    type="text"
+                                    className="inputMessage"
+                                    placeholder="Escribe tu mensaje..."
+                                    value={newMessage}
+                                    onChange={(e) => setNewMessage(e.target.value)}
+                                    onKeyDown={(e) => {
+                                        if (e.key === 'Enter') sendMessage();
+                                    }}
+                                />
+                                <button className="buttonSend" onClick={sendMessage}>
+                                    Enviar
+                                </button>
+                            </div>
+                        </div>
+                        <div className={toggleInfo ? 'block' : 'hidden'}>
+                            {VistaInformacionChat}
+                        </div>
+                    </div>
+                </>
+                    : <>
+                        <div className='w-full flex justify-center'>
+
+                            <img src={imgNoChats} alt="no chats yet" className='w-[80%]' />
+                        </div>
+                    </>
+            }
+        </>
     );
 };
 
