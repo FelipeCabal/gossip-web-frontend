@@ -140,11 +140,48 @@ const ChatComponent = () => {
         scrollToBottom();
     }, [messages]);
 
+    const handleToggleInfo = () => {
+        setToggleInfo(!toggleInfo);
+    };
+
     return (
         <div className="flex flex-col h-[calc(100dvh-64px)]">
             {/* Encabezado del chat */}
             <div className="flex justify-between items-center border-b-2 border-slate-900 p-2">
                 <h2>{title ? title : <>Cargando Chat</>}</h2>
+                {toggleInfo ? (
+                    <svg
+                        onClick={handleToggleInfo}
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth="1.5"
+                        stroke="currentColor"
+                        className="size-8 cursor-pointer"
+                    >
+                        <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3"
+                        />
+                    </svg>
+                ) : (
+                    <svg
+                        onClick={handleToggleInfo}
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth="1.5"
+                        stroke="currentColor"
+                        className="size-9 cursor-pointer"
+                    >
+                        <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M12 6.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 12.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 18.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5Z"
+                        />
+                    </svg>
+                )}
             </div>
 
             {/* Contenedor de mensajes */}
