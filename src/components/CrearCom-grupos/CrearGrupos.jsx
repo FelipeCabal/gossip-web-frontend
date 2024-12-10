@@ -126,7 +126,7 @@ const CrearGrupoModal = ({ onClose }) => {
                         name="nombre"
                         value={GroupInfo.nombre}
                         onChange={handleChange}
-                        placeholder="Dairo Moreno mentiroso"
+                        placeholder="......"
                         className="w-full mr-5 mb-6 mt-5 rounded-lg shadow-md border border-b-2 border-b-blue-500"
                     />
                 </div>
@@ -141,7 +141,7 @@ const CrearGrupoModal = ({ onClose }) => {
                         name="descripcion"
                         value={GroupInfo.descripcion}
                         onChange={handleChange}
-                        placeholder="Su papa no lo quiere"
+                        placeholder="......"
                         className="w-full mr-5 mb-6 mt-5 rounded-lg shadow-md border border-b-2 border-b-blue-500"
                     />
                 </div>

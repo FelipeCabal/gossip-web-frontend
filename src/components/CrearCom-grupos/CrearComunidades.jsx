@@ -125,7 +125,7 @@ const CrearComunidadModal = ({ onClose }) => {
                         name="nombre"
                         value={communityInfo.nombre}
                         onChange={handleChange}
-                        placeholder="La Comunidad del pan"
+                        placeholder="....."
                         className="w-full mr-5 mb-6 mt-5 rounded-lg shadow-md border border-b-2 border-b-blue-500"
                     />
                 </div>
@@ -140,7 +140,7 @@ const CrearComunidadModal = ({ onClose }) => {
                         name="descripcion"
                         value={communityInfo.descripcion}
                         onChange={handleChange}
-                        placeholder="Aquí solo hablamos de pan"
+                        placeholder="....."
                         className="w-full mr-5 mb-6 mt-5 rounded-lg shadow-md border border-b-2 border-b-blue-500"
                     />
                 </div>
