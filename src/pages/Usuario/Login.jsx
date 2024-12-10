@@ -11,12 +11,13 @@ export function Login() {
     const ENDPOINT = process.env.REACT_APP_API + '/auth/login'
     const showSucess = () => toast.success("Logueado Correctamente", {
         onClose: () => {
-            navigate('/Homepage');
+            navigate('/homepage');
         },
         autoClose: 2000,
     });
     const showErrorContraseña = () => toast.error("Constraseña incorrecta")
     const showErrorCorreo = () => toast.error("Usuario no encontrado")
+    const showErrorInformacion = () => toast.info("Campos sin informacion")
     const { updateToken } = useAuth()
     const [datos, setDatos] = useState({
         email: '',
@@ -31,6 +32,10 @@ export function Login() {
 
 
     const handleIngresar = () => {
+        if (!datos.email || !datos.password) {
+            showErrorInformacion();
+            return;
+        }
         axios.post(ENDPOINT, datos)
             .then((respuesta) => {
                 updateToken(respuesta.data.access_token)
@@ -115,7 +120,10 @@ export function Login() {
                     value={datos.email}
                     onChange={handleChange}
                     variant="standard"
-
+                    onKeyUp={(e) => {
+                        if (e.key === 'Enter')
+                            handleIngresar();
+                    }}
                 />
 
                 <TextField
@@ -123,6 +131,9 @@ export function Login() {
                     name='password'
                     label="Password"
                     onChange={handleChange}
+                    onKeyUp={(e) => {
+                        if (e.key === 'Enter') handleIngresar()
+                    }}
                     value={datos.password}
                     variant="standard"
                     type={showPassword ? 'text' : 'password'}
@@ -144,6 +155,9 @@ export function Login() {
         </form>
         <button className='btn btn-3' style={{ marginBottom: '10px' }}
             onClick={handleIngresar}
+            onKeyUp={(e) => {
+                if (e.key === 'Enter') handleIngresar();
+            }}
         >
             Ingresar
         </button>

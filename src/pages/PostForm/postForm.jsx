@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { PostHomeForm } from "../../components/postsHomeForm/postHomeForm";
+import { useRef } from "react";
 
 export function PostForm() {
     const navigate = useNavigate();
