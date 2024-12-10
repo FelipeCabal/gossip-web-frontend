@@ -4,8 +4,8 @@ import Navbar from "../partials/navbar";
 
 export function LayoutComponent() {
     return (<>
-        <Navbar/>
-        <div>
+        <Navbar />
+        <div className="w-full h-full">
             <Outlet></Outlet>
         </div>
     </>

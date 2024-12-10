@@ -59,6 +59,7 @@ const DropdownSolicitudes = () => {
         const fetchData = async () => {
             try {
                 const response = await axios.get(enpoint);
+                console.log(response.data.userEnvia)
                 setSolicitudesAmistad(response.data);
             } catch (e) {
                 console.error("Error en solicitudes de amistad:", e);
@@ -97,8 +98,8 @@ const DropdownSolicitudes = () => {
                         {visibleSection === 'amistad' && solicitudesAmistad ? <>
                             {solicitudesAmistad.length > 0 ? solicitudesAmistad.map((solicitud) => (
                                 <li key={solicitud.id} className="solicitud-item flex justify-between items-center p-2 border-b">
-                                    <img src={img} alt="foto de perfil" className='w-28' />
-                                    <span className="text-black">{solicitud.name}</span>
+                                    <img src={solicitud.userEnvia.imagen || img} alt="foto de perfil" className='w-28' />
+                                    <span className="text-black">{solicitud.userEnvia.nombre}</span>
                                     <div className="actions flex space-x-2">
                                         <button onClick={() => handleActionAcceptSol(solicitud.id)}>
                                             <img src={aceptar} alt="aceptar" className="w-8 h-8" />
@@ -127,7 +128,7 @@ const DropdownSolicitudes = () => {
                                     </li>
                                 ))
                             ) : (
-                                    <><p className='text-black'>No tienes invitaciones a grupos</p></>
+                                <><p className='text-black'>No tienes invitaciones a grupos</p></>
                             )}
                     </ul>
                 </div>

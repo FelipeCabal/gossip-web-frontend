@@ -8,9 +8,9 @@
 }
 
 .left-column-chats {
-    padding-left: 10px;
-    padding-right: 10px;
-
+    margin-left: 10px;
+    height: 100%;
+    padding-bottom: 100px;
 }
 
 .left-column-chats .searchChatCommunity {
