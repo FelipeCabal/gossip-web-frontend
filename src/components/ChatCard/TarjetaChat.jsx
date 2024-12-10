@@ -1,12 +1,14 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import icono from '../../assets/avatares/neutro.png';
+import { useRefresh } from '../../providers/RefreshProvider';
 
 export function TarjetaChat({ nombre, imagen, chatid, tipoChat }) {
 
     const ENDPOINT_MENSAJES = `${process.env.REACT_APP_API}/chats/mensajes/${chatid}/type/${tipoChat}/`
 
     const [mensaje, setMensaje] = useState([]);
+    const {refresh} = useRefresh()
 
     useEffect(() => {
         axios.get(ENDPOINT_MENSAJES)
@@ -16,7 +18,7 @@ export function TarjetaChat({ nombre, imagen, chatid, tipoChat }) {
             .catch((error) => {
                 console.error(error);
             });
-    }, []);
+    }, [refresh]);
 
     return (
         <>

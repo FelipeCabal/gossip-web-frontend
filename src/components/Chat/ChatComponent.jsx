@@ -4,6 +4,7 @@ import { useAuth } from '../../providers/AuthProvider';
 import axios from 'axios';
 import './ChatStyle.css';
 import { useParams } from 'react-router-dom';
+import { useRefresh } from '../../providers/RefreshProvider';
 
 const ChatComponent = () => {
 
@@ -23,6 +24,7 @@ const ChatComponent = () => {
     const [title, setTitle] = useState(null);
     const [imagen, setImagen] = useState(null);
     const [toggleInfo, setToggleInfo] = useState(false);
+    const { refresh, setRefresh } = useRefresh()
 
     const fetchChatData = async () => {
         try {
@@ -65,6 +67,7 @@ const ChatComponent = () => {
     const sendMessage = () => {
         if (newMessage.trim() && socketRef.current) {
             socketRef.current.emit('sendMessage', { chatId, chatType, message: newMessage });
+            setRefresh(!refresh)
             setNewMessage('');
         }
     };
