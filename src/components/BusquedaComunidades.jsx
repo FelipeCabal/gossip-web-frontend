@@ -34,6 +34,16 @@ export function BusquedaComunidades() {
       });
   };
 
+  const obtenerSolicitudes = () => {
+    axios.get(process.env.REACT_APP_API + '/friend-request/user/received')
+      .then((respuesta) => {
+        console.log("solicitudes de amistad: " + respuesta.data)
+      })
+      .catch((error) => {
+        console.log("este es el error" + error)
+      })
+  }
+
 
 
   useEffect(() => {
