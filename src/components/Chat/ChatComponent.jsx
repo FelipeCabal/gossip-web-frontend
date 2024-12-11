@@ -5,10 +5,11 @@ import axios from 'axios';
 import './ChatStyle.css';
 import { useParams } from 'react-router-dom';
 import { useRefresh } from '../../providers/RefreshProvider';
+import { VistaInformacionChat } from '../VistaChats/VistaInformacionChat';
 
 const ChatComponent = () => {
 
-    const {id, type} = useParams()
+    const { id, type } = useParams()
     // ESTAS CONSTANTES SE DEBEN ENVIAR A ESTE COMPONENTE YA SEA POR PARÁMETRO O COMO PROP
     const chatId = id;
     const chatType = type;
@@ -25,6 +26,7 @@ const ChatComponent = () => {
     const [imagen, setImagen] = useState(null);
     const [toggleInfo, setToggleInfo] = useState(false);
     const { refresh, setRefresh } = useRefresh()
+    const [amigo, setAmigo] = useState({})
 
     const fetchChatData = async () => {
         try {
@@ -46,6 +48,7 @@ const ChatComponent = () => {
                 setUsersCache({
                     [relatedUser.id]: relatedUser,
                 });
+                setAmigo(relatedUser)
 
                 setTitle(relatedUser.nombre);
                 setImagen(relatedUser.imagen || '');
@@ -263,7 +266,18 @@ const ChatComponent = () => {
                 </div>
             </div>
             <div className={toggleInfo ? 'block' : 'hidden'}>
-                {/* Aquí debe ir el componente de la información del chat y pasarle las props necesarias */}
+                {
+                    chat ?
+                        <VistaInformacionChat
+                            imagen={imagen}
+                            chatId={chat.id}
+                            nombre={title}
+                            chatType={chatType}
+                            userId={amigo.id}
+                            miembros={chat.miembros || null}
+                        />
+                        : <></>
+                }
             </div>
         </div>
     );

@@ -2,18 +2,18 @@ import { Link, useNavigate, useParams } from "react-router-dom"
 import axios from "axios"
 import { toast } from "react-toastify"
 
-export function VistaInformacionChat(imagen, chatId, userId, nombre, chatType) {
+export function VistaInformacionChat(imagen, chatId, userId, nombre, chatType, miembros) {
     const navigate = useNavigate()
     const alerta = () => toast.error('Saliste del chat exitosamente')
-    
+
     const eliminar_user = (idUser) => {
-        const ENDPOINT_DELETE_USER = process.env.REACT_APP_API + "/chats/"+chatType + "/" + chatId + "/miembros/" + idUser
-        
+        const ENDPOINT_DELETE_USER = process.env.REACT_APP_API + "/chats/" + chatType + "/" + chatId + "/miembros/" + idUser
+
         axios.delete(ENDPOINT_DELETE_USER)
             .then(() => {
 
                 alerta
-             })
+            })
             .catch((error) => {
                 console.log(error)
             })
@@ -54,7 +54,7 @@ export function VistaInformacionChat(imagen, chatId, userId, nombre, chatType) {
                             </div>
                         </div></> : <><div className="mb-3"></div>
                         </>}
-                        
+
                     </section>
                     <section className="border-b-2 border-[#ABABAB]">
                         <h3 className="text-2xl font-semibold ml-3 mt-2">Archivos compartidos</h3>
@@ -65,20 +65,20 @@ export function VistaInformacionChat(imagen, chatId, userId, nombre, chatType) {
                         </div>
                     </section>
                     {
-                        chatType !== "private" ? (<>
+                        chatType !== "private" && miembros !== null ? (<>
                             <div className="border-b-2 border-[#ABABAB] w-full">
                                 <h3 className="text-2xl font-medium ml-3">Integrantes</h3>
                                 {miembros.map((miembro) => (
                                     <div key={miembro.id} className="w-full flex gap-2 ml-3 mt-2 mb-4 items-center border-none">
                                         <img src={miembro.imagen} alt="" className="h-12 w-12 rounded-full border-none" />
-                                        <span className="h-auto flex text-xl font-semibold items-center justify-start flex-wrap w-full" style={{wordBreak:"break-word"}}>{miembro.nombre}</span>
+                                        <span className="h-auto flex text-xl font-semibold items-center justify-start flex-wrap w-full" style={{ wordBreak: "break-word" }}>{miembro.nombre}</span>
                                         <div className=" flex justify-end gap-3 items-center relative group mr-4">
                                             <button onClick={eliminar_user(miembro.id)} className="transition-transform transform group-hover:-translate-x-1 group-hover:-translate-y-1">
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-9">
                                                     <path strokeLinecap="round" strokeLinejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                                                 </svg>
                                             </button>
-                                            
+
                                         </div>
                                     </div>
 
