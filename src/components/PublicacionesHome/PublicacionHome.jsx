@@ -30,7 +30,6 @@ function ConfirmModal({ mensaje, onConfirm, onCancel }) {
   );
 }
 
-
 export function PublicacionHome({ userName, img, texto, perfil, esAnonimo, postId, userId }) {
   const { usuario } = useAuth()
   const [expandir, setExpandir] = useState(false); // Controla si la publicación está extendida
@@ -41,7 +40,6 @@ export function PublicacionHome({ userName, img, texto, perfil, esAnonimo, postI
   const fotoPerfil = esAnonimo ? anonimo : perfil ? perfil : anonimo;
   const nombre = esAnonimo ? 'anonimo' : userName;
   const { refresh, setRefresh } = useRefresh();
-
 
   const handleClick = () => {
     axios.post(process.env.REACT_APP_API + "/likes/" + postId)
@@ -97,8 +95,24 @@ export function PublicacionHome({ userName, img, texto, perfil, esAnonimo, postI
   };
 
   const manejarEliminar = () => setShowModal(true);
+  const [editando, setEditando] = useState(false);
+  const [description, setDescription] = useState(texto);
 
+  useEffect(() => {
+    setDescription(texto); // Sincroniza el estado con la prop cuando esta cambie
+  }, [texto]);
 
+  const actualizacion = () => {
+    axios.patch(`${process.env.REACT_APP_API}/posts/${postId}`, { description: description })
+      .then(response => {
+        console.log('Descripción actualizada:', response.data);
+        setEditando(false);
+        setRefresh(true);
+      })
+      .catch(error => {
+        console.error('Error actualizando la descripción:', error);
+      });
+  };
 
   return (
     <>
@@ -125,7 +139,6 @@ export function PublicacionHome({ userName, img, texto, perfil, esAnonimo, postI
                   )}
                 </div> : <></>
               }
-
             </div>
             <aside className="flex-col flex justify-center items-center relative">
               <Link to={pathDireccion + '/post/' + postId}>
@@ -136,15 +149,33 @@ export function PublicacionHome({ userName, img, texto, perfil, esAnonimo, postI
                     <></>
                   }
                 </div>
-                <div className="w-full p-6">
-                  <span className="text-xl font-roboto">{truncatedText}</span>
+                <div>
+                  {!editando ? (
+                    <span className="text-xl font-roboto">{truncatedText}</span>
+                  ) : (<></>)
+                  }
                 </div>
               </Link>
-
+              <div className="w-full p-6">
+                {editando ? (
+                  <div>
+                    <input
+                      className="w-full h-14 border rounded-xl p-2"
+                      value={description}
+                      onChange={(e) => setDescription(e.target.value)}
+                    />
+                    <button
+                      className="btn btn-3 mt-2"
+                      onClick={actualizacion}>
+                      guardar
+                    </button>
+                  </div>
+                ) : (<></>)}
+              </div>
               <section className="bottom-0 right-0 flex space-x-3 p-4 w-full">
                 <div className="absolute bottom-0 right-0 flex justify-end space-x-3 pt-6 pb-4 pr-4 w-full">
                   {
-                    userId == usuario.id ? <button>
+                    userId == usuario.id ? <button onClick={() => setEditando(!editando)}>
                       <svg xmlns="http://www.w3.org/2000/svg"
                         fill="none" viewBox="0 0 24 24"
                         strokeWidth={1.5} stroke="currentColor"
@@ -154,11 +185,10 @@ export function PublicacionHome({ userName, img, texto, perfil, esAnonimo, postI
                           strokeLinejoin="round"
                           d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
                       </svg>
+                      {editando ? <></> : <></>}
                     </button>
                       : <></>
                   }
-
-
                   <button onClick={handleClick}>
                     <svg
                       data-slot="icon"
