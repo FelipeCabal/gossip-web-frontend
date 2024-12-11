@@ -11,35 +11,30 @@ export function BusquedaComunidades() {
   const [activeSection, setActiveSection] = useState('personas'); // Estado para alternar secciones
 
   const toggleFollow = (list, setList, id) => {
-    const updatedList = list.map((item) =>
-      item.id === id ? { ...item, isFollowing: !item.isFollowing } : item
-    );
-    setList(updatedList);
-
+    console.log("Lista antes de modificar:", list); // <--- Aquí
     const selectedItem = list.find((item) => item.id === id);
 
-    if (!selectedItem.isFollowing) {
-      // Construye el endpoint dinámicamente con el `id`
-      const endpoint = `${process.env.REACT_APP_API}/friend-request/request/${id}`;
-      axios
-        .post(endpoint, {
-          status: 'P', // Estado inicial: pendiente
-        })
-        .then(() => {
-          console.log(`Solicitud enviada con estado "P" para el ID ${id}`);
-        })
-        .catch((error) => {
-          console.error("Error al enviar la solicitud:", error);
-          // Revertir estado local en caso de error
-          const revertedList = list.map((item) =>
-            item.id === id ? { ...item, isFollowing: !item.isFollowing } : item
-          );
-          setList(revertedList);
-        });
-    } else {
-      console.log(`Gestión adicional para eliminar seguimiento del ID ${id}`);
+    if (!selectedItem) {
+      console.error("No se encontró el usuario/comunidad con el ID:", id);
+      return;
     }
+
+    if (selectedItem.status === 'P') {
+      console.log("Ya existe una solicitud pendiente o el usuario/comunidad ya es seguido.");
+      return; // No hacemos nada si ya hay una solicitud pendiente o está en seguimiento
+    }
+
+    const endpoint = `${process.env.REACT_APP_API}/friend-request/request/${id}`;
+    axios.post(endpoint, { status: 'P' })
+      .then(() => {
+        console.log("Solicitud enviada con éxito para el ID:", id);
+      })
+      .catch((error) => {
+        console.error("Error al enviar la solicitud:", error);
+      });
   };
+
+
 
   useEffect(() => {
     axios
@@ -51,11 +46,12 @@ export function BusquedaComunidades() {
           isFollowing: false, // Estado inicial
         }));
         setPeople(peopleWithFollowing);
+        console.log("Lista de personas:", peopleWithFollowing)
       })
       .catch((error) => {
         console.log("Este es el error", error);
       });
-  }, []); // Asegúrate de incluir el array de dependencias vacío para evitar múltiples llamadas
+  }, []);
 
   useEffect(() => {
     axios
@@ -142,12 +138,12 @@ export function BusquedaComunidades() {
                   <div>
                     <button
                       onClick={() => toggleFollow(people, setPeople, persona.id)}
-                      className={`btn btn-font-black border ${persona.isFollowing
+                      className={`btn btn-font-black border ${persona
                         ? 'border-red-500 text-white'
                         : 'border-blue-500 text-white'
                         }`}
                     >
-                      {persona.isFollowing ? 'Eliminar' : 'Añadir'}
+                      {persona.status == 'P' ? 'Eliminar' : 'Añadir'}
                     </button>
                   </div>
                 </article>
