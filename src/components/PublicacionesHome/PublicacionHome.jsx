@@ -5,6 +5,7 @@ import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import { useAuth } from "../../providers/AuthProvider";
 import { useRefresh } from "../../providers/RefreshProvider";
+import { deleteFileWithUrl } from "../../services/firebase-services";
 
 function ConfirmModal({ mensaje, onConfirm, onCancel }) {
   return (
@@ -81,6 +82,18 @@ export function PublicacionHome({ userName, img, texto, perfil, esAnonimo, postI
 
   const [showModal, setShowModal] = useState(false);
 
+
+  const handleDelete = () => {
+    try {
+      if (img) {
+        deleteFileWithUrl(img); // Asegúrate de pasar la URL de la imagen
+      }
+      eliminarPublicacion(); // Llama directamente a esta función
+    } catch (error) {
+      console.log("No fue posible eliminar la publicación", error);
+    }
+  };
+
   const eliminarPublicacion = () => {
     axios.delete(`${process.env.REACT_APP_API}/posts/${postId}`)
       .then(response => {
@@ -133,7 +146,7 @@ export function PublicacionHome({ userName, img, texto, perfil, esAnonimo, postI
                   {showModal && (
                     <ConfirmModal
                       mensaje="¿Estás seguro de que deseas eliminar esta publicación?"
-                      onConfirm={eliminarPublicacion}
+                      onConfirm={handleDelete}
                       onCancel={() => setShowModal(false)}
                     />
                   )}
@@ -156,24 +169,25 @@ export function PublicacionHome({ userName, img, texto, perfil, esAnonimo, postI
                   }
                 </div>
               </Link>
-              <div className="w-full p-6">
+              <div className="w-full m-6">
                 {editando ? (
                   <div>
                     <input
-                      className="w-full h-14 border rounded-xl p-2"
+                      className="w-[98%] h-12 ml-2 border rounded-xl p-2"
                       value={description}
                       onChange={(e) => setDescription(e.target.value)}
                     />
                     <button
-                      className="btn btn-3 mt-2"
-                      onClick={actualizacion}>
+                      onClick={actualizacion}
+                      className="btn btn-3 mt-2 ml-4"
+                    >
                       guardar
                     </button>
                   </div>
                 ) : (<></>)}
               </div>
               <section className="bottom-0 right-0 flex space-x-3 p-4 w-full">
-                <div className="absolute bottom-0 right-0 flex justify-end space-x-3 pt-6 pb-4 pr-4 w-full">
+                <div className="absolute bottom-0 right-0 flex justify-end space-x-3 mt-6 pb-4 pr-4 w-full">
                   {
                     userId == usuario.id ? <button onClick={() => setEditando(!editando)}>
                       <svg xmlns="http://www.w3.org/2000/svg"
