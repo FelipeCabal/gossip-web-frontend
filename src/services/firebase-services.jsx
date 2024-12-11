@@ -50,5 +50,10 @@ const deleteFile = async (asset) => {
     const storageRef = ref(storage, `uploads/${asset.type}/${asset.name}`);
     return await deleteObject(storageRef)
 };
+const deleteFileWithUrl = async (downloadUrl) => {
+    const storageRef = ref(getStorage(), downloadUrl);
 
-export { deleteFile, uploadFile };
+    return await deleteObject(storageRef);
+
+};
+export { deleteFile, uploadFile, deleteFileWithUrl };

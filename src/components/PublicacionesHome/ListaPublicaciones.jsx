@@ -36,6 +36,8 @@ export const ListaPublicaciones = ({ ENDPOINT }) => {
                         perfil={publicaciones.user ? publicaciones.user.imagen : null}
                         texto={publicaciones.description}
                         esAnonimo={publicaciones.esAnonimo}
+                        userId={publicaciones.user ? publicaciones.user.id : null}
+
                     >
                     </PublicacionHome>
                 })}
