@@ -77,7 +77,7 @@ export function PaginaChats() {
 
                     <div className={`icon-text-group hover:opacity-50 cursor-pointer ${selectedType === 'community' ? 'icon-selected' : ''}`} onClick={() => handleTypeChange('community')}>
                         <p className="community-group-private">Comunidades</p>
-                        <svg className="community" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                             width="30" height="30" stroke-width="1.75">
                             <path d="M10 13a2 2 0 1 0 4 0a2 2 0 0 0 -4 0"></path>
                             <path d="M8 21v-1a2 2 0 0 1 2 -2h4a2 2 0 0 1 2 2v1"></path>
@@ -139,7 +139,7 @@ export function PaginaChats() {
             </div>
             <div className="right-column-chats">
                 {
-                    defaultRoute || filteredChats.length === 0 ?
+                    defaultRoute ?
                         <div className="image-container">
                             <img className="img-placeholder" src={imgNoChats} alt="no chats yet" />
                         </div>
