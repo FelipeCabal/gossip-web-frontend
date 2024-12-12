@@ -1,17 +1,20 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import foto from '../assets/avatares/neutro.png'
+import { useParams } from 'react-router-dom';
 
 export function BusquedaComunidades() {
   const API_ENDPOINT_PEOPLE = process.env.REACT_APP_API + '/users'
   const API_ENDPOINT_COMUNIDADES = process.env.REACT_APP_API + '/chats/community'
-  const API_ENDPOINT_SOLICITUDES = process.env.REACT_APP_API + '/friend-request/request/'
+  const API_ENDPOINT_SOLICITUDES = process.env.REACT_APP_API + '/friend-request/user'
   const [communities, setCommunities] = useState([]);
   const [people, setPeople] = useState([]);
+  const { id } = useParams
   const [searchTerm, setSearchTerm] = useState(''); // Estado para el término de búsqueda
   const [activeSection, setActiveSection] = useState('personas'); // Estado para alternar secciones
 
   const toggleFollow = (list, setList, id) => {
-    console.log("Lista antes de modificar:", list); // <--- Aquí
+    console.log("Lista antes de modificar:", list);
     const selectedItem = list.find((item) => item.id === id);
 
     if (!selectedItem) {
@@ -34,18 +37,6 @@ export function BusquedaComunidades() {
       });
   };
 
-  const obtenerSolicitudes = () => {
-    axios.get(process.env.REACT_APP_API + '/friend-request/user/received')
-      .then((respuesta) => {
-        console.log("solicitudes de amistad: " + respuesta.data)
-      })
-      .catch((error) => {
-        console.log("este es el error" + error)
-      })
-  }
-
-
-
   useEffect(() => {
     axios
       .get(API_ENDPOINT_PEOPLE)
@@ -53,7 +44,6 @@ export function BusquedaComunidades() {
         // Agregamos `isFollowing` inicialmente como false para cada usuario
         const peopleWithFollowing = respuesta.data.map((persona) => ({
           ...persona,
-          isFollowing: false, // Estado inicial
         }));
         setPeople(peopleWithFollowing);
         console.log("Lista de personas:", peopleWithFollowing)
@@ -63,6 +53,7 @@ export function BusquedaComunidades() {
       });
   }, []);
 
+
   useEffect(() => {
     axios
       .get(API_ENDPOINT_COMUNIDADES)
@@ -70,7 +61,6 @@ export function BusquedaComunidades() {
         // Agregamos `isFollowing` inicialmente como false para cada comunidad
         const communitiesWithFollowing = respuesta.data.map((comunidad) => ({
           ...comunidad,
-          isFollowing: false, // Estado inicial
         }));
         setCommunities(communitiesWithFollowing);
       })
@@ -78,6 +68,23 @@ export function BusquedaComunidades() {
         console.log("Este es el error de comunidades", error);
       });
   }, []);
+
+  const [solicitudes, setSolicitudes] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get(API_ENDPOINT_SOLICITUDES)
+      .then((respuesta) => {
+        setSolicitudes(respuesta.data)
+        console.log(respuesta.data)
+      })
+      .catch((error) => {
+        console.log("Este es el error de solicitudes: ", error);
+      });
+  }, []);
+
+
+
 
 
   // Filtrar resultados basados en el término de búsqueda
@@ -136,25 +143,34 @@ export function BusquedaComunidades() {
               {filteredPeople.map((persona) => (
                 <article key={persona.id} className="flex items-center gap-4 mb-4">
                   <div className="flex items-center gap-1">
-                    <img
-                      src={persona.imagen_perfil}
+                    {persona.imagen ? <img
+                      src={persona.imagen}
                       alt={`Perfil de ${persona.nombre}`}
-                      className="w-16 h-16 rounded-full"
-                    />
+                      className="w-20 h-20 rounded-full"
+                    /> : <img
+                      src={foto}
+                      alt={`Perfil de ${persona.nombre}`}
+                      className="w-20 h-20 rounded-full"
+                    />}
+
                     <div className="flex flex-col w-[70px]">
-                      <span className="text-black font-medium">{persona.nombre}</span>
+                      <span className="text-black font-semibold text-xl ml-2">{persona.nombre}</span>
                     </div>
                   </div>
                   <div>
-                    <button
-                      onClick={() => toggleFollow(people, setPeople, persona.id)}
-                      className={`btn btn-font-black border ${persona
-                        ? 'border-red-500 text-white'
-                        : 'border-blue-500 text-white'
-                        }`}
-                    >
-                      {persona.status == 'P' ? 'Eliminar' : 'Añadir'}
-                    </button>
+                    {solicitudes.map((solicitud) => {
+                      (solicitud.userEnvia.id === id || solicitud.userRecibe.id === id) ? <></> :
+                        <button
+                          onClick={() => toggleFollow(people, setPeople, persona.id)}
+                          className={`btn btn-font-black border ${persona
+                            ? 'border-red-500 text-white'
+                            : 'border-blue-500 text-white'
+                            }`}
+                        >
+                          añadir
+                        </button>
+                    })}
+
                   </div>
                 </article>
               ))}
