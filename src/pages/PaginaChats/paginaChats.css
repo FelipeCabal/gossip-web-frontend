@@ -4,12 +4,12 @@
     grid-template-columns: 1fr 2fr;
     grid-auto-flow: column;
     column-gap: 5px;
-    margin-top: 15px;
 }
 
 .left-column-chats {
-    margin-left: 10px;
-
+    padding: 10px;
+    height: 100%;
+    padding-bottom: 100px;
 }
 
 .left-column-chats .btn-crear {

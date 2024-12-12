@@ -84,118 +84,120 @@ export function BusquedaComunidades() {
 
   return (
     <>
-      <section className="flex border-b border-gray-400">
-        <div className="w-full pb-3 pt-2 flex items-center justify-center">
-          <form action="" className="w-full flex items-center justify-center">
-            <div className="flex items-center border rounded-2xl bg-gray-200 m-2 w-[85%]">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                className="w-5 h-5 text-gray-600 mr-2"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
-                />
-              </svg>
-              <input
-                type="text"
-                placeholder="Escribe el nombre de la persona o comunidad"
-                className="w-full bg-transparent outline-none border-none text-gray-700 placeholder-gray-600 focus:ring-0 focus:outline-none text-xl"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)} // Actualizar el término de búsqueda
-              />
-            </div>
-          </form>
-        </div>
-      </section>
-
-      <section className="flex flex-col-2 justify-around">
-        <div className="items-center">
-          <h3
-            onClick={() => setActiveSection('personas')}
-            className={`cursor-pointer text-3xl font-normal flex items-center justify-center mb-2 ${activeSection === 'personas' ? 'text-black' : 'text-gray-500'
-              }`}
-          >
-            Personas
-          </h3>
-          <div
-            className={`flex flex-col items-center justify-between text-white text-sm ${activeSection === 'personas' ? 'block' : 'hidden'
-              }`}
-          >
-            {filteredPeople.map((persona) => (
-              <article key={persona.id} className="flex items-center gap-4 mb-4">
-                <div className="flex items-center gap-1">
-                  <img
-                    src={persona.imagen_perfil}
-                    alt={`Perfil de ${persona.nombre}`}
-                    className="w-16 h-16 rounded-full"
+      <div className='w-full h-full overflow-y-auto'>
+        <section className="flex border-b border-gray-400">
+          <div className="w-full pb-3 pt-2 flex items-center justify-center">
+            <form action="" className="w-full flex items-center justify-center">
+              <div className="flex items-center border rounded-2xl bg-gray-200 m-2 w-[85%]">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  className="w-5 h-5 text-gray-600 mr-2"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
                   />
-                  <div className="flex flex-col w-[70px]">
-                    <span className="text-black font-medium">{persona.nombre}</span>
+                </svg>
+                <input
+                  type="text"
+                  placeholder="Escribe el nombre de la persona o comunidad"
+                  className="w-full bg-transparent outline-none border-none text-gray-700 placeholder-gray-600 focus:ring-0 focus:outline-none text-xl"
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)} // Actualizar el término de búsqueda
+                />
+              </div>
+            </form>
+          </div>
+        </section>
+
+        <section className="flex flex-col-2 justify-around">
+          <div className="items-center">
+            <h3
+              onClick={() => setActiveSection('personas')}
+              className={`cursor-pointer text-3xl font-normal flex items-center justify-center mb-2 ${activeSection === 'personas' ? 'text-black' : 'text-gray-500'
+                }`}
+            >
+              Personas
+            </h3>
+            <div
+              className={`flex flex-col items-center justify-between text-white text-sm ${activeSection === 'personas' ? 'block' : 'hidden'
+                }`}
+            >
+              {filteredPeople.map((persona) => (
+                <article key={persona.id} className="flex items-center gap-4 mb-4">
+                  <div className="flex items-center gap-1">
+                    <img
+                      src={persona.imagen_perfil}
+                      alt={`Perfil de ${persona.nombre}`}
+                      className="w-16 h-16 rounded-full"
+                    />
+                    <div className="flex flex-col w-[70px]">
+                      <span className="text-black font-medium">{persona.nombre}</span>
+                    </div>
                   </div>
-                </div>
-                <div>
+                  <div>
+                    <button
+                      onClick={() => toggleFollow(people, setPeople, persona.id)}
+                      className={`btn btn-font-black border ${persona.isFollowing
+                        ? 'border-red-500 text-white'
+                        : 'border-blue-500 text-white'
+                        }`}
+                    >
+                      {persona.isFollowing ? 'Eliminar' : 'Añadir'}
+                    </button>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+          <div className="items-start justify-start">
+            <h3
+              onClick={() => setActiveSection('comunidades')}
+              className={`cursor-pointer text-3xl font-normal flex items-center justify-center mb-2 ${activeSection === 'comunidades' ? 'text-black' : 'text-gray-500'
+                }`}
+            >
+              Comunidades
+            </h3>
+            <div
+              className={`flex flex-col items-start justify-between text-white text-sm ${activeSection === 'comunidades' ? 'block' : 'hidden'
+                }`}
+            >
+              {filteredCommunities.map((comunidad) => (
+                <article
+                  key={comunidad.id}
+                  className="flex items-start gap-4 mb-4 justify-start"
+                >
+                  <div className="flex items-center gap-1">
+                    <img
+                      src={comunidad.perfil}
+                      alt={`Perfil de ${comunidad.nombre}`}
+                      className="w-16 h-16 rounded-full"
+                    />
+                    <div className="flex flex-col w-[100px]">
+                      <span className="text-black font-medium">{comunidad.nombre}</span>
+                    </div>
+                  </div>
                   <button
-                    onClick={() => toggleFollow(people, setPeople, persona.id)}
-                    className={`btn btn-font-black border ${persona.isFollowing
+                    onClick={() =>
+                      toggleFollow(communities, setCommunities, comunidad.id)
+                    }
+                    className={`btn btn-font-black border ${comunidad.isFollowing
                       ? 'border-red-500 text-white'
                       : 'border-blue-500 text-white'
                       }`}
                   >
-                    {persona.isFollowing ? 'Eliminar' : 'Añadir'}
+                    {comunidad.isFollowing ? 'Eliminar' : 'Añadir'}
                   </button>
-                </div>
-              </article>
-            ))}
+                </article>
+              ))}
+            </div>
           </div>
-        </div>
-        <div className="items-start justify-start">
-          <h3
-            onClick={() => setActiveSection('comunidades')}
-            className={`cursor-pointer text-3xl font-normal flex items-center justify-center mb-2 ${activeSection === 'comunidades' ? 'text-black' : 'text-gray-500'
-              }`}
-          >
-            Comunidades
-          </h3>
-          <div
-            className={`flex flex-col items-start justify-between text-white text-sm ${activeSection === 'comunidades' ? 'block' : 'hidden'
-              }`}
-          >
-            {filteredCommunities.map((comunidad) => (
-              <article
-                key={comunidad.id}
-                className="flex items-start gap-4 mb-4 justify-start"
-              >
-                <div className="flex items-center gap-1">
-                  <img
-                    src={comunidad.perfil}
-                    alt={`Perfil de ${comunidad.nombre}`}
-                    className="w-16 h-16 rounded-full"
-                  />
-                  <div className="flex flex-col w-[100px]">
-                    <span className="text-black font-medium">{comunidad.nombre}</span>
-                  </div>
-                </div>
-                <button
-                  onClick={() =>
-                    toggleFollow(communities, setCommunities, comunidad.id)
-                  }
-                  className={`btn btn-font-black border ${comunidad.isFollowing
-                    ? 'border-red-500 text-white'
-                    : 'border-blue-500 text-white'
-                    }`}
-                >
-                  {comunidad.isFollowing ? 'Eliminar' : 'Añadir'}
-                </button>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
+        </section>
+      </div>
     </>
   );
 }

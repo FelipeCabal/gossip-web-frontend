@@ -70,8 +70,8 @@ export function PaginaChats() {
     }
 
     return (
-        <div className="contenedor-chats-page">
-            <div className="left-column-chats">
+        <div className="contenedor-chats-page overflow-hidden">
+            <div className="left-column-chats border-r-2 border-black">
                 <div className="searchChatCommunity flex gap-1">
                     <input type="search" className="searchChats" placeholder="Buscar o iniciar un chat" value={searchQuery} onChange={handleSearchChange} />
 
@@ -104,8 +104,6 @@ export function PaginaChats() {
 
                     </div>
                 </div>
-
-
                 {filteredChats.length > 0 ? (
                     filteredChats.map((chat) => (
                         <TarjetaChat
