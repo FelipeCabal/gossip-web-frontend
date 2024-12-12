@@ -12,6 +12,15 @@
     padding-bottom: 100px;
 }
 
+.left-column-chats .btn-crear {
+    width: 200px;
+    height: 35px;
+    border-radius: 10px;
+    border: 2px solid #6F9CEB;
+    font-size: 18px;
+    margin: 10px 0;
+}
+
 .left-column-chats .searchChatCommunity {
     display: flex;
     flex-direction: row;
@@ -30,22 +39,27 @@
     color: #ababab;
 }
 
+
+.icon-selected {
+    color: #918EF4;
+}
+
 .left-column-chats .searchChatCommunity .icon-text-group .community {
     margin-top: 4px;
     margin-left: 7px;
-    color: #918ef4;
+    color: #202b33;
 }
 
 .left-column-chats .searchChatCommunity .icon-text-group .personalChat {
     margin-top: 4px;
     margin-left: 7px;
-    color: #374957;
+    color: #202b33;
 }
 
 .left-column-chats .searchChatCommunity .icon-text-group .group {
     margin-top: 4px;
     margin-left: 7px;
-    color: #374957;
+    color: #202b33;
 }
 
 .left-column-chats .searchChats {
@@ -65,10 +79,15 @@
     height: 100vh;
 }
 
-.no-selected-chat {
+.right-column-chats .image-container {
     display: block;
     margin-left: auto;
     margin-right: auto;
     width: 70%;
+}
 
+.right-column-chats .image-container .img-placeholder {
+    width: 100%;
+    height: auto;
+    margin: 40px auto;
 }

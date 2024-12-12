@@ -3,7 +3,7 @@ import axios from 'axios';
 import icono from '../../assets/avatares/neutro.png';
 import { useRefresh } from '../../providers/RefreshProvider';
 
-export function TarjetaChat({ nombre, imagen, chatid, tipoChat }) {
+export function TarjetaChat({ onClick, nombre, imagen, chatid, tipoChat }) {
 
     const ENDPOINT_MENSAJES = `${process.env.REACT_APP_API}/chats/mensajes/${chatid}/type/${tipoChat}/`
 
@@ -23,20 +23,19 @@ export function TarjetaChat({ nombre, imagen, chatid, tipoChat }) {
     return (
         <>
             {chatid && (
-                <div className="flex items-center p-4 border-b border-gray-300 hover:bg-gray-100 cursor-pointer">
+                <div onClick={onClick} className="flex items-center p-4 border-b border-gray-300 hover:bg-gray-100 cursor-pointer">
                     <img
                         src={imagen || icono}
-                        className="w-14 h-14 rounded-full object-cover border-2 border-black"
+                        className="w-20 h-20 rounded-full object-cover border-2 border-black"
                     />
                     <div className="ml-4 flex-1">
-                        <h3 className="font-bold text-gray-800 text-base sm:text-lg truncate">
+                        <p className="font-bold text-gray-800 text-sm sm:text-xl truncate">
                             {nombre}
-                        </h3>
-                        <p className="text-gray-600 text-base sm:text-lg truncate">
+                        </p>
+                        <p className="text-gray-600 text-xs sm:text-sm truncate">
                             {Array.isArray(mensaje) && mensaje.length > 0
                                 ? mensaje[mensaje.length - 1].message.slice(0, 40)
                                 : "Sin mensajes recientes"}
-
 
                         </p>
 
