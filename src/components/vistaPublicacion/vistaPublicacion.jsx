@@ -29,6 +29,7 @@ export function VistaPublicacion() {
                 setPublicacion(data)
             }).catch(e => console.log(e));
     }, [usuario]);
+
     useEffect(() => {
         if (!usuario) {
             return
