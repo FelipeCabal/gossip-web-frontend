@@ -176,6 +176,10 @@ export function PublicacionHome({ userName, img, texto, perfil, esAnonimo, postI
                       className="w-[98%] h-12 ml-2 border rounded-xl p-2"
                       value={description}
                       onChange={(e) => setDescription(e.target.value)}
+                      onKeyUp={(e) => {
+                        if (e.key === 'Enter')
+                          actualizacion();
+                      }}
                     />
                     <button
                       onClick={actualizacion}
