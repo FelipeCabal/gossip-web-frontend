@@ -83,8 +83,8 @@ const ChatComponent = () => {
     };
 
     const scrollToBottom = () => {
-        if (messagesContainerRef.current) {
-            messagesContainerRef.current.scrollTop = messagesContainerRef.current.scrollHeight;
+        if (messagesEndRef.current) {
+            messagesEndRef.current.scrollTop = messagesEndRef.current.scrollHeight;
         }
     };
 
@@ -153,10 +153,10 @@ const ChatComponent = () => {
             {
                 chat ? <>
                     <div className='flex'>
-                        <div className='w-full'>
+                        <div className='w-full h-full'>
                             <div className="flex justify-between items-center border-b-2 border-slate-900">
                                 <h2>{title ? title : <>Cargando Chat</>}</h2>
-                                {toggleInfo ? (
+                                {!toggleInfo ? (
                                     <svg
                                         onClick={handleToggleInfo}
                                         xmlns="http://www.w3.org/2000/svg"
@@ -175,10 +175,7 @@ const ChatComponent = () => {
                                 ) : <></>}
                             </div>
                             <div
-                                className="chatContainer overflow-y-scroll p-[10px] mb-2"
-                                style={{
-                                    height: '300px',
-                                }}
+                                className="chatContainer overflow-y-scroll p-[10px] mb-2 h-full"
                             >
                                 {loadingMessages ? (
                                     <div>Cargando mensajes...</div>
@@ -253,14 +250,14 @@ const ChatComponent = () => {
                         </div>
                         <div className={toggleInfo ? 'block' : 'hidden'}>
                             <VistaInformacionChat
-                            imagen={imagen ? imagen : null}
-                            chatId={id}
-                            userId={amigo ? amigo.id : null}
-                            nombre={title ? title : null}
-                            chatType={type}
-                            miembros={chat.miembros ? chat.miembros : null}
-                            cerrar={() => handleToggleInfo()}
-                        />
+                                imagen={imagen ? imagen : null}
+                                chatId={id}
+                                userId={amigo ? amigo.id : null}
+                                nombre={title ? title : null}
+                                chatType={type}
+                                miembros={chat.miembros ? chat.miembros : null}
+                                cerrar={() => handleToggleInfo()}
+                            />
                         </div>
                     </div>
                 </>
