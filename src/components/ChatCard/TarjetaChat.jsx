@@ -26,13 +26,13 @@ export function TarjetaChat({ nombre, imagen, chatid, tipoChat }) {
                 <div className="flex items-center p-4 border-b border-gray-300 hover:bg-gray-100 cursor-pointer">
                     <img
                         src={imagen || icono}
-                        className="w-12 h-12 rounded-full object-cover"
+                        className="w-14 h-14 rounded-full object-cover border-2 border-black"
                     />
                     <div className="ml-4 flex-1">
-                        <h3 className="font-bold text-gray-800 text-sm sm:text-base truncate">
+                        <h3 className="font-bold text-gray-800 text-base sm:text-lg truncate">
                             {nombre}
                         </h3>
-                        <p className="text-gray-600 text-xs sm:text-sm truncate">
+                        <p className="text-gray-600 text-base sm:text-lg truncate">
                             {Array.isArray(mensaje) && mensaje.length > 0
                                 ? mensaje[mensaje.length - 1].message.slice(0, 40)
                                 : "Sin mensajes recientes"}

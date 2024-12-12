@@ -5,7 +5,7 @@ import { useRefresh } from "../../providers/RefreshProvider"
 import { useAuth } from "../../providers/AuthProvider"
 
 export const ListaPublicaciones = ({ ENDPOINT }) => {
-    const {usuario} = useAuth()
+    const { usuario } = useAuth()
     const { refresh, setRefresh } = useRefresh();
     const [posts, setPosts] = useState(null)
 
@@ -21,8 +21,8 @@ export const ListaPublicaciones = ({ ENDPOINT }) => {
             .catch((error) => {
                 console.log(error)
             })
-    }, [refresh, setRefresh, ENDPOINT, usuario ])
-     
+    }, [refresh, setRefresh, ENDPOINT, usuario])
+
 
     return (<>
         <section className="w-full">
@@ -33,13 +33,13 @@ export const ListaPublicaciones = ({ ENDPOINT }) => {
                         postId={publicaciones.id}
                         img={publicaciones.imagen}
                         userName={publicaciones.user ? publicaciones.user.nombre : null}
-                        perfil={publicaciones.user ? publicaciones.user.imagen_perfil : null}
+                        perfil={publicaciones.user ? publicaciones.user.imagen : null}
                         texto={publicaciones.description}
                         esAnonimo={publicaciones.esAnonimo}
                     >
                     </PublicacionHome>
                 })}
-            </> : <div className = "flex items-center justify-center font-medium text-2xl">No hay publicaciones disponibles</div>
+            </> : <div className="flex items-center justify-center font-medium text-2xl">No hay publicaciones disponibles</div>
             }
         </section >
     </>

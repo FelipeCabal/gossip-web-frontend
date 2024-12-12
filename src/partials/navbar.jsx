@@ -20,11 +20,11 @@ const Navbar = () => {
     return <>
         {
             usuario ?
-                <header>
+                <header className='h-fit'>
                     <nav className="w-full h-17 flex justify-between items-center ">
                         <div className=" h-20 text-slate-950 flex items-center justify-center ">
                             <Link to={'/perfil/' + usuario.id} className="flex flex-row items-center justify-center p-2">
-                                <img src={img} alt="Gossip-web" className="max-w-full w-20" />
+                                <img src={usuario.imagen || img} alt="Gossip-web" className="max-w-full w-20 h-20 rounded-full object-cover border-2 border-[#306bac]" />
                                 <h1 className="hidden -m-1 -mt-3.5 px-5 text-3xl sm:block">{usuario.nombre}</h1>
                             </Link>
                         </div>
@@ -63,7 +63,7 @@ const Navbar = () => {
                             </div>
                         </div>
                     </nav>
-                </header> : <></>
+                </header > : <></>
         }
     </>
 };
