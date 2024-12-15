@@ -42,6 +42,10 @@
     .ocultarChat {
         display: block;
     }
+
+    .back-chats {
+        display: none;
+    }
 }
 
 @media (max-width: 550px) {
@@ -52,6 +56,18 @@
     .infostyles {
         display: block;
         width: 100%;
+    }
+}
+
+@media (max-width: 450px) {
+    .back-chats {
+        display: block;
+    }
+}
+
+@media (min-width: 450px) {
+    .back-chats {
+        display: none;
     }
 }
 
