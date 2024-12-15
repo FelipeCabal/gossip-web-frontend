@@ -28,8 +28,8 @@ export function VistaInformacionChat({ imagen, chatId, userId, nombre, chatType,
 
     return (
         <>
-            <div className="w-[290px]">
-                <div className="h-screen !xs:h-full !xs:pr-4 sm:bg-[#E7E7E7] !xs:m-[16px] !xs:bg-fuchsia-50 w-full">
+            <div className="w-full">
+                <div className="h-screen !xs:h-full !xs:pr-4 bg-[#E7E7E7] w-full">
                     <section className="border-b-2 border-[#ABABAB]">
                         <div className="flex ml-2 pt-2 items-center gap-4 relative group">
                             <button onClick={cerrar} className="transition-transform transform group-hover:-translate-x-1 group-hover:-translate-y-1">

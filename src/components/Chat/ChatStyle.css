@@ -1,12 +1,15 @@
 .chatContainer {
     overflow-y: auto;
-    scrollbar-width: thin; /* Reduce el ancho del scroll (para Firefox) */
-    scrollbar-color: #3f7bfc #f1f1f1; /* Color del scroll y del fondo (para Firefox) */
-    word-break: break-word; /* Permite que las palabras largas se rompan */
-    overflow-wrap: break-word; 
+    scrollbar-width: thin;
+    /* Reduce el ancho del scroll (para Firefox) */
+    scrollbar-color: #3f7bfc #f1f1f1;
+    /* Color del scroll y del fondo (para Firefox) */
+    word-break: break-word;
+    /* Permite que las palabras largas se rompan */
+    overflow-wrap: break-word;
 }
 
-.buttonSend{
+.buttonSend {
     background-color: lightgreen;
     border-radius: 10px;
     width: 18%;
@@ -14,15 +17,61 @@
     margin-left: 3px;
 }
 
-.buttonSend:hover{
+.buttonSend:hover {
     background-color: rgb(84, 196, 84);
 }
 
-.inputMessage{
+.inputMessage {
     width: 80%;
     padding: 5px;
     background-color: rgb(226, 231, 236);
     border-radius: 15px;
-    overflow-wrap: break-word; /* Rompe palabras largas */
-    word-break: break-word; /* Asegura el corte de palabras largas */
+    overflow-wrap: break-word;
+    /* Rompe palabras largas */
+    word-break: break-word;
+    /* Asegura el corte de palabras largas */
+}
+
+
+@media (min-width: 550px) {
+    .infostyles {
+        display: block;
+        width: 100%;
+    }
+
+    .ocultarChat {
+        display: block;
+    }
+}
+
+@media (max-width: 550px) {
+    .ocultarChat {
+        display: none;
+    }
+
+    .infostyles {
+        display: block;
+        width: 100%;
+    }
+}
+
+@media (min-width: 600px) {
+    .infostyles {
+        display: block;
+        width: 40%;
+    }
+
+    .ocultarChat {
+        display: block;
+        width: 70%;
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+@media (min-width: 700px) {
+    .infostyles {
+        display: block;
+        width: 30%;
+    }
 }

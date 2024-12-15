@@ -3,7 +3,7 @@ import { io } from 'socket.io-client';
 import { useAuth } from '../../providers/AuthProvider';
 import axios from 'axios';
 import './ChatStyle.css';
-import { useParams } from 'react-router-dom';
+import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import { useRefresh } from '../../providers/RefreshProvider';
 import { VistaInformacionChat } from '../VistaChats/VistaInformacionChat';
 import imgNoChats from "../../assets/imgNoChats/imgNoChats.png";
@@ -11,8 +11,7 @@ import imgNoChats from "../../assets/imgNoChats/imgNoChats.png";
 const ChatComponent = () => {
 
     const { id, type } = useParams()
-    const chatId = id;
-    const chatType = type;
+    const navigate = useNavigate()
     const { usuario, token } = useAuth();
     const socketRef = useRef(null);
     const [messages, setMessages] = useState([]);
@@ -152,11 +151,21 @@ const ChatComponent = () => {
         <>
             {
                 chat ? <>
-                    <div className='flex'>
-                        <div className='w-full h-full'>
-                            <div className="flex justify-between items-center border-b-2 border-slate-900">
-                                <h2>{title ? title : <>Cargando Chat</>}</h2>
-                                {!toggleInfo ? (
+                    <div className='flex w-full'>
+
+                        <div className={`h-[calc(100dvh-64px)] ${toggleInfo ? 'ocultarChat' : 'flex flex-col w-full'}`}>
+                            {/* Encabezado del chat */}
+                            <div className="flex justify-between items-center border-b-2 border-slate-900 p-2">
+                                <div className='flex items-center gap-2'>
+                                    <div onClick={() => navigate("/chats")}>
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-10 cursor-pointer">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15M12 9l-3 3m0 0 3 3m-3-3h12.75" />
+                                        </svg>
+                                    </div>
+
+                                    <h2>{title ? title : <>Cargando Chat</>}</h2>
+                                </div>
+                                {toggleInfo ? (
                                     <svg
                                         onClick={handleToggleInfo}
                                         xmlns="http://www.w3.org/2000/svg"
@@ -172,10 +181,32 @@ const ChatComponent = () => {
                                             d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3"
                                         />
                                     </svg>
-                                ) : <></>}
+                                ) : (
+                                    <svg
+                                        onClick={handleToggleInfo}
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        strokeWidth="1.5"
+                                        stroke="currentColor"
+                                        className="size-9 cursor-pointer"
+                                    >
+                                        <path
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            d="M12 6.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 12.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 18.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5Z"
+                                        />
+                                    </svg>
+                                )}
                             </div>
+
+                            {/* Contenedor de mensajes */}
                             <div
-                                className="chatContainer overflow-y-scroll p-[10px] mb-2 h-full"
+                                ref={messagesEndRef}
+                                className="chatContainer overflow-y-auto p-[10px] flex-1"
+                                style={{
+                                    maxHeight: 'calc(100dvh - 200px)', // Ajustar según diseño
+                                }}
                             >
                                 {loadingMessages ? (
                                     <div>Cargando mensajes...</div>
@@ -228,11 +259,12 @@ const ChatComponent = () => {
                                                 </div>
                                             );
                                         })}
-                                        <div ref={messagesEndRef} />
                                     </>
                                 )}
                             </div>
-                            <div>
+
+                            {/* Input de mensajes */}
+                            <div className="p-2">
                                 <input
                                     type="text"
                                     className="inputMessage"
@@ -248,7 +280,8 @@ const ChatComponent = () => {
                                 </button>
                             </div>
                         </div>
-                        <div className={toggleInfo ? 'block' : 'hidden'}>
+
+                        <div className={toggleInfo ? 'infostyles' : 'hidden'}>
                             <VistaInformacionChat
                                 imagen={imagen ? imagen : null}
                                 chatId={id}
