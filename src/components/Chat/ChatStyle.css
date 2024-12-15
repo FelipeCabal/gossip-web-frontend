@@ -1,28 +1,33 @@
 .chatContainer {
     overflow-y: auto;
-    scrollbar-width: thin; /* Reduce el ancho del scroll (para Firefox) */
-    scrollbar-color: #3f7bfc #f1f1f1; /* Color del scroll y del fondo (para Firefox) */
-    word-break: break-word; /* Permite que las palabras largas se rompan */
-    overflow-wrap: break-word; 
+    scrollbar-width: thin;
+    /* Reduce el ancho del scroll (para Firefox) */
+    scrollbar-color: #3f7bfc #f1f1f1;
+    /* Color del scroll y del fondo (para Firefox) */
+    word-break: break-word;
+    /* Permite que las palabras largas se rompan */
+    overflow-wrap: break-word;
 }
 
-.buttonSend{
+.buttonSend {
     background-color: lightgreen;
     border-radius: 10px;
-    width: 18%;
+    width: 16%;
     padding: 5px;
     margin-left: 3px;
 }
 
-.buttonSend:hover{
+.buttonSend:hover {
     background-color: rgb(84, 196, 84);
 }
 
-.inputMessage{
+.inputMessage {
     width: 80%;
     padding: 5px;
     background-color: rgb(226, 231, 236);
     border-radius: 15px;
-    overflow-wrap: break-word; /* Rompe palabras largas */
-    word-break: break-word; /* Asegura el corte de palabras largas */
+    overflow-wrap: break-word;
+    /* Rompe palabras largas */
+    word-break: break-word;
+    /* Asegura el corte de palabras largas */
 }

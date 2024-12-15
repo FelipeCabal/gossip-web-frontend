@@ -7,6 +7,7 @@ import { useParams } from 'react-router-dom';
 import { useRefresh } from '../../providers/RefreshProvider';
 import { VistaInformacionChat } from '../VistaChats/VistaInformacionChat';
 import imgNoChats from "../../assets/imgNoChats/imgNoChats.png";
+import EmojiPicker from 'emoji-picker-react';
 
 
 
@@ -31,7 +32,7 @@ const ChatComponent = () => {
     const [amigo, setAmigo] = useState({});
     const [showPicker, setShowPicker] = useState(false);
     const addEmoji = (emoji) => {
-        setNewMessage((prev) => prev + emoji.native);
+        setNewMessage((prev) => prev + emoji.emoji);
         setShowPicker(false); // Oculta el selector después de seleccionar un emoji
     };
 
@@ -91,8 +92,8 @@ const ChatComponent = () => {
     };
 
     const scrollToBottom = () => {
-        if (messagesContainerRef.current) {
-            messagesContainerRef.current.scrollTop = messagesContainerRef.current.scrollHeight;
+        if (messagesEndRef.current) {
+            messagesEndRef.current.scrollTop = messagesEndRef.current.scrollHeight;
         }
     };
 
@@ -183,7 +184,7 @@ const ChatComponent = () => {
                                 ) : <></>}
                             </div>
                             <div
-                                className="chatContainer overflow-y-scroll p-[10px] mb-2"
+                                className="chatContainer overflow-y-scroll p-[10px] mb-2 relative"
                                 style={{
                                     height: '300px',
                                 }}
@@ -242,14 +243,24 @@ const ChatComponent = () => {
                                         <div ref={messagesEndRef} />
                                     </>
                                 )}
+                                {/* Mostrar el picker de emojis con posición absoluta */}
+                                {showPicker && (
+                                    <div
+                                        style={{
+                                            position: 'absolute',
+                                            bottom: '50px', // Ajusta esta distancia según la altura del picker
+                                            left: '10px',  // Ajusta para colocarlo en el lugar deseado
+                                            zIndex: 1000,  // Garantiza que esté encima de otros elementos
+                                        }}
+                                    >
+                                        <EmojiPicker onEmojiClick={addEmoji} />
+                                    </div>
+                                )}
                             </div>
                             <div>
                                 {/* Botón para abrir el selector */}
                                 <button onClick={() => setShowPicker(!showPicker)}>😊</button>
                                 {/* Mostrar el selector de emojis */}
-                                {showPicker && (
-                                    <Picker onSelect={addEmoji} />
-                                )}
                                 <input
                                     type="text"
                                     className="inputMessage"
