@@ -1,15 +1,9 @@
 .contenedor-chats-page {
-    display: grid;
-    grid-template-areas: "chats-communities vista-chat";
-    grid-template-columns: 1fr 2fr;
-    grid-auto-flow: column;
     column-gap: 5px;
 }
 
 .left-column-chats {
     padding: 10px;
-    height: 100%;
-    padding-bottom: 100px;
 }
 
 .left-column-chats .btn-crear {
@@ -22,8 +16,6 @@
 }
 
 .left-column-chats .searchChatCommunity {
-    display: flex;
-    flex-direction: row;
     justify-content: space-evenly;
 }
 
@@ -65,7 +57,6 @@
 .left-column-chats .searchChats {
     background-color: #d9d9d9;
     border-radius: 20px;
-    width: 280px;
     height: 40px;
     text-align: center;
 }
@@ -74,20 +65,34 @@
     text-align: center;
 }
 
-.right-column-chats .vistaChat {
-    width: auto;
+.vistaChat {
+    width: 100%;
     height: 100vh;
 }
 
-.right-column-chats .image-container {
+.image-container {
     display: block;
     margin-left: auto;
     margin-right: auto;
     width: 70%;
 }
 
-.right-column-chats .image-container .img-placeholder {
+.image-container .img-placeholder {
     width: 100%;
     height: auto;
     margin: 40px auto;
+}
+
+@media (max-width: 450px) {
+    .ocultar {
+        display: none;
+    }
+
+    .mostrar {
+        width: 100%;
+    }
+
+    .image-container {
+        display: none;
+    }
 }

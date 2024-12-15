@@ -31,3 +31,63 @@
     word-break: break-word;
     /* Asegura el corte de palabras largas */
 }
+
+
+@media (min-width: 550px) {
+    .infostyles {
+        display: block;
+        width: 100%;
+    }
+
+    .ocultarChat {
+        display: block;
+    }
+
+    .back-chats {
+        display: none;
+    }
+}
+
+@media (max-width: 550px) {
+    .ocultarChat {
+        display: none;
+    }
+
+    .infostyles {
+        display: block;
+        width: 100%;
+    }
+}
+
+@media (max-width: 450px) {
+    .back-chats {
+        display: block;
+    }
+}
+
+@media (min-width: 450px) {
+    .back-chats {
+        display: none;
+    }
+}
+
+@media (min-width: 600px) {
+    .infostyles {
+        display: block;
+        width: 40%;
+    }
+
+    .ocultarChat {
+        display: block;
+        width: 70%;
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+@media (min-width: 700px) {
+    .infostyles {
+        display: block;
+        width: 30%;
+    }
+}
