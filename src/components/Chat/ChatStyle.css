@@ -59,11 +59,44 @@
     }
 }
 
+@media (max-width: 1000px) {
+    .buttonSend {
+        width: 14%;
+        font-size: 18px;
+    }
+
+    .inputMessage {
+        width: 75%;
+    }
+}
+
 @media (max-width: 450px) {
     .back-chats {
         display: block;
     }
+
+    .inputMessage {
+        width: 70%;
+    }
+
+    .buttonSend {
+        width: 12%;
+        font-size: 15px;
+    }
 }
+
+@media (max-width: 450px) {
+
+    .inputMessage {
+        width: 73%;
+    }
+
+    .buttonSend {
+        width: 13%;
+        font-size: 15px;
+    }
+}
+
 
 @media (min-width: 450px) {
     .back-chats {
