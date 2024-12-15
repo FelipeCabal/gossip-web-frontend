@@ -8,6 +8,9 @@ import { useRefresh } from '../../providers/RefreshProvider';
 import { VistaInformacionChat } from '../VistaChats/VistaInformacionChat';
 import imgNoChats from "../../assets/imgNoChats/imgNoChats.png";
 
+
+
+
 const ChatComponent = () => {
 
     const { id, type } = useParams()
@@ -26,6 +29,11 @@ const ChatComponent = () => {
     const [toggleInfo, setToggleInfo] = useState(false);
     const { refresh, setRefresh } = useRefresh();
     const [amigo, setAmigo] = useState({});
+    const [showPicker, setShowPicker] = useState(false);
+    const addEmoji = (emoji) => {
+        setNewMessage((prev) => prev + emoji.native);
+        setShowPicker(false); // Oculta el selector después de seleccionar un emoji
+    };
 
     const fetchChatData = async () => {
         try {
@@ -236,6 +244,12 @@ const ChatComponent = () => {
                                 )}
                             </div>
                             <div>
+                                {/* Botón para abrir el selector */}
+                                <button onClick={() => setShowPicker(!showPicker)}>😊</button>
+                                {/* Mostrar el selector de emojis */}
+                                {showPicker && (
+                                    <Picker onSelect={addEmoji} />
+                                )}
                                 <input
                                     type="text"
                                     className="inputMessage"
@@ -253,14 +267,14 @@ const ChatComponent = () => {
                         </div>
                         <div className={toggleInfo ? 'block' : 'hidden'}>
                             <VistaInformacionChat
-                            imagen={imagen ? imagen : null}
-                            chatId={id}
-                            userId={amigo ? amigo.id : null}
-                            nombre={title ? title : null}
-                            chatType={type}
-                            miembros={chat.miembros ? chat.miembros : null}
-                            cerrar={() => handleToggleInfo()}
-                        />
+                                imagen={imagen ? imagen : null}
+                                chatId={id}
+                                userId={amigo ? amigo.id : null}
+                                nombre={title ? title : null}
+                                chatType={type}
+                                miembros={chat.miembros ? chat.miembros : null}
+                                cerrar={() => handleToggleInfo()}
+                            />
                         </div>
                     </div>
                 </>
