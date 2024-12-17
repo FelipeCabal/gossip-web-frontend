@@ -1,78 +1,102 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import foto from '../assets/avatares/neutro.png'
+import { useParams } from 'react-router-dom';
+import { useRefresh } from '../providers/RefreshProvider';
+
 
 export function BusquedaComunidades() {
   const API_ENDPOINT_PEOPLE = process.env.REACT_APP_API + '/users'
   const API_ENDPOINT_COMUNIDADES = process.env.REACT_APP_API + '/chats/community'
-  const API_ENDPOINT_SOLICITUDES = process.env.REACT_APP_API + '/friend-request/request/'
+  const API_ENDPOINT_INVITACIONES = process.env.REACT_APP_API + '/chats/group-invitation'
+  const API_ENDPOINT_SOLICITUDES = process.env.REACT_APP_API + '/friend-request/user'
   const [communities, setCommunities] = useState([]);
   const [people, setPeople] = useState([]);
+  const { id } = useParams
   const [searchTerm, setSearchTerm] = useState(''); // Estado para el término de búsqueda
   const [activeSection, setActiveSection] = useState('personas'); // Estado para alternar secciones
-
+  const { refresh, setRefresh } = useRefresh()
   const toggleFollow = (list, setList, id) => {
-    const updatedList = list.map((item) =>
-      item.id === id ? { ...item, isFollowing: !item.isFollowing } : item
-    );
-    setList(updatedList);
 
+    console.log("Lista antes de modificar:", list);
     const selectedItem = list.find((item) => item.id === id);
 
-    if (!selectedItem.isFollowing) {
-      // Construye el endpoint dinámicamente con el `id`
-      const endpoint = `${process.env.REACT_APP_API}/friend-request/request/${id}`;
-      axios
-        .post(endpoint, {
-          status: 'P', // Estado inicial: pendiente
-        })
-        .then(() => {
-          console.log(`Solicitud enviada con estado "P" para el ID ${id}`);
-        })
-        .catch((error) => {
-          console.error("Error al enviar la solicitud:", error);
-          // Revertir estado local en caso de error
-          const revertedList = list.map((item) =>
-            item.id === id ? { ...item, isFollowing: !item.isFollowing } : item
-          );
-          setList(revertedList);
-        });
-    } else {
-      console.log(`Gestión adicional para eliminar seguimiento del ID ${id}`);
+    if (!selectedItem) {
+      console.error("No se encontró el usuario/comunidad con el ID:", id);
+      return;
     }
+
+    const endpoint = `${process.env.REACT_APP_API}/friend-request/request/${id}`;
+    axios.post(endpoint, { status: 'P' })
+      .then(() => {
+        setRefresh(true)
+        console.log("Solicitud enviada con éxito para el ID:", id);
+      })
+      .catch((error) => {
+        console.error("Error al enviar la solicitud:", error);
+      });
   };
 
   useEffect(() => {
     axios
       .get(API_ENDPOINT_PEOPLE)
       .then((respuesta) => {
-        // Agregamos `isFollowing` inicialmente como false para cada usuario
         const peopleWithFollowing = respuesta.data.map((persona) => ({
           ...persona,
-          isFollowing: false, // Estado inicial
         }));
         setPeople(peopleWithFollowing);
       })
       .catch((error) => {
         console.log("Este es el error", error);
       });
-  }, []); // Asegúrate de incluir el array de dependencias vacío para evitar múltiples llamadas
+  }, []);
+
 
   useEffect(() => {
     axios
       .get(API_ENDPOINT_COMUNIDADES)
       .then((respuesta) => {
-        // Agregamos `isFollowing` inicialmente como false para cada comunidad
         const communitiesWithFollowing = respuesta.data.map((comunidad) => ({
           ...comunidad,
-          isFollowing: false, // Estado inicial
         }));
         setCommunities(communitiesWithFollowing);
       })
       .catch((error) => {
         console.log("Este es el error de comunidades", error);
       });
-  }, []);
+  }, [refresh]);
 
+  const [solicitudes, setSolicitudes] = useState([])
+
+  useEffect(() => {
+    axios
+      .get(API_ENDPOINT_SOLICITUDES)
+      .then((respuesta) => {
+        setSolicitudes(respuesta.data)
+        console.log(respuesta.data)
+      })
+      .catch((error) => {
+        console.log("Este es el error de solicitudes: ", error);
+      });
+  }, [refresh]);
+
+  const verificar_solicitudes = (idUser) => {
+    return solicitudes.some((solicitud) => (solicitud.userEnvia.id === idUser || solicitud.userRecibe.id === idUser)
+    )
+  }
+
+  const [invitaciones, setInvitaciones] = useState([])
+
+  useEffect(() => {
+    axios.get(API_ENDPOINT_INVITACIONES)
+      .then((respuesta) => {
+        setInvitaciones(respuesta.data)
+        console.log('respuesta invitaciones', respuesta.data)
+      })
+      .catch((error) => {
+        console.los("error en las invitaciones", error)
+      })
+  }, [])
 
   // Filtrar resultados basados en el término de búsqueda
   const filteredPeople = people.filter((persona) =>
@@ -128,42 +152,40 @@ export function BusquedaComunidades() {
                 }`}
             >
               {filteredPeople.map((persona) => (
-                <article key={persona.id} className="flex items-center gap-4 mb-4">
+                < article key={persona.id} className="flex w-full items-start justify-start gap-4 mb-4" >
                   <div className="flex items-center gap-1">
                     <img
-                      src={persona.imagen_perfil}
+                      src={persona.imagen || foto}
                       alt={`Perfil de ${persona.nombre}`}
-                      className="w-16 h-16 rounded-full"
-                    />
+                      className="w-20 h-20 rounded-full"
+                    ></img>
                     <div className="flex flex-col w-[70px]">
-                      <span className="text-black font-medium">{persona.nombre}</span>
+                      <span className="text-black font-semibold text-xl ml-2">{persona.nombre}</span>
                     </div>
                   </div>
                   <div>
-                    <button
-                      onClick={() => toggleFollow(people, setPeople, persona.id)}
-                      className={`btn btn-font-black border ${persona.isFollowing
-                        ? 'border-red-500 text-white'
-                        : 'border-blue-500 text-white'
-                        }`}
-                    >
-                      {persona.isFollowing ? 'Eliminar' : 'Añadir'}
-                    </button>
+                    {verificar_solicitudes(persona.id) === true ? <></> :
+                      <button
+                        onClick={() => toggleFollow(people, setPeople, persona.id)}
+                        className={'btn btn-font-black border border-blue-500 text-white'
+                        }>
+                        añadir
+                      </button>
+                    }
+
                   </div>
                 </article>
               ))}
             </div>
           </div>
           <div className="items-start justify-start">
-            <h3
-              onClick={() => setActiveSection('comunidades')}
+            <h3 onClick={() => setActiveSection('comunidades')}
               className={`cursor-pointer text-3xl font-normal flex items-center justify-center mb-2 ${activeSection === 'comunidades' ? 'text-black' : 'text-gray-500'
-                }`}
-            >
+                }`} >
               Comunidades
             </h3>
             <div
-              className={`flex flex-col items-start justify-between text-white text-sm ${activeSection === 'comunidades' ? 'block' : 'hidden'
+              className={`flex w-full flex-col items-start justify-between text-white text-sm ${activeSection === 'comunidades' ? 'block' : 'hidden'
                 }`}
             >
               {filteredCommunities.map((comunidad) => (
@@ -173,31 +195,28 @@ export function BusquedaComunidades() {
                 >
                   <div className="flex items-center gap-1">
                     <img
-                      src={comunidad.perfil}
+                      src={comunidad.perfil || foto}
                       alt={`Perfil de ${comunidad.nombre}`}
-                      className="w-16 h-16 rounded-full"
+                      className="w-20 h-20 rounded-full"
                     />
                     <div className="flex flex-col w-[100px]">
-                      <span className="text-black font-medium">{comunidad.nombre}</span>
+                      <span className="text-black font-semibold text-xl">{comunidad.nombre}</span>
                     </div>
                   </div>
                   <button
                     onClick={() =>
                       toggleFollow(communities, setCommunities, comunidad.id)
                     }
-                    className={`btn btn-font-black border ${comunidad.isFollowing
-                      ? 'border-red-500 text-white'
-                      : 'border-blue-500 text-white'
-                      }`}
+                    className={'btn btn-font-black border border-blue-500 text-white'}
                   >
-                    {comunidad.isFollowing ? 'Eliminar' : 'Añadir'}
+                    Añadir
                   </button>
                 </article>
               ))}
             </div>
           </div>
-        </section>
-      </div>
+        </section >
+      </div >
     </>
   );
 }
