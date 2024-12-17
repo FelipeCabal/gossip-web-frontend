@@ -28,12 +28,13 @@ export function PerfilUsuario() {
         {
             user && usuario ? <>
                 <div className="flex flex-col items-center h-full overflow-y-scroll">
-                    < section className='flex justify-between !xs:w-3/5 border-b-2 border-gray-300 pb-10 mt-6' style={{ maxwidth: '100%' }}>
-                        <div className='mr-12 flex items-center'>
-                            <img src={user.imagen ? user.imagen : neutro} alt="perfil" className='w-80 h-80 rounded-full object-cover border-4 border-[#306bac]' />
+                    < section className='flex xs:justify-between !xs:w-3/5 border-b-2 border-gray-300 pb-2 mt-2 sm:pb-10 xs:mt-6' style={{ maxwidth: '100%' }}>
+                        <div className='ml-2 mr-8 flex items-center sx:mr-12'>
+                            <img src={user.imagen ? user.imagen : neutro} alt="perfil" className='h-20 w-20 rounded-full object-cover border-4 border-[#306bac] sm:w-80  sm:h-80 ' />
                         </div>
+
                         <div className='mr-12 w-auto'>
-                            <h2 className='font-semibold h-fit pt-10 '>
+                            <h2 className='font-semibold h-fit pt-4 sm:pt-10'>
                                 {user.nombre}
                             </h2>
                             <div className='grid'>
@@ -44,9 +45,9 @@ export function PerfilUsuario() {
                             </div>
                         </div>
 
-                        <div className='flex h-fit pt-10'>
+                        <div className='flex sm:flex h-fit pt-2 sm:pt-10 items-end justify-end'>
                             <div className='flex sm:flex-col'>
-                                {usuario.id == id ? (<div>
+                                {usuario.id == id ? (<div className=''>
                                     <Link to={`/update`}>
                                         <button className='btn btn-font-black border border-blue-500  text-black mr-4'>
                                             Editar perfil
