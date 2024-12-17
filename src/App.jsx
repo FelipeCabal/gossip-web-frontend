@@ -1,9 +1,12 @@
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import { GuiaEstilos } from './pages/GuiaEstilos';
 import { VistaPublicacion } from './components/vistaPublicacion/vistaPublicacion.jsx';
+import ProtectedRoute from './utils/ProtectedRoute.jsx';
+import { LayoutComponent } from './pages/LayoutComponent';
 
 //providers
 import { AuthContextProvider } from './providers/AuthProvider';
+import { RefreshProvider } from './providers/RefreshProvider.jsx';
 
 //usuario
 import { Fondo } from './pages/Usuario/Fondo';
@@ -13,24 +16,26 @@ import { PostForm } from './pages/PostForm/postForm';
 
 //Paginas
 import { HomePage } from './pages/HomePage/HomePage';
-import { LayoutComponent } from './pages/LayoutComponent';
 import { PerfilUsuario } from './pages/Perfil/PerfilUsuario';
-import { useState } from 'react';
-import { RefreshProvider } from './providers/RefreshProvider.jsx';
 import ChatComponent from './components/Chat/ChatComponent.jsx';
 import { PaginaChats } from './pages/PaginaChats/paginaChats.jsx';
 import { CreateGroup } from './components/createGroup/createGroup.jsx';
 import { CreateComunity } from './components/createGroup/createComunity.jsx';
 import { EditarPerfil } from './components/EditarPerfil/EditarPerfil.jsx';
 import { BusquedaComunidades } from './components/BusquedaComunidades.jsx';
+import NotFound from './utils/NotFound.jsx';
+import PublicRoute from './utils/PublicRoute.jsx';
 
 const App = () => {
-  const [refresh, setRefresh] = useState(false)
 
   const router = createBrowserRouter([
     {
       path: '',
-      element: <Fondo />,
+      element: (
+        <PublicRoute>
+          <Fondo />
+        </PublicRoute>
+      ),
       children: [{
         path: '',
         element: <Login />
@@ -42,7 +47,11 @@ const App = () => {
     },
     {
       path: '',
-      element: <LayoutComponent />,
+      element: (
+        <ProtectedRoute>
+          <LayoutComponent />
+        </ProtectedRoute>
+      ),
       children: [
         {
           path: 'search',
@@ -105,7 +114,8 @@ const App = () => {
           element: <EditarPerfil />
         }
       ]
-    }
+    },
+    { path: '*', element: <NotFound /> }
   ])
   return (
     <AuthContextProvider>

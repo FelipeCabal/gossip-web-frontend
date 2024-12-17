@@ -1,4 +1,5 @@
 import { TarjetaChat } from "../components/ChatCard/TarjetaChat";
+import CrearComunidades from "../components/CrearCom-grupos/CrearGrupos";
 import ComunidadesDesplegables from "../components/ComunidadesDesplegables";
 import "../css/buttons/buttons.css"
 import { Outlet } from "react-router-dom";
@@ -114,16 +115,7 @@ export function GuiaEstilos() {
 
                 <br />
                 <br />
-                <div>
-                    {chats.map((chat, index) => (
-                        <TarjetaChat
-                            key={index}
-                            nombre={chat.nombre}
-                            imagen={chat.imagen}
-                            ultimoMensaje={chat.ultimoMensaje}
-                        />
-                    ))}
-                </div>
+
                 <br />
                 <br />
                 <div className="flex justify-evenly">
@@ -152,8 +144,7 @@ export function GuiaEstilos() {
 
             </div>
             <div className="right-column">
-                <PostHomeForm />
-                <Comentarios></Comentarios>
+
                 <h1 className="text-[25px]">Guía de estilos</h1>
                 <h2>Introduccion</h2>
                 <p>La Guía de Estilos tiene como objetivo proporcionar un conjunto de reglas y componentes predefinidos que permiten mantener la consistencia visual y de comportamiento a lo largo de toda la aplicación. Al utilizar esta guía, los desarrolladores y diseñadores pueden asegurarse de que la interfaz de usuario sea coherente, accesible y fácil de mantener, independientemente de la escala o el tamaño del proyecto.</p>
@@ -164,6 +155,9 @@ export function GuiaEstilos() {
                     <li>Robot Candense: Fue desarrollada originalmente para Google como parte de su sistema operativo Android y lanzada en 2011 y se utiliza para los títulos secundarios con tipografia base de 16 px.</li>
                     <li>Inter:  Es una fuente de código abierto diseñada principalmente para pantallas y lectura en interfaces digitales y va a ser usada para textos generales con tipografia base de 16 px. </li>
                 </ul>
+            </div>
+            <div>
+                <CrearComunidades />
             </div>
             <Outlet />
         </>

@@ -2,11 +2,17 @@ import { useState, useEffect, } from 'react';
 import axios from 'axios';
 import icono from '../../assets/avatares/neutro.png';
 import { useAuth } from '../../providers/AuthProvider';
+import { deleteFile, uploadFile } from "../../services/firebase-services";
+import { VerFoto } from './VerFoto';
+import { CambiarFoto } from './CambiarFoto';
 
 export function EditarPerfil() {
     const { usuario } = useAuth()
     const [user, setUser] = useState(usuario || {});
     const [loading, setLoading] = useState(false);
+    const [verFoto, setVerFoto] = useState(false)
+    const [cambiarFoto, setCambiarFoto] = useState(false)
+
     useEffect(() => {
         if (!usuario) {
             return
@@ -21,7 +27,6 @@ export function EditarPerfil() {
             [name]: value,
         }));
     };
-
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -39,17 +44,30 @@ export function EditarPerfil() {
         }
     };
 
+    const toggleVerFoto = () => {
+        setVerFoto(!verFoto)
+    }
+    const toggleCambiarFoto = () => {
+        setCambiarFoto(!cambiarFoto)
+    }
+
+
     return (
-        <div className="max-w-md mt-32 mx-auto p-6 bg-white rounded-lg ">
+        <div className="max-w-md mx-auto p-6 bg-white rounded-lg ">
             <h2 className='text-center mb-16 font-bold'>Editar Perfil</h2>
             {loading && <p>Cargando...</p>}
-
-            <div className="flex flex-col items-center mb-6 mx-auto">
-                <img
-                    src={user.imagen || icono}
-                    alt="foto de perfil"
-                    className="w-52 rounded-full object-cover border mb-10"
-                />
+            <div className='flex justify-center'>
+                <div className="mb-6 mx-auto relative group">
+                    <img
+                        src={user.imagen || icono}
+                        alt="foto de perfil"
+                        className="w-52 h-52 rounded-full object-cover border-4 border-sky-700 mb-10  group-hover:brightness-50"
+                    />
+                    <div className="absolute -mt-10 inset-0 flex flex-col gap-2 items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out top-0">
+                        <button onClick={() => toggleCambiarFoto()} className="bg-opacity-70 text-white rounded hover:bg-opacity-90">Cambiar</button>
+                        <button onClick={() => toggleVerFoto()} className="bg-opacity-70 text-white rounded hover:bg-opacity-90">Ver foto</button>
+                    </div>
+                </div>
             </div>
 
             <form onSubmit={handleSubmit}>
@@ -58,7 +76,7 @@ export function EditarPerfil() {
                     <input className='w-full mr-5 mb-6 mt-5 rounded-lg shadow-md border border-b-2 border-b-purple-500'
                         type="text"
                         name="name"
-                        value={user.nombre}
+
                         onChange={handleChange}
                         required
                     />
@@ -83,6 +101,12 @@ export function EditarPerfil() {
                     </button>
                 </div>
             </form>
+            {
+                verFoto ? <VerFoto salir={toggleVerFoto} foto={user.imagen || icono} /> : <></>
+            }
+            {
+                cambiarFoto ? <CambiarFoto salir={toggleCambiarFoto} /> : <></>
+            }
         </div>
     );
 };
