@@ -1,13 +1,16 @@
-import { Link, useNavigate, useParams } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import axios from "axios"
 import { toast } from "react-toastify"
 import { useState } from "react"
 import { VerFoto } from "../EditarPerfil/VerFoto"
+import foto from '../../assets/avatares/neutro.png'
+import { ShowFriends } from "./ShowFriends"
 
 export function VistaInformacionChat({ imagen, chatId, userId, nombre, chatType, miembros, cerrar }) {
     const navigate = useNavigate()
     const alerta = () => toast.error('Saliste del chat exitosamente')
     const [verFoto, setVerFoto] = useState(false)
+    const [toggleFriends, setToggleFriends] = useState(false)
 
     const eliminar_user = (idUser) => {
         const ENDPOINT_DELETE_USER = process.env.REACT_APP_API + "/chats/" + chatType + "/" + chatId + "/miembros/" + idUser
@@ -15,7 +18,6 @@ export function VistaInformacionChat({ imagen, chatId, userId, nombre, chatType,
         axios.delete(ENDPOINT_DELETE_USER)
             .then(() => {
 
-                alerta
             })
             .catch((error) => {
                 console.log(error)
@@ -24,6 +26,9 @@ export function VistaInformacionChat({ imagen, chatId, userId, nombre, chatType,
 
     const toggleVerFoto = () => {
         setVerFoto(!verFoto)
+    }
+    const toggleVerAmigos = () => {
+        setToggleFriends(!toggleFriends)
     }
 
     return (
@@ -41,7 +46,7 @@ export function VistaInformacionChat({ imagen, chatId, userId, nombre, chatType,
                         </div>
                         <div className="flex flex-col ">
                             <div className="flex justify-center mt-8 mb-0">
-                                <img src={imagen} alt="perfil" className="h-[90px] w-[90px] rounded-full" onClick={() => toggleVerFoto()} />
+                                <img src={imagen || foto} alt="perfil" className="h-[90px] w-[90px] rounded-full" onClick={() => toggleVerFoto()} />
                             </div>
                             <h3 className="flex justify-center font-medium">{nombre}</h3>
                         </div>
@@ -67,7 +72,22 @@ export function VistaInformacionChat({ imagen, chatId, userId, nombre, chatType,
                         chatType !== "private" && miembros !== null ? (<>
                             <div className="border-b-2 border-[#ABABAB] w-full">
                                 <h3 className="text-2xl font-medium ml-3">Integrantes</h3>
+                                <div className="flex flex-col gap-2 mb-2 mt-2">
+                                    {
+                                        miembros.map((miembro) => {
+                                            return <>
+                                                <div className="flex gap-2 items-center">
+                                                    <img
+                                                        src={miembro.imagen ? miembro.imagen : foto} alt=""
+                                                        className="w-12 h-12 object-cover rounded-full"
+                                                    />
 
+                                                    <p className="text-base font-bold">{miembro.nombre}</p>
+                                                </div>
+                                            </>
+                                        })
+                                    }
+                                </div>
 
                             </div>
                             {chatType === "community" ? <><div className="flex gap-3 items-center relative group ml-2 mt-2">
@@ -85,21 +105,34 @@ export function VistaInformacionChat({ imagen, chatId, userId, nombre, chatType,
                                     </svg>
                                 </button>
                                 <span className="text-xl font-semibold">Salir de la comunidad</span>
-                            </div></> : <><div className="flex gap-3 items-center relative group ml-2 mt-2 mb-2">
-                                <button className=" transition-transform transform group-hover:-translate-x-1 group-hover:-translate-y-1">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none">
-                                        <g clip-path="url(#clip0_673_899)">
-                                            <path d="M11.476 15C11.2108 15 10.9564 15.1054 10.7689 15.2929C10.5814 15.4804 10.476 15.7348 10.476 16V19C10.476 19.7956 10.1599 20.5587 9.59732 21.1213C9.03471 21.6839 8.27165 22 7.476 22H5C4.20435 22 3.44129 21.6839 2.87868 21.1213C2.31607 20.5587 2 19.7956 2 19V5C2 4.20435 2.31607 3.44129 2.87868 2.87868C3.44129 2.31607 4.20435 2 5 2H7.476C8.27165 2 9.03471 2.31607 9.59732 2.87868C10.1599 3.44129 10.476 4.20435 10.476 5V8C10.476 8.26522 10.5814 8.51957 10.7689 8.70711C10.9564 8.89464 11.2108 9 11.476 9C11.7412 9 11.9956 8.89464 12.1831 8.70711C12.3706 8.51957 12.476 8.26522 12.476 8V5C12.4744 3.67441 11.9471 2.40356 11.0098 1.46622C10.0724 0.528882 8.80159 0.00158786 7.476 0H5C3.67441 0.00158786 2.40356 0.528882 1.46622 1.46622C0.528882 2.40356 0.00158786 3.67441 0 5L0 19C0.00158786 20.3256 0.528882 21.5964 1.46622 22.5338C2.40356 23.4711 3.67441 23.9984 5 24H7.476C8.80159 23.9984 10.0724 23.4711 11.0098 22.5338C11.9471 21.5964 12.4744 20.3256 12.476 19V16C12.476 15.7348 12.3706 15.4804 12.1831 15.2929C11.9956 15.1054 11.7412 15 11.476 15Z" fill="#000000" />
-                                            <path d="M22.867 9.8792L18.281 5.2932C18.1888 5.19769 18.0784 5.12151 17.9564 5.0691C17.8344 5.01669 17.7032 4.98911 17.5704 4.98795C17.4376 4.9868 17.3059 5.0121 17.183 5.06238C17.0602 5.11266 16.9485 5.18692 16.8546 5.28081C16.7607 5.3747 16.6865 5.48635 16.6362 5.60925C16.5859 5.73215 16.5606 5.86383 16.5618 5.9966C16.5629 6.12938 16.5905 6.2606 16.6429 6.38261C16.6953 6.50461 16.7715 6.61496 16.867 6.7072L21.129 10.9702L6 11.0002C5.73478 11.0002 5.48043 11.1056 5.29289 11.2931C5.10536 11.4806 5 11.735 5 12.0002C5 12.2654 5.10536 12.5198 5.29289 12.7073C5.48043 12.8948 5.73478 13.0002 6 13.0002L21.188 12.9692L16.865 17.2932C16.7695 17.3855 16.6933 17.4958 16.6409 17.6178C16.5885 17.7398 16.5609 17.871 16.5598 18.0038C16.5586 18.1366 16.5839 18.2683 16.6342 18.3912C16.6845 18.5141 16.7587 18.6257 16.8526 18.7196C16.9465 18.8135 17.0582 18.8877 17.181 18.938C17.3039 18.9883 17.4356 19.0136 17.5684 19.0125C17.7012 19.0113 17.8324 18.9837 17.9544 18.9313C18.0764 18.8789 18.1868 18.8027 18.279 18.7072L22.865 14.1212C23.4277 13.5589 23.744 12.7961 23.7444 12.0006C23.7447 11.2051 23.4292 10.4421 22.867 9.8792Z" fill="#000000" />
-                                        </g>
-                                        <defs>
-                                            <clipPath id="clip0_673_899">
-                                                <rect width="24" height="24" fill="white" />
-                                            </clipPath>
-                                        </defs>
-                                    </svg>
-                                </button>
-                                <span className="text-xl font-semibold">Salir del grupo</span>
+                            </div></> : <><div className="flex flex-col justify-center gap-3 ml-2 mt-2 mb-2">
+                                <div className="relative group">
+
+                                    <button onClick={toggleVerAmigos} className=" flex gap-2 transition-transform transform group-hover:-translate-x-1 group-hover:-translate-y-1">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-9">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M18 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0ZM3 19.235v-.11a6.375 6.375 0 0 1 12.75 0v.109A12.318 12.318 0 0 1 9.374 21c-2.331 0-4.512-.645-6.374-1.766Z" />
+                                        </svg>
+
+                                        <span className="text-xl font-semibold">Invitar</span>
+                                    </button>
+                                </div>
+                                <div className="relative group">
+
+                                    <button className="flex gap-2 transition-transform transform group-hover:-translate-x-1 group-hover:-translate-y-1">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none">
+                                            <g clip-path="url(#clip0_673_899)">
+                                                <path d="M11.476 15C11.2108 15 10.9564 15.1054 10.7689 15.2929C10.5814 15.4804 10.476 15.7348 10.476 16V19C10.476 19.7956 10.1599 20.5587 9.59732 21.1213C9.03471 21.6839 8.27165 22 7.476 22H5C4.20435 22 3.44129 21.6839 2.87868 21.1213C2.31607 20.5587 2 19.7956 2 19V5C2 4.20435 2.31607 3.44129 2.87868 2.87868C3.44129 2.31607 4.20435 2 5 2H7.476C8.27165 2 9.03471 2.31607 9.59732 2.87868C10.1599 3.44129 10.476 4.20435 10.476 5V8C10.476 8.26522 10.5814 8.51957 10.7689 8.70711C10.9564 8.89464 11.2108 9 11.476 9C11.7412 9 11.9956 8.89464 12.1831 8.70711C12.3706 8.51957 12.476 8.26522 12.476 8V5C12.4744 3.67441 11.9471 2.40356 11.0098 1.46622C10.0724 0.528882 8.80159 0.00158786 7.476 0H5C3.67441 0.00158786 2.40356 0.528882 1.46622 1.46622C0.528882 2.40356 0.00158786 3.67441 0 5L0 19C0.00158786 20.3256 0.528882 21.5964 1.46622 22.5338C2.40356 23.4711 3.67441 23.9984 5 24H7.476C8.80159 23.9984 10.0724 23.4711 11.0098 22.5338C11.9471 21.5964 12.4744 20.3256 12.476 19V16C12.476 15.7348 12.3706 15.4804 12.1831 15.2929C11.9956 15.1054 11.7412 15 11.476 15Z" fill="#000000" />
+                                                <path d="M22.867 9.8792L18.281 5.2932C18.1888 5.19769 18.0784 5.12151 17.9564 5.0691C17.8344 5.01669 17.7032 4.98911 17.5704 4.98795C17.4376 4.9868 17.3059 5.0121 17.183 5.06238C17.0602 5.11266 16.9485 5.18692 16.8546 5.28081C16.7607 5.3747 16.6865 5.48635 16.6362 5.60925C16.5859 5.73215 16.5606 5.86383 16.5618 5.9966C16.5629 6.12938 16.5905 6.2606 16.6429 6.38261C16.6953 6.50461 16.7715 6.61496 16.867 6.7072L21.129 10.9702L6 11.0002C5.73478 11.0002 5.48043 11.1056 5.29289 11.2931C5.10536 11.4806 5 11.735 5 12.0002C5 12.2654 5.10536 12.5198 5.29289 12.7073C5.48043 12.8948 5.73478 13.0002 6 13.0002L21.188 12.9692L16.865 17.2932C16.7695 17.3855 16.6933 17.4958 16.6409 17.6178C16.5885 17.7398 16.5609 17.871 16.5598 18.0038C16.5586 18.1366 16.5839 18.2683 16.6342 18.3912C16.6845 18.5141 16.7587 18.6257 16.8526 18.7196C16.9465 18.8135 17.0582 18.8877 17.181 18.938C17.3039 18.9883 17.4356 19.0136 17.5684 19.0125C17.7012 19.0113 17.8324 18.9837 17.9544 18.9313C18.0764 18.8789 18.1868 18.8027 18.279 18.7072L22.865 14.1212C23.4277 13.5589 23.744 12.7961 23.7444 12.0006C23.7447 11.2051 23.4292 10.4421 22.867 9.8792Z" fill="#000000" />
+                                            </g>
+                                            <defs>
+                                                <clipPath id="clip0_673_899">
+                                                    <rect width="24" height="24" fill="white" />
+                                                </clipPath>
+                                            </defs>
+                                        </svg>
+                                        <span className="text-xl font-semibold">Salir del grupo</span>
+                                    </button>
+                                </div>
                             </div>
                             </>}
                         </>
@@ -127,6 +160,9 @@ export function VistaInformacionChat({ imagen, chatId, userId, nombre, chatType,
                 </div>
                 <div className={verFoto ? '' : 'hidden'}>
                     <VerFoto salir={() => toggleVerFoto()} foto={imagen} />
+                </div>
+                <div className={toggleFriends ? '' : 'hidden'}>
+                    <ShowFriends salir={() => toggleVerAmigos()} />
                 </div>
             </div>
         </>

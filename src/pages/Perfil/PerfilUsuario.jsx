@@ -91,7 +91,7 @@ export function PerfilUsuario() {
                                     {activeTab === "publicaciones" ? (
                                         <ListaPublicaciones ENDPOINT={process.env.REACT_APP_API + '/posts/user/' + id} />
                                     ) : (
-                                        <ListaLikes ENDPOINT={process.env.REACT_APP_API + '/posts/likes/' + id} />
+                                        <ListaPublicaciones ENDPOINT={process.env.REACT_APP_API + '/likes/user/' + id} />
                                     )}
                                 </div>
                             </section>

@@ -118,8 +118,8 @@ const DropdownSolicitudes = () => {
                                 solicitudesGrupo.map((solicitud) => (
                                     <li key={solicitud.id} className="solicitud-item flex justify-between items-center p-2 border-b">
                                         <div className='flex items-center justify-center gap-2'>
-                                            <img src={img} alt="foto de perfil" className='w-28 rounded-full h-28 object-cover' />
-                                            <span className="text-black">{solicitud.name.slice(0, 15)}</span>
+                                            <img src={solicitud.grupo.imagen ? solicitud.grupo.imagen : img} alt="foto de perfil" className='w-28 rounded-full h-28 object-cover' />
+                                            <span className="text-black">{solicitud.grupo.nombre.slice(0, 15)}</span>
                                         </div>
                                         <div className="actions flex space-x-2">
                                             <button onClick={() => handleActionAcceptInv(solicitud.id)}>

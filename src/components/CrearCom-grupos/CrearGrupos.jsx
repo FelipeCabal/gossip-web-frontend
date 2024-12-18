@@ -30,7 +30,7 @@ const CrearGrupoModal = ({ onClose }) => {
         }
 
         const newAsset = {
-            type: 'Grupos',
+            type: 'group',
             name: file.name,
             url: URL.createObjectURL(file),
             file,
@@ -46,7 +46,7 @@ const CrearGrupoModal = ({ onClose }) => {
                 }
             });
             if (url) {
-                setCommunityInfo((prev) => ({ ...prev, imagen: url }));
+                setGroupInfo((prev) => ({ ...prev, imagen: url }));
             }
         } catch (error) {
             console.error("Upload error:", error);
@@ -63,8 +63,6 @@ const CrearGrupoModal = ({ onClose }) => {
         },
         autoClose: 2000,
     });
-
-    const showError = () => toast.error("¿que tan bruto hay que ser para no saber que no se pudo crear?")
 
     const handleDelete = () => {
         try {

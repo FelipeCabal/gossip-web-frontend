@@ -30,7 +30,7 @@ const CrearComunidadModal = ({ onClose }) => {
         }
 
         const newAsset = {
-            type: 'comunidades',
+            type: 'community',
             name: file.name,
             url: URL.createObjectURL(file),
             file,

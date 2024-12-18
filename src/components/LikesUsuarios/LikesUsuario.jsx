@@ -16,7 +16,7 @@ export const ListaLikes = () => {
         const ENDPOINT = `${process.env.REACT_APP_API}/likes/user/${usuario.id}`;
         axios.get(ENDPOINT)
             .then((respuesta) => {
-                setLikes(respuesta.data.likes);
+                setLikes(respuesta.data);
                 setRefresh(false);
             })
             .catch((error) => {
