@@ -5,7 +5,7 @@ export function ImagenPreview({ file, handleDelete }) {
 
     return <>
         <div className='w-full flex justify-center items-center mt-2 relative' data-file={id}>
-            <img src={url} alt={name} />
+            <img src={url} alt={name} className='w-[60%] h-[80%]' />
             <div className='w-full h-full absolute'>
                 <button className='w-full h-full flex justify-center items-center object-cover relative cursor-auto'>
                     <svg onClick={handleDelete} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-8 absolute top-0 right-0 w-12 h-12 bg-red-600 rounded-full p-1 cursor-pointer hover:opacity-70">
