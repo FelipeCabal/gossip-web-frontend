@@ -41,7 +41,7 @@ export function VistaInformacionChat({ imagen, chatId, userId, nombre, chatType,
                         </div>
                         <div className="flex flex-col ">
                             <div className="flex justify-center mt-8 mb-0">
-                                <img src={imagen} alt="perfil" className="h-[90px] w-[90px]" onClick={() => toggleVerFoto()} />
+                                <img src={imagen} alt="perfil" className="h-[90px] w-[90px] rounded-full" onClick={() => toggleVerFoto()} />
                             </div>
                             <h3 className="flex justify-center font-medium">{nombre}</h3>
                         </div>
@@ -62,14 +62,6 @@ export function VistaInformacionChat({ imagen, chatId, userId, nombre, chatType,
                         </div></> : <><div className="mb-3"></div>
                         </>}
 
-                    </section>
-                    <section className="border-b-2 border-[#ABABAB]">
-                        <h3 className="text-2xl font-semibold ml-3 mt-2">Archivos compartidos</h3>
-                        <div className=" flex gap-4 ml-3 mt-3 mb-4">
-                            <img src="https://i.pinimg.com/736x/cb/2c/74/cb2c74dbf4a73674f2d2cd87c3f7ccd2.jpg" alt="imagen compartida" className="w-[64px] h-[64px] rounded-3xl" />
-                            <img src="https://i.pinimg.com/736x/5e/fa/ea/5efaeababb2e319be8d5d7f6ea61f5fe.jpg" alt="imagen compartida" className="w-[64px] h-[64px] rounded-3xl" />
-                            <img src="https://i.pinimg.com/736x/84/e5/6f/84e56fa89585cdaff7d828406b957f52.jpg" alt="imagen compartida" className="w-[64px] h-[64px] rounded-3xl" />
-                        </div>
                     </section>
                     {
                         chatType !== "private" && miembros !== null ? (<>
@@ -113,21 +105,21 @@ export function VistaInformacionChat({ imagen, chatId, userId, nombre, chatType,
                         </>
                         ) : <> <section className="grid gap-1 ml-2 mt-4">
                             <div className="flex gap-3 items-center relative group">
-                                <button className=" transition-transform transform group-hover:-translate-x-1 group-hover:-translate-y-1">
+                                <button className="flex gap-2 items-center transition-transform transform group-hover:-translate-x-1 group-hover:-translate-y-1">
                                     <svg xmlns="http://www.w3.org/2000/svg"
                                         viewBox="0 0 24 24"
                                         fill="currentColor"
                                         className="size-9"><path d="M16.9057 5.68009L5.68009 16.9057C4.62644 15.5506 4 13.8491 4 12C4 7.58172 7.58172 4 12 4C13.8491 4 15.5506 4.62644 16.9057 5.68009ZM7.0943 18.3199L18.3199 7.0943C19.3736 8.44939 20 10.1509 20 12C20 16.4183 16.4183 20 12 20C10.1509 20 8.44939 19.3736 7.0943 18.3199ZM12 2C6.47715 2 2 6.47715 2 12C2 17.5223 6.47771 22 12 22C17.5228 22 22 17.5228 22 12C22 6.47771 17.5223 2 12 2Z"></path>
                                     </svg>
+                                    <span className="text-xl font-semibold">Eliminar Amigo</span>
                                 </button>
-                                <span className="text-xl font-semibold">Eliminar Amigo</span>
                             </div>
                             <div className="flex gap-3 items-center relative group">
-                                <button className=" transition-transform transform group-hover:-translate-x-1 group-hover:-translate-y-1">
+                                <button className="flex gap-2 transition-transform transform group-hover:-translate-x-1 group-hover:-translate-y-1">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-9"><path d="M6.45455 19L2 22.5V4C2 3.44772 2.44772 3 3 3H21C21.5523 3 22 3.44772 22 4V18C22 18.5523 21.5523 19 21 19H6.45455ZM4 18.3851L5.76282 17H20V5H4V18.3851ZM13.4142 11L15.8891 13.4749L14.4749 14.8891L12 12.4142L9.52513 14.8891L8.11091 13.4749L10.5858 11L8.11091 8.52513L9.52513 7.11091L12 9.58579L14.4749 7.11091L15.8891 8.52513L13.4142 11Z"></path>
                                     </svg>
+                                    <span className="text-xl font-semibold">Vaciar chat</span>
                                 </button>
-                                <span className="text-xl font-semibold">Vaciar chat</span>
                             </div>
                         </section>
                         </>

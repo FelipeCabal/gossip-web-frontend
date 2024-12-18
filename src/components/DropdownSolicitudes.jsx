@@ -93,19 +93,21 @@ const DropdownSolicitudes = () => {
             </div>
 
             {visibleSection && (
-                <div className="`absolute right-0 mt-8">
+                <div className="`absolute right-0 mt-8 w-[80%]">
                     <ul className="w-full">
                         {visibleSection === 'amistad' && solicitudesAmistad ? <>
                             {solicitudesAmistad.length > 0 ? solicitudesAmistad.map((solicitud) => (
                                 <li key={solicitud.id} className="solicitud-item flex justify-between items-center p-2 border-b">
-                                    <img src={solicitud.userEnvia.imagen || img} alt="foto de perfil" className='w-28' />
-                                    <span className="text-black">{solicitud.userEnvia.nombre}</span>
+                                    <div className='flex items-center justify-center gap-2'>
+                                        <img src={solicitud.userEnvia.imagen || img} alt="foto de perfil" className='w-28 rounded-full h-28 object-cover' />
+                                        <span className="text-black">{solicitud.userEnvia.nombre.slice(0, 15)}</span>
+                                    </div>
                                     <div className="actions flex space-x-2">
                                         <button onClick={() => handleActionAcceptSol(solicitud.id)}>
-                                            <img src={aceptar} alt="aceptar" className="w-8 h-8" />
+                                            <img src={aceptar} alt="aceptar" className="w-12 h-12" />
                                         </button>
                                         <button onClick={() => handleActionRejectSol(solicitud.id)}>
-                                            <img src={no_aceptar} alt="no aceptar" className="w-8 h-8" />
+                                            <img src={no_aceptar} alt="no aceptar" className="w-12 h-12" />
                                         </button>
                                     </div>
                                 </li>
@@ -115,14 +117,16 @@ const DropdownSolicitudes = () => {
                             : visibleSection === 'grupo' && solicitudesGrupo.length > 0 ? (
                                 solicitudesGrupo.map((solicitud) => (
                                     <li key={solicitud.id} className="solicitud-item flex justify-between items-center p-2 border-b">
-                                        <img src={img} alt="foto de perfil" className='w-28' />
-                                        <span className="text-black">{solicitud.name}</span>
+                                        <div className='flex items-center justify-center gap-2'>
+                                            <img src={img} alt="foto de perfil" className='w-28 rounded-full h-28 object-cover' />
+                                            <span className="text-black">{solicitud.name.slice(0, 15)}</span>
+                                        </div>
                                         <div className="actions flex space-x-2">
                                             <button onClick={() => handleActionAcceptInv(solicitud.id)}>
-                                                <img src={aceptar} alt="aceptar" className="w-8 h-8" />
+                                                <img src={aceptar} alt="aceptar" className="w-12 h-12" />
                                             </button>
                                             <button onClick={() => handleActionRejectInv(solicitud.id)}>
-                                                <img src={no_aceptar} alt="no aceptar" className="w-8 h-8" />
+                                                <img src={no_aceptar} alt="no aceptar" className="w-12 h-12" />
                                             </button>
                                         </div>
                                     </li>

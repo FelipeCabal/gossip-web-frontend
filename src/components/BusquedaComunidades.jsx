@@ -3,6 +3,8 @@ import axios from 'axios';
 import foto from '../assets/avatares/neutro.png'
 import { useParams } from 'react-router-dom';
 import { useRefresh } from '../providers/RefreshProvider';
+import { useAuth } from '../providers/AuthProvider';
+import { toast, ToastContainer } from 'react-toastify';
 
 
 export function BusquedaComunidades() {
@@ -11,30 +13,41 @@ export function BusquedaComunidades() {
   const API_ENDPOINT_INVITACIONES = process.env.REACT_APP_API + '/chats/group-invitation'
   const API_ENDPOINT_SOLICITUDES = process.env.REACT_APP_API + '/friend-request/user'
   const [communities, setCommunities] = useState([]);
+  const { usuario } = useAuth()
   const [people, setPeople] = useState([]);
   const { id } = useParams
   const [searchTerm, setSearchTerm] = useState(''); // Estado para el término de búsqueda
   const [activeSection, setActiveSection] = useState('personas'); // Estado para alternar secciones
   const { refresh, setRefresh } = useRefresh()
+  let enpoint = ""
   const toggleFollow = (list, setList, id) => {
 
-    console.log("Lista antes de modificar:", list);
     const selectedItem = list.find((item) => item.id === id);
 
     if (!selectedItem) {
       console.error("No se encontró el usuario/comunidad con el ID:", id);
       return;
     }
+    enpoint = process.env.REACT_APP_API + (activeSection === 'personas' ? `/friend-request/request/${id}` : `/chats/community/${id}/miembros`)
 
-    const endpoint = `${process.env.REACT_APP_API}/friend-request/request/${id}`;
-    axios.post(endpoint, { status: 'P' })
-      .then(() => {
-        setRefresh(true)
-        console.log("Solicitud enviada con éxito para el ID:", id);
-      })
-      .catch((error) => {
-        console.error("Error al enviar la solicitud:", error);
-      });
+    if (activeSection === 'personas') {
+      axios.post(enpoint, { status: 'P' })
+        .then(() => {
+          setRefresh(true)
+          console.log("Solicitud enviada con éxito para el ID:", id);
+        })
+        .catch((error) => {
+          console.error("Error al enviar la solicitud:", error);
+        });
+    } else {
+      axios.post(enpoint)
+        .then((r) => {
+          toast.success("¡Te has unido a la comunidad exitosamente!");
+        })
+        .catch((e) => {
+          toast.error("Hubo un error al intentar unirte a la comunidad.");
+        })
+    }
   };
 
   useEffect(() => {
@@ -108,6 +121,8 @@ export function BusquedaComunidades() {
 
   return (
     <>
+      <ToastContainer position="top-right" autoClose={3000} hideProgressBar closeOnClick />
+
       <div className='w-full h-full overflow-y-auto'>
         <section className="flex border-b border-gray-400">
           <div className="w-full pb-3 pt-2 flex items-center justify-center">
@@ -209,7 +224,9 @@ export function BusquedaComunidades() {
                     }
                     className={'btn btn-font-black border border-blue-500 text-white'}
                   >
-                    Añadir
+                    {
+                      activeSection == 'personas' ? <p className='font-bold'>añadir</p> : <p className='font-bold'>unirme</p>
+                    }
                   </button>
                 </article>
               ))}

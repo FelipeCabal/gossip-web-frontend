@@ -133,10 +133,12 @@ export function PublicacionHome({ userName, img, texto, perfil, esAnonimo, postI
         <div className="w-full h-auto overflow-hidden max-h-[900px] bg-gray-50 place-items-center sm:w-3/4">
           <article className="w-full h-full overflow-hidden flex-col border-b border-gray-400 mb-2">
             <div className="w-full  flex justify-between">
-              <div className="flex pt-2 pl-2 pb-2 gap-2">
-                <img src={fotoPerfil} alt="perfil" className="w-20 h-20 rounded-full object-cover" />
-                <span className="flex items-center justify-center text-xl font-bold">@{nombre}</span>
-              </div>
+              <Link to={"/perfil/" + userId}>
+                <div className="flex pt-2 pl-2 pb-2 gap-2">
+                  <img src={fotoPerfil} alt="perfil" className="w-20 h-20 rounded-full object-cover" />
+                  <span className="flex items-center justify-center text-xl font-bold">@{nombre}</span>
+                </div>
+              </Link>
               {
                 userId == usuario.id ? <div>
                   <button className="pr-2 pt-3" onClick={manejarEliminar}><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-9">

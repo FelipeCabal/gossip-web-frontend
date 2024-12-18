@@ -105,7 +105,7 @@ export function PostHomeForm({ context }) {
                     <div className="flex justify-between items-center space-x-4 mb-4">
                         <div className="flex items-center space-x-4">
                             <img
-                                className="w-12 h-12 rounded-full object-cover border-2 border-black"
+                                className="w-16 h-16 rounded-full object-cover border-2 border-black"
                                 src={usuario.imagen || "https://via.placeholder.com/150"}
                                 alt="Profile"
                             />

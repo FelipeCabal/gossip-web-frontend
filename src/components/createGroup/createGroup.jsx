@@ -2,12 +2,14 @@ import { Link } from "react-router-dom";
 import "./createGroup.css";
 import { useState } from "react";
 import axios from "axios";
+import { useRefresh } from "../../providers/RefreshProvider";
 
-export function CreateGroup() {
+export function CreateGroup({ salir }) {
     const endpoint_group = process.env.REACT_APP_API + "/chats/group";
 
     // Estados locales para el formulario
     const [groupName, setGroupName] = useState("");
+    const { refresh, setRefresh } = useRefresh()
     const [description, setDescription] = useState("");
     const [file, setFile] = useState(null);
 
@@ -26,7 +28,6 @@ export function CreateGroup() {
         e.preventDefault();
 
         if (!groupName || !description) {
-            alert("Por favor, completa todos los campos requeridos.");
             return;
         }
 
@@ -39,36 +40,24 @@ export function CreateGroup() {
 
             // Crear el objeto de datos
             const groupData = {
-                nombre: groupName.trim(),
-                descripcion: description.trim(),
+                nombre: groupName,
+                descripcion: description,
                 imagen: imageBase64,
             };
 
-            console.log("Datos enviados:", groupData); // Verificar el objeto en consola
-
-            // Realizar la petición POST con Axios
-            const response = await axios.post(endpoint_group, groupData, {
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            });
+            const response = await axios.post(endpoint_group, groupData);
 
             if (response.status === 200 || response.status === 201) {
-                alert("¡Grupo creado exitosamente!");
-                // Limpia los campos del formulario
                 setGroupName("");
                 setDescription("");
                 setFile(null);
-            } else {
-                alert("Error al crear el grupo. Inténtalo de nuevo.");
+                setRefresh(true)
+                salir()
             }
         } catch (error) {
-            console.error("Error en la petición:", error);
-            alert("Hubo un problema con la solicitud.");
         }
     };
 
-    // Manejar la cancelación (limpiar el formulario)
     const handleCancel = () => {
         setGroupName("");
         setDescription("");
@@ -79,7 +68,7 @@ export function CreateGroup() {
         <>
             <div className="modal-fade">
                 <div className="modal-content">
-                    <Link to={"/homepage"} className="modal-closer flex justify-end">
+                    <Link onClick={() => salir()} className="modal-closer flex justify-end">
                         <span className="material-symbols-outlined text-black">
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"

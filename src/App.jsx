@@ -32,9 +32,9 @@ const App = () => {
     {
       path: '',
       element: (
-        <PublicRoute>
-          <Fondo />
-        </PublicRoute>
+        //<PublicRoute>
+        <Fondo />
+        //</PublicRoute>
       ),
       children: [{
         path: '',

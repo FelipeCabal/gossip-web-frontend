@@ -2,14 +2,16 @@ import { Link } from "react-router-dom";
 import "./createGroup.css";
 import { useState } from "react";
 import axios from "axios";
+import { useRefresh } from "../../providers/RefreshProvider";
 
-export function CreateComunity() {
-    const endpoint_group = process.env.REACT_APP_API + "/chats/community";
+export function CreateComunity({ salir }) {
+    const endpoint_community = process.env.REACT_APP_API + "/chats/community";
 
     // Estados locales para el formulario
     const [groupName, setGroupName] = useState("");
     const [description, setDescription] = useState("");
     const [file, setFile] = useState(null);
+    const { refresh, setRefresh } = useRefresh()
 
     // Convertir el archivo a Base64
     const fileToBase64 = (file) => {
@@ -39,40 +41,34 @@ export function CreateComunity() {
 
             // Crear el objeto de datos
             const groupData = {
-                nombre: groupName.trim(),
-                descripcion: description.trim(),
+                nombre: groupName,
+                descripcion: description,
                 imagen: imageBase64,
             };
 
-            console.log("Datos enviados:", groupData); // Verificar el objeto en consola
+            const response = await axios.post(endpoint_community, groupData);
 
-            // Realizar la petición POST con Axios
-            const response = await axios.post(endpoint_group, groupData, {
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            });
+            salir()
+            setRefresh(true)
 
 
         }
         catch (error) {
-            console.error("Error en la petición:", error);
-            alert("Hubo un problema con la solicitud.");
         }
     };
 
-    // Manejar la cancelación (limpiar el formulario)
     const handleCancel = () => {
         setGroupName("");
         setDescription("");
         setFile(null);
+        salir()
     };
 
     return (
         <>
             <div className="modal-fade">
                 <div className="modal-content">
-                    <Link to={"/homepage"} className="modal-closer flex justify-end">
+                    <Link onClick={() => salir()} className="modal-closer flex justify-end">
                         <span className="material-symbols-outlined text-black">
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"

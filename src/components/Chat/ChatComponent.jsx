@@ -32,7 +32,6 @@ const ChatComponent = () => {
     const [showPicker, setShowPicker] = useState(false);
     const addEmoji = (emoji) => {
         setNewMessage((prev) => prev + emoji.emoji);
-        setShowPicker(false); // Oculta el selector después de seleccionar un emoji
     };
 
     const fetchChatData = async () => {
@@ -171,7 +170,7 @@ const ChatComponent = () => {
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15M12 9l-3 3m0 0 3 3m-3-3h12.75" />
                                         </svg>
                                     </div>
-
+                                    {imagen ? <><img src={imagen} alt="" className='w-16 h-16 rounded-full object-cover' /></> : <></>}
                                     <h2>{title ? title : <>Cargando Chat</>}</h2>
                                 </div>
                                 {toggleInfo ? (
@@ -214,62 +213,67 @@ const ChatComponent = () => {
                                 ref={messagesEndRef}
                                 className="chatContainer overflow-y-auto p-[10px] flex-1 relative"
                                 style={{
-                                    maxHeight: 'calc(100dvh - 200px)', // Ajustar según diseño
+                                    maxHeight: 'calc(100dvh - 200px)',
                                 }}
-                            >
-                                {loadingMessages ? (
-                                    <div>Cargando mensajes...</div>
-                                ) : (
-                                    <>
-                                        {messages.map((msg, index) => {
-                                            const user = usersCache[msg.usuarioId];
-                                            const myMessage = msg.usuarioId === usuario.id;
-                                            return (
-                                                <div
-                                                    key={index}
-                                                    className={
-                                                        myMessage
-                                                            ? 'mb-4 w-full flex justify-end'
-                                                            : 'mb-4 w-full flex justify-start'
-                                                    }
-                                                >
-                                                    <div
-                                                        className="max-w-[70%] w-auto border border-slate-600 p-3"
-                                                        style={
-                                                            myMessage
-                                                                ? {
-                                                                    borderTopLeftRadius: '12px',
-                                                                    borderTopRightRadius: '12px',
-                                                                    borderBottomLeftRadius: '12px',
+                            >{
+                                    messages ? <>
+
+                                        {loadingMessages ? (
+                                            <div>Cargando mensajes...</div>
+                                        ) : (
+                                            <>
+                                                {messages.map((msg, index) => {
+                                                    const user = usersCache[msg.usuarioId];
+                                                    const myMessage = msg.usuarioId === usuario.id;
+                                                    return (
+                                                        <div
+                                                            key={index}
+                                                            className={
+                                                                myMessage
+                                                                    ? 'mb-4 w-full flex justify-end'
+                                                                    : 'mb-4 w-full flex justify-start'
+                                                            }
+                                                        >
+                                                            <div
+                                                                className="max-w-[70%] w-auto border border-slate-600 p-3"
+                                                                style={
+                                                                    myMessage
+                                                                        ? {
+                                                                            borderTopLeftRadius: '12px',
+                                                                            borderTopRightRadius: '12px',
+                                                                            borderBottomLeftRadius: '12px',
+                                                                        }
+                                                                        : {
+                                                                            borderTopLeftRadius: '12px',
+                                                                            borderTopRightRadius: '12px',
+                                                                            borderBottomRightRadius: '12px',
+                                                                        }
                                                                 }
-                                                                : {
-                                                                    borderTopLeftRadius: '12px',
-                                                                    borderTopRightRadius: '12px',
-                                                                    borderBottomRightRadius: '12px',
-                                                                }
-                                                        }
-                                                    >
-                                                        <span className="text-[10px] font-bold">
-                                                            {myMessage ? (
-                                                                <p className="text-end">@Me</p>
-                                                            ) : user ? (
-                                                                <p>@{user.nombre}</p>
-                                                            ) : (
-                                                                'Cargando usuario...'
-                                                            )}
-                                                        </span>
-                                                        <p className="text-[16px]">{msg.message}</p>
-                                                        <div className="w-full text-end -mt-3">
-                                                            <span className="text-end text-slate-500 text-[9px]">
-                                                                {formatTime(msg.createdAt)}
-                                                            </span>
+                                                            >
+                                                                <span className="text-[10px] font-bold">
+                                                                    {myMessage ? (
+                                                                        <p className="text-end">@Me</p>
+                                                                    ) : user ? (
+                                                                        <p>@{user.nombre}</p>
+                                                                    ) : (
+                                                                        'Cargando usuario...'
+                                                                    )}
+                                                                </span>
+                                                                <p className="text-[16px]">{msg.message}</p>
+                                                                <div className="w-full text-end -mt-3">
+                                                                    <span className="text-end text-slate-500 text-[9px]">
+                                                                        {formatTime(msg.createdAt)}
+                                                                    </span>
+                                                                </div>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                </div>
-                                            );
-                                        })}
+                                                    );
+                                                })}
+                                            </>
+                                        )}
                                     </>
-                                )}
+                                        : <></>
+                                }
                                 {/* Mostrar el picker de emojis con posición absoluta */}
                                 {showPicker && (
                                     <div

@@ -5,14 +5,29 @@ import axios from "axios";
 import { TarjetaChat } from "../../components/ChatCard/TarjetaChat";
 import './paginaChats.css';
 import imgNoChats from "../../assets/imgNoChats/imgNoChats.png";
+import { CreateComunity } from "../../components/createGroup/createComunity";
+import { CreateGroup } from "../../components/createGroup/createGroup";
+import { useRefresh } from "../../providers/RefreshProvider";
+import CrearComunidadModal from "../../components/CrearCom-grupos/CrearComunidades";
+import CrearGrupoModal from "../../components/CrearCom-grupos/CrearGrupos";
 
 export function PaginaChats() {
     const { usuario } = useAuth();
     const [chats, setChats] = useState([]);
+    const { refresh, setRefresh } = useRefresh()
     const [type, setType] = useState('private');
     const [selectedType, setSelectedType] = useState('private')
     const navigate = useNavigate();
     const [searchQuery, setSearchQuery] = useState("");
+    const [showComunnityForm, setShowComunnityForm] = useState(false)
+    const [showGroupForm, setShowGroupForm] = useState(false)
+
+    const handleShowComunnity = () => {
+        setShowComunnityForm(!showComunnityForm)
+    }
+    const handleShowGroup = () => {
+        setShowGroupForm(!showGroupForm)
+    }
 
     const endpointMap = {
         private: process.env.REACT_APP_API + "/chats/private",
@@ -31,13 +46,16 @@ export function PaginaChats() {
         if (endpointMap[type]) {
             axios
                 .get(endpointMap[type])
-                .then((response) => setChats(response.data || []))
+                .then((response) => {
+                    setChats(response.data || [])
+                    setRefresh(false)
+                })
                 .catch(() => setChats([]));
         } else {
             console.error("Tipo de chat inválido.");
             setChats([]);
         }
-    }, [type, usuario]);
+    }, [type, usuario, refresh]);
 
     const handleSearchChange = (e) => {
         setSearchQuery(e.target.value);
@@ -61,18 +79,18 @@ export function PaginaChats() {
 
     const handleCrear = (currentType) => {
         if (currentType === 'community') {
-            {/* Componente Comunidades*/ }
+            handleShowComunnity()
 
         } else if (currentType === 'group') {
-            {/* Componente grupos */ }
+            handleShowGroup()
 
         }
     }
     return (
         <div className="contenedor-chats-page overflow-hidden w-full flex">
-            <div className={`left-column-chats border-r-2 border-black w-[40%] h-[calc(100dvh-64px)] 
+            <div className={`left-column-chats border-r-2 border-black w-[40%] h-[calc(100dvh-64px)] overflow-x-hidden
             ${defaultRoute ? 'mostrar' : 'ocultar'}`}>
-                <div className="flex flex-col gap-1 w-full justify-center items-center">
+                <div className="flex flex-col gap-1 w-full justify-center items-center overflow-x-hidden">
                     <input type="search" className="searchChats w-[98%] lg:w-[80%]" placeholder="Buscar o iniciar un chat" value={searchQuery} onChange={handleSearchChange} />
                     <div className="flex justify-between gap-3">
 
@@ -106,7 +124,7 @@ export function PaginaChats() {
                         </div>
                     </div>
                 </div>
-                <div className="overflow-y-auto">
+                <div className="overflow-y-auto overflow-x-hidden object-contain">
                     {filteredChats.length > 0 ? (
                         filteredChats.map((chat) => (
                             <TarjetaChat
@@ -149,6 +167,11 @@ export function PaginaChats() {
                         <Outlet />
                     </div>
             }
+            {showComunnityForm ?
+                <CrearComunidadModal onClose={() => handleShowComunnity()} /> : <></>
+            }
+            {showGroupForm ?
+                <CrearGrupoModal onClose={() => handleShowGroup()} /> : <></>}
         </div>
     )
 }
