@@ -1,6 +1,5 @@
 import { useEffect, useMemo, useState, createContext, useContext } from "react";
 import axios from "axios";
-
 const AuthContext = createContext();
 
 export function AuthContextProvider({ children }) {
@@ -45,7 +44,8 @@ export function AuthContextProvider({ children }) {
             isLoading,
             usuario,
             updateToken,
-            deleteToken
+            deleteToken,
+            getUsuario
         }
     }, [token, usuario, isLoading])
     return <AuthContext.Provider value={Context}>{children}</AuthContext.Provider>

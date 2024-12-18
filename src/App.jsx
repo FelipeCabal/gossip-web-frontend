@@ -19,8 +19,6 @@ import { HomePage } from './pages/HomePage/HomePage';
 import { PerfilUsuario } from './pages/Perfil/PerfilUsuario';
 import ChatComponent from './components/Chat/ChatComponent.jsx';
 import { PaginaChats } from './pages/PaginaChats/paginaChats.jsx';
-import { CreateGroup } from './components/createGroup/createGroup.jsx';
-import { CreateComunity } from './components/createGroup/createComunity.jsx';
 import { EditarPerfil } from './components/EditarPerfil/EditarPerfil.jsx';
 import { BusquedaComunidades } from './components/BusquedaComunidades.jsx';
 import NotFound from './utils/NotFound.jsx';
@@ -71,14 +69,6 @@ const App = () => {
           path: 'homepage',
           element: <HomePage />,
           children: [
-            {
-              path: 'CreateGroup',
-              element: <CreateGroup />
-            },
-            {
-              path: "CreateComunity",
-              element: <CreateComunity />
-            },
             {
               path: 'Postform',
               element: <PostForm />

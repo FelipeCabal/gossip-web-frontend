@@ -5,8 +5,6 @@ import axios from "axios";
 import { TarjetaChat } from "../../components/ChatCard/TarjetaChat";
 import './paginaChats.css';
 import imgNoChats from "../../assets/imgNoChats/imgNoChats.png";
-import { CreateComunity } from "../../components/createGroup/createComunity";
-import { CreateGroup } from "../../components/createGroup/createGroup";
 import { useRefresh } from "../../providers/RefreshProvider";
 import CrearComunidadModal from "../../components/CrearCom-grupos/CrearComunidades";
 import CrearGrupoModal from "../../components/CrearCom-grupos/CrearGrupos";
@@ -32,7 +30,7 @@ export function PaginaChats() {
     const endpointMap = {
         private: process.env.REACT_APP_API + "/chats/private",
         group: process.env.REACT_APP_API + "/chats/group",
-        community: `${process.env.REACT_APP_API}/chats/community/${usuario?.id}`,
+        community: `${process.env.REACT_APP_API}/chats/community/user/${usuario?.id}`,
     };
 
     const abrirChat = (id, type) => {
@@ -129,11 +127,26 @@ export function PaginaChats() {
                         filteredChats.map((chat) => (
                             <TarjetaChat
                                 key={chat.id}
-                                onClick={() => abrirChat(chat.id, type)}
-                                nombre={type === "private" ? chat?.friend?.nombre : chat?.nombre}
+                                onClick={() => abrirChat(type === 'community' ? chat.comunidad ? chat.comunidad.id :
+                                    chat.id :
+                                    chat.id, type)}
+                                nombre={
+                                    type === "private" ? chat?.friend?.nombre :
+                                        type === 'community' ? chat.comunidad ? chat.comunidad.nombre :
+                                            chat.nombre :
+                                            chat.nombre
+                                }
                                 tipoChat={type}
-                                chatid={chat.id}
-                                imagen={type === "private" ? chat?.friend?.imagen : chat?.imagen}
+                                chatid={
+                                    type === 'community' ? chat.comunidad ? chat.comunidad.id :
+                                        chat.id :
+                                        chat.id
+                                }
+                                imagen={
+                                    type === "private" ? chat?.friend?.imagen :
+                                        type === 'community' ? chat.comunidad ? chat.comunidad.imagen :
+                                            chat.imagen : chat.imagen
+                                }
                             />
                         ))
                     ) : (

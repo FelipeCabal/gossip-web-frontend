@@ -3,13 +3,15 @@ import { ImagenPreview } from "../../partials/ImagenPreview/imagenPreview"
 import { deleteFile, uploadFile } from "../../services/firebase-services"
 import axios from "axios"
 import { useAuth } from "../../providers/AuthProvider"
+import { useRefresh } from "../../providers/RefreshProvider"
 
 export function CambiarFoto({ salir }) {
-    const { usuario } = useAuth()
+    const { usuario, getUsuario } = useAuth()
     const [eleccion, setEleccion] = useState(false)
     const [cambiar, setCambiar] = useState(false)
     const [eliminar, setEliminar] = useState(false)
     const [fileExist, setFileExist] = useState(false)
+    const { refresh, setRefresh } = useRefresh()
     const [asset, setAsset] = useState(null)
     const [isUploading, setIsUploading] = useState(false)
     const [image, setImage] = useState('')
@@ -52,12 +54,15 @@ export function CambiarFoto({ salir }) {
                 setFileExist(false);
                 setEleccion(!eleccion)
                 setEliminar(!eliminar)
+                setRefresh(true)
+                getUsuario()
                 salir()
             }
         }
     }
 
     const handleSubimt = () => {
+
         const imagenSend = {
             imagen: image
         }

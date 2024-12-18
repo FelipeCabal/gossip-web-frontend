@@ -41,6 +41,7 @@ const Comunidades = () => {
         axios.get(endpoint + "/user/" + usuario.id)
             .then((r) => {
                 setMyCommunities(r.data)
+                console.log(r.data)
             })
     }, [usuario, actualizar])
 
@@ -53,7 +54,7 @@ const Comunidades = () => {
                 <div className="rounded-lg w-full mt-5">
                     <h2 className="text-2xl font-bold text-center mb-6">COMUNIDADES</h2>
                     <div className=" mt-1 w-full flex flex-col p-6">
-                        {communities.filter((comunidad) => !myCommunities || !myCommunities.some((myCom) => myCom.id == comunidad.id)).slice(0, 5).map((comunidad) => (
+                        {communities.filter((comunidad) => !myCommunities || !myCommunities.some((myCom) => myCom.comunidad.id == comunidad.id)).slice(0, 5).map((comunidad) => (
                             <div key={comunidad.id} className="flex items-center border-b-2 justify-between  border-b-[#918ef4] w-full h-[65px]">
                                 <div className='flex justify-center items-center gap-2'>
                                     <img src={comunidad.imagen ? comunidad.imagen : icono} className="w-20 h-20 rounded-full object-cover" />

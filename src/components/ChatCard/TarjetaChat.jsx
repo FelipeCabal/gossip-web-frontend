@@ -8,7 +8,7 @@ export function TarjetaChat({ onClick, nombre, imagen, chatid, tipoChat }) {
     const ENDPOINT_MENSAJES = `${process.env.REACT_APP_API}/chats/mensajes/${chatid}/type/${tipoChat}/`
 
     const [mensaje, setMensaje] = useState([]);
-    const {refresh} = useRefresh()
+    const { refresh } = useRefresh()
 
     useEffect(() => {
         axios.get(ENDPOINT_MENSAJES)
@@ -18,7 +18,7 @@ export function TarjetaChat({ onClick, nombre, imagen, chatid, tipoChat }) {
             .catch((error) => {
                 console.error(error);
             });
-    }, [refresh]);
+    }, [refresh, tipoChat, chatid]);
 
     return (
         <>
